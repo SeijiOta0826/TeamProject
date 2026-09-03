@@ -1,22 +1,22 @@
-#include "GameScene.h"
+ï»¿#include "GameScene.h"
 #include "ScreenConfig.h"
 #include <DxLib.h>
 
 void GameScene::Initialize()
 {
-    // ‰Šú‰»ˆ—
+    // åˆæœŸåŒ–å‡¦ç†
 }
 
 void GameScene::Update(float deltaTime)
 {
-    // XVˆ—
+    // æ›´æ–°å‡¦ç†
 }
 
 void GameScene::Draw()
 {
-    // —á@GameScene •`‰æˆ—
+    // ä¾‹ã€€GameScene æç”»å‡¦ç†
 
-    // ”wŒi
+    // èƒŒæ™¯
     DrawBox(
         0,
         0,
@@ -26,7 +26,7 @@ void GameScene::Draw()
         TRUE
     );
 
-    // ‰¼‚ÌƒvƒŒƒCƒ„[
+    // ä»®ã®ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
     DrawCircle(
         960,
         540,
@@ -35,7 +35,7 @@ void GameScene::Draw()
         TRUE
     );
 
-    // ‰¼‚Ì•¶š
+    // ä»®ã®æ–‡å­—
     DrawString(
         20,
         20,
@@ -46,5 +46,5 @@ void GameScene::Draw()
 
 void GameScene::Finalize()
 {
-    // I—¹ˆ—
+    // çµ‚äº†å‡¦ç†
 }
