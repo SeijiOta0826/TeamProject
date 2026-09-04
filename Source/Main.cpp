@@ -1,4 +1,6 @@
-﻿#include "DxLib.h"
+﻿#include <DxLib.h>
+
+// #include "Master.h" 
 #include "GameScene.h"
 #include "ScreenConfig.h"
 
@@ -20,9 +22,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	}
 
 	//Todo:	初期化処理系をここへ
-	// GameScene初期化
-	GameScene gameScene;
-	gameScene.Initialize();
+	// Master::mpSceneManager->Initialize();
 
 	SetDrawScreen(DX_SCREEN_BACK);
 
@@ -47,13 +47,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 		// -- 更新処理 -- //
 		//Todo:	更新処理をここへ
-		gameScene.Update(deltaTime);
+		// Master::mpSceneManager->Update(deltaTime);
 
 
 		// -- 描画処理 -- //
 		ClearDrawScreen();
 
-		gameScene.Draw();
+		// Master::mpSceneManager->Draw();
 
 		//Todo:	描画処理をここへ
 		ScreenFlip();
@@ -71,7 +71,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	// -- 終了処理　-- // 
 	// 終了処理をここへ
-	gameScene.Finalize();
+	// Master::mpSceneManager->Finalize();
 
 	DxLib_End();	// DXライブラリ使用の終了
 	return 0;	//ソフトの終了
