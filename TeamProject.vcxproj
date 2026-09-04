@@ -19,12 +19,22 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\GamePad.cpp" />
     <ClCompile Include="Source\GameScene.cpp" />
+    <ClCompile Include="Source\InputManager.cpp" />
+    <ClCompile Include="Source\Keyboard.cpp" />
     <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\Mouse.cpp" />
+    <ClCompile Include="Source\Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameScene.h" />
+    <ClInclude Include="Source\GamePad.h" />
+    <ClInclude Include="Source\GameScene.h" />
+    <ClInclude Include="Source\InputManager.h" />
+    <ClInclude Include="Source\Keyboard.h" />
+    <ClInclude Include="Source\Mouse.h" />
     <ClInclude Include="Source\ScreenConfig.h" />
+    <ClInclude Include="Source\Vector2.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
