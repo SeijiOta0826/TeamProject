@@ -43,6 +43,12 @@
     <Filter Include="ヘッダー ファイル\Obj">
       <UniqueIdentifier>{d23f8d4d-3ec5-4cbb-8c8d-8f37ca92efe0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Module">
+      <UniqueIdentifier>{f3284e1a-8df3-4d25-adad-2135d5ebfc71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Module">
+      <UniqueIdentifier>{4b613f5c-62dc-42a5-976e-8ff8e3cd146c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GamePad.cpp">
@@ -80,6 +86,12 @@
     </ClCompile>
     <ClCompile Include="Source\Texture.cpp">
       <Filter>ソース ファイル\Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Collider.cpp">
+      <Filter>ソース ファイル\Module</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CollisionManager.cpp">
+      <Filter>ソース ファイル\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -121,6 +133,12 @@
     </ClInclude>
     <ClInclude Include="Source\Texture.h">
       <Filter>ヘッダー ファイル\Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Collider.h">
+      <Filter>ヘッダー ファイル\Module</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CollisionManager.h">
+      <Filter>ヘッダー ファイル\Manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
