@@ -59,8 +59,8 @@ void InputManager::InitializeAxis() {
 
 	mAxisBindings[(int)Axis::MoveY] =
 	{
-		KEY_INPUT_W,
 		KEY_INPUT_S,
+		KEY_INPUT_W,
 		PadAxis::LeftY
 	};
 

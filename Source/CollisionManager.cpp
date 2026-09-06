@@ -141,14 +141,14 @@ bool CollisionManager::GetBoxBoxCollision(
 		(halfA.y + halfB.y) -
 		std::abs(posA.y - posB.y);
 
-	const float overlapZ =
+	/*const float overlapZ =
 		(halfA.z + halfB.z) -
-		std::abs(posA.z - posB.z);
+		std::abs(posA.z - posB.z);*/
 
 	// そもそも衝突していない
 	if (overlapX <= 0.0f ||
-		overlapY <= 0.0f ||
-		overlapZ <= 0.0f)
+		overlapY <= 0.0f 
+		/*overlapZ <= 0.0f*/)
 	{
 		return false;
 	}
@@ -172,7 +172,7 @@ bool CollisionManager::GetBoxBoxCollision(
 		);
 	}
 
-	if (overlapZ < _info.penetration)
+	/*if (overlapZ < _info.penetration)
 	{
 		_info.penetration = overlapZ;
 
@@ -181,7 +181,7 @@ bool CollisionManager::GetBoxBoxCollision(
 			0.0f,
 			posA.z < posB.z ? -1.0f : 1.0f
 		);
-	}
+	}*/
 
 	return true;
 }

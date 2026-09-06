@@ -1,10 +1,33 @@
 ﻿#include "GameScene.h"
-#include "ScreenConfig.h"
-#include <DxLib.h>
+
+#include "Master.h"
+#include "SceneManager.h"
+#include "Scene.h"
+#include "ObjectManager.h"
+
+#include "Player.h"
+#include "StageBlock.h"
 
 void GameScene::Initialize()
 {
     // 初期化処理
+    auto player =
+        Master::mpSceneManager
+        ->GetCurrentScene()
+        ->GetObjectManager()
+        ->CreateObject<Player>(
+            "Resource/Obj/test_player.jpg",
+            VGet(0.0f, 0.0f, 0.0f)
+        );
+
+    auto block =
+        Master::mpSceneManager
+        ->GetCurrentScene()
+        ->GetObjectManager()
+        ->CreateObject<StageBlock>(
+            "Resource/Obj/test_field.jpg",
+            VGet(300.0f, 300.0f, 0.0f)
+        );
 }
 
 void GameScene::Update(float deltaTime)
@@ -15,35 +38,6 @@ void GameScene::Update(float deltaTime)
 
 void GameScene::Draw()
 {
-    // 例　GameScene 描画処理
-
-    // 背景
-    DrawBox(
-        0,
-        0,
-        1920,
-        1080,
-        GetColor(30, 30, 30),
-        TRUE
-    );
-
-    // 仮のプレイヤー
-    DrawCircle(
-        960,
-        540,
-        50,
-        GetColor(0, 150, 255),
-        TRUE
-    );
-
-    // 仮の文字
-    DrawString(
-        20,
-        20,
-        "GAME SCENE",
-        GetColor(255, 255, 255)
-    );
-
     Scene::Draw();
 }
 

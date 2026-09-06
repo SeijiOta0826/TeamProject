@@ -9,6 +9,8 @@ enum class Tag
 	None,
 
 	UNNKO,
+	PLAYER,
+	BLOCK,
 };
 
 /*

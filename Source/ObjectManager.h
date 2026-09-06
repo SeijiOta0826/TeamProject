@@ -22,7 +22,7 @@ public:
 
 		auto obj = new T(std::forward<Args>(args)...);
 
-		obj->Initialize(this);
+		// obj->Initialize(this);
 
 		mObjects.push_back(obj);
 

@@ -6,6 +6,7 @@
 
 #include "SceneManager.h"
 #include "ResourceManager.h"
+#include "InputManager.h"
 
 SceneManager* Master::mpSceneManager = new SceneManager();
 ResourceManager* Master::mpResource = new ResourceManager();
@@ -29,6 +30,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	//Todo:	初期化処理系をここへ
 	Master::mpSceneManager->Initialize();
+	InputManager::GetInstance().InitializeButton();
+	InputManager::GetInstance().InitializeAxis();
 
 	SetDrawScreen(DX_SCREEN_BACK);
 
@@ -54,7 +57,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		// -- 更新処理 -- //
 		//Todo:	更新処理をここへ
 		Master::mpSceneManager->Update(deltaTime);
-
+		InputManager::GetInstance().Update();
 
 		// -- 描画処理 -- //
 		ClearDrawScreen();
