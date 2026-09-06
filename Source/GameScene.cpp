@@ -10,6 +10,7 @@ void GameScene::Initialize()
 void GameScene::Update(float deltaTime)
 {
     // 更新処理
+    Scene::Update(deltaTime);
 }
 
 void GameScene::Draw()
@@ -42,6 +43,8 @@ void GameScene::Draw()
         "GAME SCENE",
         GetColor(255, 255, 255)
     );
+
+    Scene::Draw();
 }
 
 void GameScene::Finalize()

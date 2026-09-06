@@ -1,6 +1,7 @@
 #pragma once
+#include "Scene.h"
 
-class GameScene
+class GameScene : public Scene
 {
 public:
     void Initialize();

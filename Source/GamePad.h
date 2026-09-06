@@ -1,5 +1,5 @@
 #pragma once
-#include "Vector2.h"
+#include <DxLib.h>
 
 enum class PadAxis
 {
@@ -27,15 +27,15 @@ public:
 	bool IsDown(int _button) const;
 	bool IsUp(int _button) const;
 
-	Vector2 GetLeftStick() const;
-	Vector2 GetRightStick() const;
+	VECTOR GetLeftStick() const;
+	VECTOR GetRightStick() const;
 
 private:
 	int mNowState = 0;
 	int mOldState = 0;
 
-	Vector2 mLeftStick;
-	Vector2 mRightStick;
+	VECTOR mLeftStick;
+	VECTOR mRightStick;
 
 	float mfLeftTrigger = 0.0f;
 	float mfRightTrigger = 0.0f;

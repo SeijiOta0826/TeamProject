@@ -1,8 +1,14 @@
 ﻿#include <DxLib.h>
 
-// #include "Master.h" 
+#include "Master.h" 
 #include "GameScene.h"
 #include "ScreenConfig.h"
+
+#include "SceneManager.h"
+#include "ResourceManager.h"
+
+SceneManager* Master::mpSceneManager = new SceneManager();
+ResourceManager* Master::mpResource = new ResourceManager();
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	LPSTR lpCmdLine, int nCmdShow)
@@ -10,8 +16,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	// -- 初期設定 -- //
 	ChangeWindowMode(true);
 	SetGraphMode(
-		ScreenConfig::SCREEN_WIDTH,
-		ScreenConfig::SCREEN_HEIGHT,
+		static_cast<int>(ScreenConfig::SCREEN_WIDTH),
+		static_cast<int>(ScreenConfig::SCREEN_HEIGHT),
 		0
 	);
 
@@ -22,7 +28,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	}
 
 	//Todo:	初期化処理系をここへ
-	// Master::mpSceneManager->Initialize();
+	Master::mpSceneManager->Initialize();
 
 	SetDrawScreen(DX_SCREEN_BACK);
 
@@ -47,13 +53,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 		// -- 更新処理 -- //
 		//Todo:	更新処理をここへ
-		// Master::mpSceneManager->Update(deltaTime);
+		Master::mpSceneManager->Update(deltaTime);
 
 
 		// -- 描画処理 -- //
 		ClearDrawScreen();
 
-		// Master::mpSceneManager->Draw();
+		Master::mpSceneManager->Draw();
 
 		//Todo:	描画処理をここへ
 		ScreenFlip();
@@ -65,13 +71,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 			//60fpsに調整
 		}
 
-		// Todo : Scene変更のチェッカーをここへ
-
+		// Scene変更のチェッカー
+		Master::mpSceneManager->ChangeSceneIfNeeded();
 	}
 
 	// -- 終了処理　-- // 
 	// 終了処理をここへ
-	// Master::mpSceneManager->Finalize();
+	Master::mpSceneManager->Finalize();
 
 	DxLib_End();	// DXライブラリ使用の終了
 	return 0;	//ソフトの終了

@@ -17,8 +17,8 @@ void GamePad::Update() {
 	if (!mbConnected) {
 		mNowState = 0;
 
-		mLeftStick = Vector2();
-		mRightStick = Vector2();
+		mLeftStick = VGet(0.0f, 0.0f, 0.0f);
+		mRightStick = VGet(0.0f, 0.0f, 0.0f);
 
 		mfLeftTrigger = 0;
 		mfRightTrigger = 0;
@@ -69,10 +69,10 @@ bool GamePad::IsUp(int _button) const {
 		(mOldState & _button) != 0;
 }
 
-Vector2 GamePad::GetLeftStick() const {
+VECTOR GamePad::GetLeftStick() const {
 	return mLeftStick;
 }
 
-Vector2 GamePad::GetRightStick() const {
+VECTOR GamePad::GetRightStick() const {
 	return mRightStick;
 }
