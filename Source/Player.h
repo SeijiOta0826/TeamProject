@@ -2,7 +2,7 @@
 #include "Object2D.h"
 
 class Collider;
-class Gravity; // ’Ç‰Á
+class Gravity; // ï¿½Ç‰ï¿½
 
 class Player : public Object2D
 {
@@ -20,7 +20,7 @@ private:
 private:
 	Collider* mpCollider;
 
-	Gravity* mpGravity; // ’Ç‰Á
+	Gravity* mpGravity; // ï¿½Ç‰ï¿½
 
 	float mfSpeed = 10.0f;
 
