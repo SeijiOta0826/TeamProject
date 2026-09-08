@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include "Object2D.h"
-#include "GameConfig.h"
 
 class Collider;
 class Gravity; // �ǉ�
@@ -25,11 +24,11 @@ private:
 
 	float mfSpeed = 10.0f;
 
-	float mCurrentAngle = 0.0f; // 現在の角度
-	float mTargetAngle = 0.0f;  // 目標の角度
+	float mCurrentAngle = 0.0f; // ���̊p�x�i�x���@�F0?360�j
+	float mTargetAngle = 0.0f;  // �ڎw���p�x
 
-	const float BLOCK_SIZE = GameConfig::CELL_SIZE;
-	float mMoveStepX = 0.0f;	// 回転に伴う移動値
+	const float BLOCK_SIZE = 100.0f; // �u���b�N�̃T�C�Y�i����j
+	float mMoveStepX = 0.0f; // �ړ��X�e�b�v�i����j
 
 	void Rotate();
 };
