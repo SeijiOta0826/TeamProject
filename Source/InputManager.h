@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "Keyboard.h"
 #include "Mouse.h"
@@ -40,7 +40,7 @@ public:
 		int mnPositiveKey = -1;
 		int mnNegativeKey = -1;
 
-		PadAxis padAxis;
+		PadAxis padAxis = PadAxis::None;
 	};
 
 	struct ButtonState {
