@@ -1,7 +1,7 @@
-#include "Player.h"
+﻿#include "Player.h"
 
 #include "Collider.h"
-#include "Gravity.h" // �ǉ�
+#include "Gravity.h" // �ǉ�
 #include "InputManager.h"
 
 #include "Master.h"
@@ -10,9 +10,10 @@
 #include "CollisionManager.h"
 
 #include "StageBlock.h"
+#include "Texture.h"
 
 Player::Player(std::string filename, VECTOR initPos)
-	:Object2D(filename, initPos)
+	: Object2D(filename, initPos)
 {
 	SetTag(Tag::PLAYER);
 
@@ -21,7 +22,7 @@ Player::Player(std::string filename, VECTOR initPos)
 
 	mpCollider->SetHalfSize(VGet(50.0f, 50.0f, 0.0f));
 
-	// �ǉ�
+	// �ǉ�
 	mpGravity = new Gravity(this);
 	mpGravity->Initialize();
 }
@@ -37,14 +38,33 @@ Player::~Player()
 
 void Player::Update(float _deltaTime)
 {
+
+	// ��]�E�]���菈��
+	Rotate();
+
+	// �]�����Ă���Œ��͖��L�[�Ȃǂ̒ʏ�ړ����~�߂�
+	if (mCurrentAngle == mTargetAngle)
+	{
+		Move();
+	}
+
 	Move();
-	mpGravity->Update(_deltaTime); // �ǉ�
+	mpGravity->Update(_deltaTime); // �ǉ�
+
 	ResolveStageCollision();
 }
 
 void Player::Draw()
 {
-	Object2D::Draw();
+	// �x���@(0?360)�����W�A���ɕϊ�
+	float rad = mCurrentAngle * (3.14159265f / 180.0f);
+
+	VECTOR pos = GetPosition();
+
+	if (mpTexture != nullptr)
+	{
+		DrawRotaGraphF(pos.x, pos.y, 1.0, rad, mpTexture->GetHandle(), TRUE);
+	}
 }
 
 void Player::Move()
@@ -67,7 +87,8 @@ void Player::Move()
 	SetPosition(nextPos);
 }
 
-void Player::ResolveStageCollision() {
+void Player::ResolveStageCollision() 
+{
 	auto* collisionManager =
 		Master::mpSceneManager
 		->GetCurrentScene()
@@ -110,4 +131,52 @@ void Player::ResolveStageCollision() {
 	);
 
 	this->SetPosition(position);
+}
+
+void Player::Rotate()
+{
+	// 1. �Î~���i��]���Ă��Ȃ����j�ɓ��͂��󂯕t����
+	if (mCurrentAngle == mTargetAngle)
+	{
+		// L�L�[�ŉE�ɃS������1�u���b�N�]����
+		if (CheckHitKey(KEY_INPUT_L)) {
+			mTargetAngle += 90.0f;
+			// 30�t���[��������90�x�񂷂̂ŁA1�t���[�������� (BLOCK_SIZE / 30) �i�߂�
+			mMoveStepX = BLOCK_SIZE / 30.0f;
+		}
+		// J�L�[�ō��ɃS������1�u���b�N�]����
+		else if (CheckHitKey(KEY_INPUT_J)) {
+			mTargetAngle -= 90.0f;
+			mMoveStepX = -BLOCK_SIZE / 30.0f;
+		}
+	}
+
+	// 2. �E�֓]���鏈��
+	if (mCurrentAngle < mTargetAngle)
+	{
+		mCurrentAngle += 3.0f; // �p�x��i�߂�
+
+		// ���W�������ɐi�߂�
+		VECTOR pos = GetPosition();
+		pos.x += mMoveStepX;
+		SetPosition(pos);
+
+		if (mCurrentAngle >= mTargetAngle) {
+			mCurrentAngle = mTargetAngle;
+		}
+	}
+	// 3. ���֓]���鏈��
+	else if (mCurrentAngle > mTargetAngle)
+	{
+		mCurrentAngle -= 3.0f; // �p�x��߂�
+
+		// ���W�������ɖ߂�
+		VECTOR pos = GetPosition();
+		pos.x += mMoveStepX;
+		SetPosition(pos);
+
+		if (mCurrentAngle <= mTargetAngle) {
+			mCurrentAngle = mTargetAngle;
+		}
+	}
 }
