@@ -7,36 +7,44 @@
 #include <cmath>
 #include <algorithm>
 
-void CollisionManager::Finalize() {
-	for (auto* collider : mColliders){
+void CollisionManager::Finalize() 
+{
+	// -- 当たり判定データのコンテナを解放 -- //
+	for (auto* collider : mColliders)
+	{
 		collider->ClearCollisions();
 	}
 
 	mColliders.clear();
 }
 
-void CollisionManager::Update() {
+void CollisionManager::Update() 
+{
 	// 前フレームの衝突結果をリセット
-	for (auto* collider : mColliders) {
+	for (auto* collider : mColliders) 
+	{
 		collider->ClearCollisions();
 	}
 
 	// 判定を行うColliderを選び、衝突結果を各自処理するコンテナに登録
 	for (size_t i = 0;
 		i < mColliders.size();
-		++i) {
+		++i)
+	{
 		Collider* a = mColliders[i];
 		
 		if (!a->IsEnabled()) continue;
 
 		for (size_t j = i + 1;
 			j < mColliders.size();
-			++j) {
+			++j) 
+		{
 			Collider* b = mColliders[j];
 
 			if (!b->IsEnabled()) continue;
 
-			if (CheckBoxBox(a, b)) {
+			if (CheckBoxBox(a, b)) 
+			{
 				a->AddCollision(b);
 				b->AddCollision(a);
 			}
@@ -44,25 +52,26 @@ void CollisionManager::Update() {
 	}
 }
 
-void CollisionManager::Register(
-	Collider* _collider
-) {
+void CollisionManager::Register(Collider* _collider) 
+{
 	if (_collider == nullptr) return;
 
-	for (auto* collider : mColliders) {
+	for (auto* collider : mColliders)
+	{
 		if (collider == _collider) return;
 	}
 
 	mColliders.push_back(_collider);
 }
 
-void CollisionManager::Unregister(
-	Collider* _collider
-) {
+void CollisionManager::Unregister(Collider* _collider)
+{
 	for (auto collider = mColliders.begin();
 		collider != mColliders.end();
-		++collider) {
-		if (*collider == _collider) {
+		++collider)
+	{
+		if (*collider == _collider)
+		{
 			mColliders.erase(collider);
 			return;
 		}
@@ -72,7 +81,9 @@ void CollisionManager::Unregister(
 bool CollisionManager::CheckBoxBox(
 	Collider* _boxA,
 	Collider* _boxB
-) const {
+) const 
+{
+	// -- Box対Boxの各衝突受付範囲を取得 -- //
 	const VECTOR posA =
 		_boxA->GetWorldPosition();
 
@@ -97,6 +108,7 @@ bool CollisionManager::CheckBoxBox(
 	const VECTOR maxB =
 		VAdd(posB, halfB);
 
+	// -- 衝突判定 -- //
 	if (maxA.x < minB.x ||
 		minA.x > maxB.x)
 	{
@@ -127,12 +139,14 @@ bool CollisionManager::GetBoxBoxCollision(
 	if (_a == nullptr || _b == nullptr) 
 		return false;
 
+	// -- Box対Boxの各衝突受付範囲を取得 -- //
 	const VECTOR posA = _a->GetWorldPosition();
 	const VECTOR posB = _b->GetWorldPosition();
 
 	const VECTOR halfA = _a->GetHalfSize();
 	const VECTOR halfB = _b->GetHalfSize();
 
+	// -- めり込んでる分の値を取得 -- //
 	const float overlapX =
 		(halfA.x + halfB.x) -
 		std::abs(posA.x - posB.x);

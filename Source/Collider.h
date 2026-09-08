@@ -27,8 +27,8 @@ public:
 
 	VECTOR GetWorldPosition() const;	// Collider中心座標(Transform + Offset)を返す
 
-	bool IsColliding() const;							// 何かしらに当たったら反応
-	bool IsColliding(Tag _tag) const;	// 指定タグのColliderに衝突時、反応
+	bool IsColliding() const;				// 何かしらに当たったら反応
+	bool IsColliding(Tag _tag) const;		// 指定タグのColliderに衝突時、反応
 	Object2D* GetCollision(Tag _tag) const;	// 指定タグの衝突したGameObjectを返す
 
 	// -- 有効フラグのアクセサ -- //

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Object2D.h"
 
 class Collider;
@@ -14,20 +14,18 @@ public:
 
 private:
 	void Move();
-	void ResolveStageCollision();
+	void ResolveStageCollision();	// ã‚¹ãƒ†ãƒ¼ã‚¸ã¨ã®è¡çªåˆ¤å®šã‚’å—ã‘å–ã‚Šã€ç§»å‹•ã‚’åˆ¶é™ã™ã‚‹å‡¦ç†
 
 private:
 	Collider* mpCollider;
 
 	float mfSpeed = 10.0f;
 
-private:
-	float mCurrentAngle = 0.0f; // ¡‚ÌŠp“xi“x”–@F0?360j
-	float mTargetAngle = 0.0f;  // –Úw‚·Šp“x
+	float mCurrentAngle = 0.0f; // ï¿½ï¿½ï¿½ÌŠpï¿½xï¿½iï¿½xï¿½ï¿½ï¿½@ï¿½F0?360ï¿½j
+	float mTargetAngle = 0.0f;  // ï¿½Úwï¿½ï¿½ï¿½pï¿½x
 
-	const float BLOCK_SIZE = 100.0f; // ƒuƒƒbƒN‚ÌƒTƒCƒYi‰¼’èj
-	float mMoveStepX = 0.0f; // ˆÚ“®ƒXƒeƒbƒvi‰¼’èj
+	const float BLOCK_SIZE = 100.0f; // ï¿½uï¿½ï¿½ï¿½bï¿½Nï¿½ÌƒTï¿½Cï¿½Yï¿½iï¿½ï¿½ï¿½ï¿½j
+	float mMoveStepX = 0.0f; // ï¿½Ú“ï¿½ï¿½Xï¿½eï¿½bï¿½vï¿½iï¿½ï¿½ï¿½ï¿½j
 
 	void Rotate();
-
 };
