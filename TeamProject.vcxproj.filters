@@ -99,6 +99,9 @@
     <ClCompile Include="Source\StageBlock.cpp">
       <Filter>ソース ファイル\Obj</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Gravity.cpp">
+      <Filter>ソース ファイル\Module</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GamePad.h">
@@ -151,6 +154,9 @@
     </ClInclude>
     <ClInclude Include="Source\StageBlock.h">
       <Filter>ヘッダー ファイル\Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gravity.h">
+      <Filter>ヘッダー ファイル\Module</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
