@@ -1,5 +1,8 @@
-#pragma once
+﻿#pragma once
 
+/* memo : 
+* ゲームの重要な各種値の設定クラス
+*/
 class GameConfig
 {
 public:

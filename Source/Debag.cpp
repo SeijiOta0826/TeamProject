@@ -1,9 +1,12 @@
-#include "Debag.h"
+﻿#include "Debag.h"
 
 #include "ScreenConfig.h"
 #include "GameConfig.h"
 
-void Debag::Draw()
+bool Debug::mbEnable = true;
+std::vector<std::string> Debug::mTexts;
+
+void Debug::Draw()
 {
 	if (!mbEnable)
 		return;
@@ -13,10 +16,20 @@ void Debag::Draw()
 	DrawGameTime();
 	DrawTexts();
 
-	mTexts.clear();
+	mTexts.clear();	// 文字列コンテナの初期化(毎フレーム更新)
 }
 
-void Debag::DrawGrid()
+void Debug::Toggle()
+{
+	mbEnable = !mbEnable;
+}
+
+bool Debug::IsEnable()
+{
+	return mbEnable;
+}
+
+void Debug::DrawGrid()
 {
 	constexpr int GRID_SIZE =
 		static_cast<int>(GameConfig::CELL_SIZE);
@@ -55,17 +68,17 @@ void Debag::DrawGrid()
 	}
 }
 
-void Debag::DrawColliders()
+void Debug::DrawColliders()
 {
 	// Collider描画
 }
 
-void Debag::DrawGameTime()
+void Debug::DrawGameTime()
 {
 	// 経過時間描画
 }
 
-void Debag::DrawTexts()
+void Debug::DrawTexts()
 {
 	// Print()で登録された文字列を描画
 	constexpr int START_X = 10;

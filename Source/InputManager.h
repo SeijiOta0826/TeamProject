@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "Keyboard.h"
 #include "Mouse.h"
@@ -26,6 +26,24 @@ enum class Axis {
 
 	Max,
 };
+
+/* memo : 
+* Stateの指定で入力状態を取得できるクラス。
+* 従来の入力処理は、
+*	INPUT_KEY_SPACEや
+* 以下使用例
+* 
+* Player.cpp
+* VECTOR input;
+* input.x = InputManager::GetInstance().GetButton(Axis::MoveX);
+* 
+* Player.cpp
+* bool bJumpFlag = InputManager::GetInstance().IsButtonDown(Button::Jump);
+* 
+* Ex.理解できるものへ
+* これだけSingletonパターンでキモイので、
+* いつか余力あるとき静的メンバ関数にします
+*/
 
 class InputManager
 {

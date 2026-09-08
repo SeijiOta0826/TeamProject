@@ -10,6 +10,7 @@ Scene::Scene()
 
 Scene::~Scene()
 {
+	// -- 所有するポインタの解放 -- //
 	delete mpObjectManager;
 	mpObjectManager = nullptr;
 
@@ -18,7 +19,17 @@ Scene::~Scene()
 }
 
 void Scene::Finalize() {
-	mpCollisionManager->Finalize();
+	// -- CollisionManagerに登録されているCollider群の解放 -- //
+	if (mpCollisionManager != nullptr)
+	{
+		mpCollisionManager->Finalize();
+	}
+
+	// -- ObjectManagerの所有するObject群の解放 -- //
+	if (mpObjectManager != nullptr)
+	{
+		mpObjectManager->Clear();
+	}
 }
 
 void Scene::Update(float _deltaTime)

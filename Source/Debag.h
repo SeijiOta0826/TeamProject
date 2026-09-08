@@ -1,16 +1,31 @@
-#pragma once
+﻿#pragma once
 #include <DxLib.h>
 #include <sstream>
 #include <vector>
 
-class Debag
+/* memo : 
+* デバック用の文言や、グリッド線、当たり判定の視覚化に用いるクラス。
+* TitleSceneや、ResultSceneではあまり使わないことを見越して、静的メンバ関数で構成。
+* 以下使用例、
+* 
+* GameScene.cpp
+* Debag::Print("Playerの座標 : " , mpPlayer->GetPosition);
+* 
+* Player.cpp
+* Debag::Print("衝突判定 : " , mpCollider->IsColliding());
+* 
+* Print関数は、int,float,string,char,VECTORなどの様々な型を引数に設定可能。
+* 不便に感じる部分があれば太田が対応します
+*/
+
+class Debug
 {
 public:
-	Debag() = default;
-	~Debag() = default;
+	Debug() = default;
+	~Debug() = default;
 
-	static void Draw();
-	static void Toggle();
+	static void Draw();		// 描画処理(main.cppの描画処理あたりに置く)
+	static void Toggle();	// デバックモードの切り替え
 
 	static bool IsEnable();
 
@@ -34,7 +49,6 @@ private:
 	static void DrawTexts();
 
 private:
-	static bool mbEnable;
-
-	static std::vector<std::string> mTexts;
+	static bool mbEnable;						// デバックモードのON / OFFを示す
+	static std::vector<std::string> mTexts;		// Print()で指定された文字列のコンテナ
 };

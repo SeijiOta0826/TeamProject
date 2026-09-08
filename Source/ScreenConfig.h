@@ -1,5 +1,8 @@
 ﻿#pragma once
 
+/* memo : 
+* 画面サイズの設定クラス
+*/
 class ScreenConfig
 {
 public:

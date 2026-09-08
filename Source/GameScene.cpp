@@ -12,8 +12,7 @@ void GameScene::Initialize()
 {
     // 初期化処理
     auto player =
-        Master::mpSceneManager
-        ->GetCurrentScene()
+       this
         ->GetObjectManager()
         ->CreateObject<Player>(
             "Resource/Obj/test_player.jpg",
@@ -21,8 +20,7 @@ void GameScene::Initialize()
         );
 
     auto block =
-        Master::mpSceneManager
-        ->GetCurrentScene()
+        this
         ->GetObjectManager()
         ->CreateObject<StageBlock>(
             "Resource/Obj/test_field.jpg",

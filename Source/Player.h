@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Object2D.h"
 
 class Collider;
@@ -14,10 +14,10 @@ public:
 
 private:
 	void Move();
-	void ResolveStageCollision();
+	void ResolveStageCollision();	// ステージとの衝突判定を受け取り、移動を制限する処理
 
 private:
-	Collider* mpCollider;
-
-	float mfSpeed = 10.0f;
+	Collider* mpCollider;		// このオブジェクトが使用するコライダー
+		
+	float mfSpeed = 10.0f;		// 移動スピード(移動はPlayerくらいしかしないかな...と思ったのでPlayer持ち)
 };
