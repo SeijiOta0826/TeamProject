@@ -15,7 +15,7 @@ void GameScene::Initialize()
        this
         ->GetObjectManager()
         ->CreateObject<Player>(
-            "Resource/Obj/test_player.jpg",
+            "Resource/Obj/test_player.png",
             VGet(0.0f, 0.0f, 0.0f)
         );
 
@@ -23,7 +23,7 @@ void GameScene::Initialize()
         this
         ->GetObjectManager()
         ->CreateObject<StageBlock>(
-            "Resource/Obj/test_field.jpg",
+            "Resource/Obj/test_field.png",
             VGet(300.0f, 300.0f, 0.0f)
         );
 }
