@@ -1,5 +1,6 @@
-#pragma once
+ï»¿#pragma once
 #include "Object2D.h"
+#include "GameConfig.h"
 
 class Collider;
 class Gravity; // ’Ç‰Á
@@ -15,7 +16,7 @@ public:
 
 private:
 	void Move();
-	void ResolveStageCollision();
+	void ResolveStageCollision();	// ã‚¹ãƒ†ãƒ¼ã‚¸ã¨ã®è¡çªåˆ¤å®šã‚’å—ã‘å–ã‚Šã€ç§»å‹•ã‚’åˆ¶é™ã™ã‚‹å‡¦ç†
 
 private:
 	Collider* mpCollider;
@@ -24,13 +25,11 @@ private:
 
 	float mfSpeed = 10.0f;
 
-private:
-	float mCurrentAngle = 0.0f; // ¡‚ÌŠp“xi“x”–@F0?360j
-	float mTargetAngle = 0.0f;  // –Úw‚·Šp“x
+	float mCurrentAngle = 0.0f; // ç¾åœ¨ã®è§’åº¦
+	float mTargetAngle = 0.0f;  // ç›®æ¨™ã®è§’åº¦
 
-	const float BLOCK_SIZE = 100.0f; // ƒuƒƒbƒN‚ÌƒTƒCƒYi‰¼’èj
-	float mMoveStepX = 0.0f; // ˆÚ“®ƒXƒeƒbƒvi‰¼’èj
+	const float BLOCK_SIZE = GameConfig::CELL_SIZE;
+	float mMoveStepX = 0.0f;	// å›è»¢ã«ä¼´ã†ç§»å‹•å€¤
 
 	void Rotate();
-
 };

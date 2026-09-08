@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Source\Collider.cpp" />
     <ClCompile Include="Source\CollisionManager.cpp" />
+    <ClCompile Include="Source\Debag.cpp" />
     <ClCompile Include="Source\GamePad.cpp" />
     <ClCompile Include="Source\GameScene.cpp" />
     <ClCompile Include="Source\Gravity.cpp" />
@@ -40,6 +41,8 @@
   <ItemGroup>
     <ClInclude Include="Source\Collider.h" />
     <ClInclude Include="Source\CollisionManager.h" />
+    <ClInclude Include="Source\Debag.h" />
+    <ClInclude Include="Source\GameConfig.h" />
     <ClInclude Include="Source\GamePad.h" />
     <ClInclude Include="Source\GameScene.h" />
     <ClInclude Include="Source\Gravity.h" />

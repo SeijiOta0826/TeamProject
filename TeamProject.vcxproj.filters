@@ -49,6 +49,9 @@
     <Filter Include="ソース ファイル\Module">
       <UniqueIdentifier>{4b613f5c-62dc-42a5-976e-8ff8e3cd146c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\System">
+      <UniqueIdentifier>{0ff01531-2269-46a4-bcb7-4399ab66fa8b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GamePad.cpp">
@@ -101,6 +104,8 @@
     </ClCompile>
     <ClCompile Include="Source\Gravity.cpp">
       <Filter>ソース ファイル\Module</Filter>
+    <ClCompile Include="Source\Debag.cpp">
+      <Filter>ソース ファイル\System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -157,6 +162,11 @@
     </ClInclude>
     <ClInclude Include="Source\Gravity.h">
       <Filter>ヘッダー ファイル\Module</Filter>
+    <ClInclude Include="Source\Debag.h">
+      <Filter>ヘッダー ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameConfig.h">
+      <Filter>ヘッダー ファイル\System</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
