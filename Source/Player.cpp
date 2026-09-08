@@ -1,6 +1,7 @@
 #include "Player.h"
 
 #include "Collider.h"
+#include "Gravity.h" // ï¿½Ç‰ï¿½
 #include "InputManager.h"
 
 #include "Master.h"
@@ -20,25 +21,42 @@ Player::Player(std::string filename, VECTOR initPos)
 	mpCollider->Initialize();
 
 	mpCollider->SetHalfSize(VGet(50.0f, 50.0f, 0.0f));
+
+	// ï¿½Ç‰ï¿½
+	mpGravity = new Gravity(this);
+	mpGravity->Initialize();
+}
+
+Player::~Player()
+{
+	delete mpGravity;
+	mpGravity = nullptr;
+
+	delete mpCollider;
+	mpCollider = nullptr;
 }
 
 void Player::Update(float _deltaTime)
 {
-	// ‰ñ“]E“]‚ª‚èˆ—
+
+	// ï¿½ï¿½]ï¿½Eï¿½]ï¿½ï¿½ï¿½èˆï¿½ï¿½
 	Rotate();
 
-	// “]‚ª‚Á‚Ä‚¢‚éÅ’†‚Í–îˆóƒL[‚È‚Ç‚Ì’ÊíˆÚ“®‚ğ~‚ß‚é
+	// ï¿½]ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½Å’ï¿½ï¿½Í–ï¿½ï¿½Lï¿½[ï¿½È‚Ç‚Ì’Êï¿½Ú“ï¿½ï¿½ï¿½ï¿½~ï¿½ß‚ï¿½
 	if (mCurrentAngle == mTargetAngle)
 	{
 		Move();
 	}
+
+	Move();
+	mpGravity->Update(_deltaTime); // ï¿½Ç‰ï¿½
 
 	ResolveStageCollision();
 }
 
 void Player::Draw()
 {
-	// “x”–@(0?360)‚ğƒ‰ƒWƒAƒ“‚É•ÏŠ·
+	// ï¿½xï¿½ï¿½ï¿½@(0?360)ï¿½ï¿½ï¿½ï¿½ï¿½Wï¿½Aï¿½ï¿½ï¿½É•ÏŠï¿½
 	float rad = mCurrentAngle * (3.14159265f / 180.0f);
 
 	VECTOR pos = GetPosition();
@@ -117,28 +135,28 @@ void Player::ResolveStageCollision()
 
 void Player::Rotate()
 {
-	// 1. Ã~’†i‰ñ“]‚µ‚Ä‚¢‚È‚¢j‚É“ü—Í‚ğó‚¯•t‚¯‚é
+	// 1. ï¿½Ã~ï¿½ï¿½ï¿½iï¿½ï¿½]ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½jï¿½É“ï¿½ï¿½Í‚ï¿½ï¿½ó‚¯•tï¿½ï¿½ï¿½ï¿½
 	if (mCurrentAngle == mTargetAngle)
 	{
-		// LƒL[‚Å‰E‚ÉƒSƒƒ“‚Æ1ƒuƒƒbƒN“]‚ª‚é
+		// Lï¿½Lï¿½[ï¿½Å‰Eï¿½ÉƒSï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1ï¿½uï¿½ï¿½ï¿½bï¿½Nï¿½]ï¿½ï¿½ï¿½ï¿½
 		if (CheckHitKey(KEY_INPUT_L)) {
 			mTargetAngle += 90.0f;
-			// 30ƒtƒŒ[ƒ€‚©‚¯‚Ä90“x‰ñ‚·‚Ì‚ÅA1ƒtƒŒ[ƒ€‚ ‚½‚è (BLOCK_SIZE / 30) i‚ß‚é
+			// 30ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½90ï¿½xï¿½ñ‚·‚Ì‚ÅA1ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (BLOCK_SIZE / 30) ï¿½iï¿½ß‚ï¿½
 			mMoveStepX = BLOCK_SIZE / 30.0f;
 		}
-		// JƒL[‚Å¶‚ÉƒSƒƒ“‚Æ1ƒuƒƒbƒN“]‚ª‚é
+		// Jï¿½Lï¿½[ï¿½Åï¿½ï¿½ÉƒSï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1ï¿½uï¿½ï¿½ï¿½bï¿½Nï¿½]ï¿½ï¿½ï¿½ï¿½
 		else if (CheckHitKey(KEY_INPUT_J)) {
 			mTargetAngle -= 90.0f;
 			mMoveStepX = -BLOCK_SIZE / 30.0f;
 		}
 	}
 
-	// 2. ‰E‚Ö“]‚ª‚éˆ—
+	// 2. ï¿½Eï¿½Ö“]ï¿½ï¿½ï¿½éˆï¿½ï¿½
 	if (mCurrentAngle < mTargetAngle)
 	{
-		mCurrentAngle += 3.0f; // Šp“x‚ği‚ß‚é
+		mCurrentAngle += 3.0f; // ï¿½pï¿½xï¿½ï¿½iï¿½ß‚ï¿½
 
-		// À•W‚à“¯‚Éi‚ß‚é
+		// ï¿½ï¿½ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Éiï¿½ß‚ï¿½
 		VECTOR pos = GetPosition();
 		pos.x += mMoveStepX;
 		SetPosition(pos);
@@ -147,12 +165,12 @@ void Player::Rotate()
 			mCurrentAngle = mTargetAngle;
 		}
 	}
-	// 3. ¶‚Ö“]‚ª‚éˆ—
+	// 3. ï¿½ï¿½ï¿½Ö“]ï¿½ï¿½ï¿½éˆï¿½ï¿½
 	else if (mCurrentAngle > mTargetAngle)
 	{
-		mCurrentAngle -= 3.0f; // Šp“x‚ğ–ß‚·
+		mCurrentAngle -= 3.0f; // ï¿½pï¿½xï¿½ï¿½ß‚ï¿½
 
-		// À•W‚à“¯‚É–ß‚·
+		// ï¿½ï¿½ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É–ß‚ï¿½
 		VECTOR pos = GetPosition();
 		pos.x += mMoveStepX;
 		SetPosition(pos);
