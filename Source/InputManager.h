@@ -58,7 +58,7 @@ public:
 		int mnPositiveKey = -1;
 		int mnNegativeKey = -1;
 
-		PadAxis padAxis;
+		PadAxis padAxis = PadAxis::None;
 	};
 
 	struct ButtonState {

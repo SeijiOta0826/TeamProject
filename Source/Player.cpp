@@ -1,6 +1,7 @@
 #include "Player.h"
 
 #include "Collider.h"
+#include "Gravity.h" // ’Ç‰Á
 #include "InputManager.h"
 
 #include "Master.h"
@@ -19,11 +20,25 @@ Player::Player(std::string filename, VECTOR initPos)
 	mpCollider->Initialize();
 
 	mpCollider->SetHalfSize(VGet(50.0f, 50.0f, 0.0f));
+
+	// ’Ç‰Á
+	mpGravity = new Gravity(this);
+	mpGravity->Initialize();
+}
+
+Player::~Player()
+{
+	delete mpGravity;
+	mpGravity = nullptr;
+
+	delete mpCollider;
+	mpCollider = nullptr;
 }
 
 void Player::Update(float _deltaTime)
 {
 	Move();
+	mpGravity->Update(_deltaTime); // ’Ç‰Á
 	ResolveStageCollision();
 }
 

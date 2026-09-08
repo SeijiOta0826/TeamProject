@@ -24,6 +24,7 @@
     <ClCompile Include="Source\Debag.cpp" />
     <ClCompile Include="Source\GamePad.cpp" />
     <ClCompile Include="Source\GameScene.cpp" />
+    <ClCompile Include="Source\Gravity.cpp" />
     <ClCompile Include="Source\InputManager.cpp" />
     <ClCompile Include="Source\Keyboard.cpp" />
     <ClCompile Include="Source\Main.cpp" />
@@ -44,6 +45,7 @@
     <ClInclude Include="Source\GameConfig.h" />
     <ClInclude Include="Source\GamePad.h" />
     <ClInclude Include="Source\GameScene.h" />
+    <ClInclude Include="Source\Gravity.h" />
     <ClInclude Include="Source\InputManager.h" />
     <ClInclude Include="Source\Keyboard.h" />
     <ClInclude Include="Source\Master.h" />

@@ -1,4 +1,4 @@
-#include "GamePad.h"
+﻿#include "GamePad.h"
 
 #include <DxLib.h>
 
