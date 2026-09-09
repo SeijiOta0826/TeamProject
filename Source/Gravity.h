@@ -1,4 +1,4 @@
-#pragma once // �ǉ�
+﻿#pragma once // 追加
 
 class Object2D;
 
