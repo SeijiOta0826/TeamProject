@@ -10,6 +10,8 @@ public:
 	~Texture();
 
 	void Draw();
+
+	void DrawAt(VECTOR centerPosition);
 	
 	// -- 座標アクセサ -- //
 	void SetPosition(VECTOR centerPosition){ mvPosition = centerPosition; }

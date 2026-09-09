@@ -47,6 +47,14 @@ void InputManager::InitializeButton() {
 		-1,
 		PAD_INPUT_5
 	};
+
+	// 追加
+	mButtonBindings[(int)Button::Transform] =
+	{
+		KEY_INPUT_E,
+		-1,
+		-1
+	};
 }
 
 void InputManager::InitializeAxis() {
