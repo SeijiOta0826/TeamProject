@@ -1,8 +1,10 @@
-#pragma once
+﻿#pragma once
 #include <DxLib.h>
 
 enum class PadAxis
 {
+	None,
+
 	LeftX,
 	LeftY,
 
@@ -34,8 +36,8 @@ private:
 	int mNowState = 0;
 	int mOldState = 0;
 
-	VECTOR mLeftStick;
-	VECTOR mRightStick;
+	VECTOR mLeftStick = VGet(0.0f, 0.0f, 0.0f);
+	VECTOR mRightStick = VGet(0.0f, 0.0f, 0.0f);
 
 	float mfLeftTrigger = 0.0f;
 	float mfRightTrigger = 0.0f;

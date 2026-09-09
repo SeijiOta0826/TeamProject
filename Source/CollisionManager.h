@@ -24,7 +24,7 @@ public:
 
 	void Update();
 
-	void DrawDebag() const;
+	// void DrawDebag() const;
 
 	bool GetBoxBoxCollision(
 		Collider* _a,
