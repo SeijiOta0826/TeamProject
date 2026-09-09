@@ -1,4 +1,4 @@
-#include "Gravity.h" // ’Ç‰Á
+ï»¿#include "Gravity.h" // è¿½åŠ 
 #include "Object2D.h"
 
 Gravity::Gravity(Object2D* _owner)
@@ -32,26 +32,26 @@ void Gravity::Update(float _deltaTime)
 		return;
 	}
 
-	// d—Í‰Á‘¬“x‚É‚æ‚Á‚Ä—Ž‰º‘¬“x‚ðŒvŽZ
+	// é‡åŠ›åŠ é€Ÿåº¦ã«ã‚ˆã£ã¦è½ä¸‹é€Ÿåº¦ã‚’è¨ˆç®—
 	mfVelocityY += mfGravity * _deltaTime;
 
-	// Œ»ÝˆÊ’u‚ðŽæ“¾
+	// ç¾åœ¨ä½ç½®ã‚’å–å¾—
 	VECTOR position = mpOwner->GetPosition();
 
-	// d—Í‚É‚æ‚éˆÚ“®—Ê‚ðŒvŽZ
+	// é‡åŠ›ã«ã‚ˆã‚‹ç§»å‹•é‡ã‚’è¨ˆç®—
 	float moveAmount = mfVelocityY * _deltaTime;
 
-	// 2DÀ•W‚Å‚ÍY‚ª‰º•ûŒü‚È‚Ì‚Å‰ÁŽZ
+	// 2Dåº§æ¨™ã§ã¯YãŒä¸‹æ–¹å‘ãªã®ã§åŠ ç®—
 	position.y += moveAmount;
 
-	// y = 0 ‚ð’n–Ê‚Æ‚µ‚ÄA‚»‚ê‚æ‚è‰º‚És‚©‚È‚¢‚æ‚¤‚É‚·‚é
+	// y = 0 ã‚’åœ°é¢ã¨ã—ã¦ã€ãã‚Œã‚ˆã‚Šä¸‹ã«è¡Œã‹ãªã„ã‚ˆã†ã«ã™ã‚‹
 	if (position.y >= 790.0f)
 	{
 		position.y = 790.0f;
 		mfVelocityY = 0.0f;
 	}
 
-	// Obj‚ÉÀ•W‚ð”½‰f
+	// Objã«åº§æ¨™ã‚’åæ˜ 
 	mpOwner->SetPosition(position);
 }
 
