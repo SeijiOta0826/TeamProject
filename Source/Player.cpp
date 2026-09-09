@@ -1,7 +1,7 @@
 ﻿#include "Player.h"
 
 #include "Collider.h"
-#include "Gravity.h" // �ǉ�
+#include "Gravity.h" 
 #include "InputManager.h"
 
 #include "Master.h"
@@ -49,6 +49,7 @@ void Player::Update(float _deltaTime)
 	}
 
 	Move();
+
 	mpGravity->Update(_deltaTime); // �ǉ�
 
 	ResolveStageCollision();
@@ -135,48 +136,42 @@ void Player::ResolveStageCollision()
 
 void Player::Rotate()
 {
-	// 1. �Î~���i��]���Ă��Ȃ����j�ɓ��͂��󂯕t����
-	if (mCurrentAngle == mTargetAngle)
+	//----1フレームあたりの回転角と移動量
+	// 例: 30フレームで90度・1ブロック分動かす場合
+	const float ROTATE_SPEED = 3.0f; //90f / 30f
+	const float MOVE_SPEED = BLOCK_SIZE / 30.0f; //1ブロック分 / 30フレーム
+
+	float angleDelta = 0.0f;
+	float moveDelta = 0.0f;
+
+	if (CheckHitKey(KEY_INPUT_L))
 	{
-		// L�L�[�ŉE�ɃS������1�u���b�N�]����
-		if (CheckHitKey(KEY_INPUT_L)) {
-			mTargetAngle += 90.0f;
-			// 30�t���[��������90�x�񂷂̂ŁA1�t���[�������� (BLOCK_SIZE / 30) �i�߂�
-			mMoveStepX = BLOCK_SIZE / 30.0f;
-		}
-		// J�L�[�ō��ɃS������1�u���b�N�]����
-		else if (CheckHitKey(KEY_INPUT_J)) {
-			mTargetAngle -= 90.0f;
-			mMoveStepX = -BLOCK_SIZE / 30.0f;
-		}
+		angleDelta = ROTATE_SPEED;
+		moveDelta = MOVE_SPEED;
 	}
 
-	// 2. �E�֓]���鏈��
-	if (mCurrentAngle < mTargetAngle)
+	else if (CheckHitKey(KEY_INPUT_J))
 	{
-		mCurrentAngle += 3.0f; // �p�x��i�߂�
+		angleDelta = -ROTATE_SPEED;
+		moveDelta = -MOVE_SPEED;
+	}
 
-		// ���W�������ɐi�߂�
+	//入力がある場合のみ回転する
+	if (angleDelta != 0.0f)
+	{
+		mCurrentAngle += angleDelta;
+
+		if (mCurrentAngle >= 360.0f)mCurrentAngle -= 360.0f;
+		if (mCurrentAngle < 0.0f)   mCurrentAngle += 360.0f;
+
+
 		VECTOR pos = GetPosition();
-		pos.x += mMoveStepX;
+		pos.x += moveDelta;
 		SetPosition(pos);
 
-		if (mCurrentAngle >= mTargetAngle) {
-			mCurrentAngle = mTargetAngle;
-		}
-	}
-	// 3. ���֓]���鏈��
-	else if (mCurrentAngle > mTargetAngle)
-	{
-		mCurrentAngle -= 3.0f; // �p�x��߂�
 
-		// ���W�������ɖ߂�
-		VECTOR pos = GetPosition();
-		pos.x += mMoveStepX;
-		SetPosition(pos);
-
-		if (mCurrentAngle <= mTargetAngle) {
-			mCurrentAngle = mTargetAngle;
-		}
 	}
+
+
 }
+
