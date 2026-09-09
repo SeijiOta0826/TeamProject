@@ -12,15 +12,18 @@
 #include "StageBlock.h"
 #include "Texture.h"
 
+#include "GameConfig.h"
+
 Player::Player(std::string filename, VECTOR initPos)
 	: Object2D(filename, initPos)
 {
 	SetTag(Tag::PLAYER);
+	mpTexture->SetSize(VGet(GameConfig::CELL_SIZE, GameConfig::CELL_SIZE, 0.0f));
 
 	mpCollider = new Collider(this);
 	mpCollider->Initialize();
 
-	mpCollider->SetHalfSize(VGet(50.0f, 50.0f, 0.0f));
+	mpCollider->SetHalfSize(VGet(GameConfig::CELL_SIZE / 2, GameConfig::CELL_SIZE / 2, 0.0f));
 
 	// �ǉ�
 	mpGravity = new Gravity(this);
@@ -64,8 +67,9 @@ void Player::Draw()
 
 	if (mpTexture != nullptr)
 	{
-		DrawRotaGraphF(pos.x, pos.y, 1.0, rad, mpTexture->GetHandle(), TRUE);
+		//DrawRotaGraphF(pos.x, pos.y, 1.0, rad, mpTexture->GetHandle(), TRUE);
 	}
+	Object2D::Draw();
 }
 
 void Player::Move()

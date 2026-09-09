@@ -41,9 +41,6 @@ public:
 	void SetTag(Tag _tag) { mTag = _tag; }
 	Tag GetTag() { return mTag; }
 
-	// -- テクスチャー(画像描画クラス)のアドレス取得 -- //
-	Texture* GetTexture() { return mpTexture; }
-
 protected:
 	Texture* mpTexture = nullptr;	// テクスチャー(画像描画クラス)のアドレス
 		

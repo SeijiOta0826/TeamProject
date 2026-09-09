@@ -102,8 +102,20 @@
     <ClCompile Include="Source\StageBlock.cpp">
       <Filter>ソース ファイル\Obj</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Debag.cpp">
+    <ClCompile Include="Source\Debug.cpp">
       <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gravity.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject.cpp">
+      <Filter>ソース ファイル\Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CsvLoader.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Stage.cpp">
+      <Filter>ソース ファイル\Obj</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -158,11 +170,23 @@
     <ClInclude Include="Source\StageBlock.h">
       <Filter>ヘッダー ファイル\Obj</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Debag.h">
+    <ClInclude Include="Source\Debug.h">
       <Filter>ヘッダー ファイル\System</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameConfig.h">
       <Filter>ヘッダー ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gravity.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject.h">
+      <Filter>ヘッダー ファイル\Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CsvLoader.h">
+      <Filter>ヘッダー ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Stage.h">
+      <Filter>ヘッダー ファイル\Obj</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

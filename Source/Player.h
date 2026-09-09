@@ -19,10 +19,9 @@ private:
 
 private:
 	Collider* mpCollider;		// このオブジェクトが使用するコライダー
-		
-	float mfSpeed = 10.0f;		// 移動スピード(移動はPlayerくらいしかしないかな...と思ったのでPlayer持ち)
+	Gravity* mpGravity;			// 	
 
-	Gravity* mpGravity; // �ǉ�
+	float mfSpeed = 10.0f;		// 移動スピード(移動はPlayerくらいしかしないかな...と思ったのでPlayer持ち)
 
 	float mCurrentAngle = 0.0f; // ���̊p�x�i�x���@�F0?360�j
 	float mTargetAngle = 0.0f;  // �ڎw���p�x

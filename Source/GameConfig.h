@@ -6,5 +6,5 @@
 class GameConfig
 {
 public:
-	static constexpr float CELL_SIZE = 50.0f;
+	static constexpr float CELL_SIZE = 80.0f;
 };

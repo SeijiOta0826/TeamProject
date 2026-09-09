@@ -18,9 +18,6 @@ public:
 	// -- サイズ設定 -- //
 	void SetSize(VECTOR _settingSize) { mvSize = _settingSize; }
 
-	float GetSizeX() { return mfSizeX; }
-	float GetSizeY() { return mfSizeY; }
-
 	// -- ハンドル取得 -- //
 	int GetHandle() { return mnHandle; }
 
@@ -32,7 +29,4 @@ private:
 
 	VECTOR mvPosition;			// 描画画像の中心座標
 	VECTOR mvSize;				// 画像の大きさ
-	float mfSizeX = 1.0f;		// 画像の幅
-	float mfSizeY = 1.0f;		// 画像の高さ
-
 };

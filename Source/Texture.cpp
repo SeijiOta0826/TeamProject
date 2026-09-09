@@ -1,49 +1,65 @@
-#include "Texture.h"
+ï»¿#include "Texture.h"
 
 #include <DxLib.h>
 
-// -- ‰æ‘œƒ[ƒh‚Ég—p -- //
+// -- ç”»åƒãƒ­ãƒ¼ãƒ‰æ™‚ã«ä½¿ç”¨ -- //
 #include "Master.h"
 #include "ResourceManager.h"
 
 Texture::Texture(std::string filename, VECTOR centerPosition)
 	:mvPosition(centerPosition)
 {
-	// -- ‰æ‘œ‚Ìƒ[ƒh -- //
+	// -- ç”»åƒã®ãƒ­ãƒ¼ãƒ‰ -- //
 	mnHandle = Master::mpResource->LoadGraphics(filename);
 
-	// -- ‰æ‘œ‚ÌƒTƒCƒYæ“¾ -- //
+	// -- ç”»åƒã®ã‚µã‚¤ã‚ºå–å¾— -- //
 	int size_x;
 	int size_y;
 	GetGraphSize(mnHandle, &size_x, &size_y);
 	
-	mfSizeX = static_cast<float>(size_x);
-	mfSizeY = static_cast<float>(size_y);
+	mvSize.x = static_cast<float>(size_x);
+	mvSize.y = static_cast<float>(size_y);
 }
 
 Texture::~Texture()
 {
-	DeleteGraph(mnHandle);	// “Ç‚İ‚ñ‚¾‰æ‘œ‚Ì”jŠü
+	DeleteGraph(mnHandle);	// èª­ã¿è¾¼ã‚“ã ç”»åƒã®ç ´æ£„
 }
 
 void Texture::Draw()
 {
-	VECTOR topLeft = CalculateTopLeftPosition();
+	/*VECTOR topLeft = CalculateTopLeftPosition();
 
 	DrawGraph(
 		static_cast<int>(topLeft.x),
 		static_cast<int>(topLeft.y),
 		mnHandle,
 		TRUE
+	);*/
+
+	VECTOR topLeft = CalculateTopLeftPosition();
+	VECTOR bottomRight = VGet(
+		topLeft.x + mvSize.x,
+		topLeft.y + mvSize.y,
+		0.0f
+	);
+
+	DrawExtendGraph(
+		static_cast<int>(topLeft.x),
+		static_cast<int>(topLeft.y),
+		static_cast<int>(bottomRight.x),
+		static_cast<int>(bottomRight.y),
+		mnHandle,
+		TRUE
 	);
 }
 
-// ’†SÀ•W‚ğADrawGraph—p‚É¶ãÀ•W‚É•ÏŠ·‚·‚é
+// ä¸­å¿ƒåº§æ¨™ã‚’ã€DrawGraphç”¨ã«å·¦ä¸Šåº§æ¨™ã«å¤‰æ›ã™ã‚‹
 VECTOR Texture::CalculateTopLeftPosition()
 {
 	return VGet(
-		mvPosition.x - (mfSizeX / 2.0f),
-		mvPosition.y - (mfSizeY / 2.0f),
+		mvPosition.x - (mvSize.x / 2.0f),
+		mvPosition.y - (mvSize.y / 2.0f),
 		mvPosition.z
 	);
 }
