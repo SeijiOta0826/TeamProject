@@ -3,7 +3,7 @@
 #include <array>
 
 class Collider;
-class Gravity; // �ǉ�
+class Gravity; // 追加
 
 class Player : public Object2D
 {
@@ -24,28 +24,21 @@ private:
 	float mfSpeed = 10.0f;		// 移動スピード(移動はPlayerくらいしかしないかな...と思ったのでPlayer持ち)
 	void ResolveStageCollision();
 	
-	// �ό`��ʂ�`��
+	// 変形画面を描画
 	void DrawTransformUI();
 	void UpdateTransformUI();
 
-	// �ό`���Collider���X�V
+	// 変形後のColliderを更新
 	void UpdateTransformCollider();
 
 private:
 	std::array<Collider*, 9> mColliders;
 
-	Gravity* mpGravity; // �ǉ�
+	Gravity* mpGravity; // 追加
 
-	float mCurrentAngle = 0.0f; // ���̊p�x�i�x���@�F0?360�j
-	float mTargetAngle = 0.0f;  // �ڎw���p�x
+	bool mbIsTransforming = false; // 追加
 
-	const float BLOCK_SIZE = 100.0f; // �u���b�N�̃T�C�Y�i����j
-	float mMoveStepX = 0.0f; // �ړ��X�e�b�v�i����j
-
-	void Rotate();
-	bool mbIsTransforming = false; // �ǉ�
-
-	// 3�~3�̌`��f�[�^
+	// 3×3の形状データ
 	bool mShape[3][3] = {};
 
 	float mfSpeed = 10.0f;

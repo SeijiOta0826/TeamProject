@@ -1,18 +1,18 @@
-#include "Texture.h"
+ï»¿#include "Texture.h"
 
 #include <DxLib.h>
 
-// -- ‰æ‘œƒ[ƒh‚Ég—p -- //
+// -- ç”»åƒãƒ­ãƒ¼ãƒ‰æ™‚ã«ä½¿ç”¨ -- //
 #include "Master.h"
 #include "ResourceManager.h"
 
 Texture::Texture(std::string filename, VECTOR centerPosition)
 	:mvPosition(centerPosition)
 {
-	// -- ‰æ‘œ‚Ìƒ[ƒh -- //
+	// -- ç”»åƒã®ãƒ­ãƒ¼ãƒ‰ -- //
 	mnHandle = Master::mpResource->LoadGraphics(filename);
 
-	// -- ‰æ‘œ‚ÌƒTƒCƒYæ“¾ -- //
+	// -- ç”»åƒã®ã‚µã‚¤ã‚ºå–å¾— -- //
 	int size_x;
 	int size_y;
 	GetGraphSize(mnHandle, &size_x, &size_y);
@@ -23,7 +23,7 @@ Texture::Texture(std::string filename, VECTOR centerPosition)
 
 Texture::~Texture()
 {
-	DeleteGraph(mnHandle);	// “Ç‚İ‚ñ‚¾‰æ‘œ‚Ì”jŠü
+	DeleteGraph(mnHandle);	// èª­ã¿è¾¼ã‚“ã ç”»åƒã®ç ´æ£„
 }
 
 void Texture::Draw()
@@ -54,7 +54,7 @@ void Texture::DrawAt(VECTOR centerPosition)
 	);
 }
 
-// ’†SÀ•W‚ğADrawGraph—p‚É¶ãÀ•W‚É•ÏŠ·‚·‚é
+// ä¸­å¿ƒåº§æ¨™ã‚’ã€DrawGraphç”¨ã«å·¦ä¸Šåº§æ¨™ã«å¤‰æ›ã™ã‚‹
 VECTOR Texture::CalculateTopLeftPosition()
 {
 	return VGet(

@@ -18,7 +18,7 @@ Player::Player(std::string filename, VECTOR initPos)
 {
 	SetTag(Tag::PLAYER);
 
-	// 3�~3 = 9��Collider���쐬
+	// 3×3 = 9個のColliderを作成
 	for (int i = 0; i < 9; i++)
 	{
 		mColliders[i] = new Collider(this);
@@ -29,14 +29,14 @@ Player::Player(std::string filename, VECTOR initPos)
 		mColliders[i]->SetEnabled(false);
 	}
 
-	// ������Ԃ͒�����1�u���b�N�����L��
+	// 初期状態は中央の1ブロックだけ有効
 	mColliders[4]->SetEnabled(true);
 
-	// �ǉ�
+	// 追加
 	mpGravity = new Gravity(this);
 	mpGravity->Initialize();
 
-	// �����`��
+	// 初期形状
 	mShape[1][1] = true;
 
 	UpdateTransformCollider();
@@ -61,28 +61,13 @@ Player::~Player()
 
 void Player::Update(float _deltaTime)
 {
-
-	// ��]�E�]���菈��
-	Rotate();
-
-	// �]�����Ă���Œ��͖��L�[�Ȃǂ̒ʏ�ړ����~�߂�
-	if (mCurrentAngle == mTargetAngle)
-	{
-		Move();
-	}
-
-	Move();
-
-	mpGravity->Update(_deltaTime); // �ǉ�
-
-	ResolveStageCollision();
-	// E�L�[����������ό`���[�h�ɓ���
+	// Eキーを押したら変形モードに入る
 	if (InputManager::GetInstance().GetButtonDown(Button::Transform))
 	{
 		mbIsTransforming = true;
 	}
 
-	// �ό`�����ǂ����œ��͂�؂�ւ���
+	// 変形中かどうかで入力を切り替える
 	if (mbIsTransforming)
 	{
 		UpdateTransformUI();
@@ -91,39 +76,31 @@ void Player::Update(float _deltaTime)
 	{
 		Move();
 
-		// �ʏ펞�����d�͂�����
+		// 通常時だけ重力を処理
 		mpGravity->Update(_deltaTime);
 
-		// StageBlock�Ƃ̓����蔻��
+		// StageBlockとの当たり判定
 		ResolveStageCollision();
 	}
 }
 
 void Player::Draw()
 {
-	// �x���@(0?360)�����W�A���ɕϊ�
-	float rad = mCurrentAngle * (3.14159265f / 180.0f);
-
-	VECTOR pos = GetPosition();
-
-	if (mpTexture != nullptr)
-	{
-		DrawRotaGraphF(pos.x, pos.y, 1.0, rad, mpTexture->GetHandle(), TRUE);
-	// Player�{��
+	// Player本体
 	Object2D::Draw();
 
-	// �ǉ����ꂽ�u���b�N��`��
+	// 追加されたブロックを描画
 	for (int y = 0; y < 3; y++)
 	{
 		for (int x = 0; x < 3; x++)
 		{
-			// ������Player�{�̂��`�悳��Ă���̂Ŕ�΂�
+			// 中央はPlayer本体が描画されているので飛ばす
 			if (x == 1 && y == 1)
 			{
 				continue;
 			}
 
-			// OFF�̃}�X�͕`�悵�Ȃ�
+			// OFFのマスは描画しない
 			if (!mShape[y][x])
 			{
 				continue;
@@ -136,7 +113,7 @@ void Player::Draw()
 			position.x += (x - 1) * blockSize;
 			position.y += (y - 1) * blockSize;
 
-			// Player�Ɠ����摜��`��
+			// Playerと同じ画像を描画
 			Texture* texture = GetTexture();
 
 			if (texture != nullptr)
@@ -147,7 +124,7 @@ void Player::Draw()
 		}
 	}
 
-	// �ό`���
+	// 変形画面
 	if (mbIsTransforming)
 	{
 		DrawTransformUI();
@@ -247,7 +224,7 @@ void Player::DrawTransformUI()
 	const int startX = (screenWidth - gridSize) / 2;
 	const int startY = (screenHeight - gridSize) / 2;
 
-	// �w�i
+	// 背景
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 150);
 
 	DrawBox(
@@ -305,7 +282,7 @@ void Player::Rotate()
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
-	// 3�~3
+	// 3×3
 	for (int y = 0; y < 3; y++)
 	{
 		for (int x = 0; x < 3; x++)
@@ -337,7 +314,7 @@ void Player::Rotate()
 				TRUE
 			);
 
-			// �g
+			// 枠
 			DrawBox(
 				left,
 				top,
@@ -352,7 +329,7 @@ void Player::Rotate()
 	DrawString(
 		startX,
 		startY - 40,
-		"�ό`",
+		"変形",
 		GetColor(255, 255, 255)
 	);
 }
@@ -373,29 +350,29 @@ void Player::UpdateTransformUI()
 	const int startX = (screenWidth - gridSize) / 2;
 	const int startY = (screenHeight - gridSize) / 2;
 
-	// �}�E�X��3�~3�͈͓̔��ɂ��邩
+	// マウスが3×3の範囲内にあるか
 	if (mouseX >= startX &&
 		mouseX < startX + gridSize &&
 		mouseY >= startY &&
 		mouseY < startY + gridSize)
 	{
-		// ����ځE���s�ڂ��N���b�N�������v�Z
+		// 何列目・何行目をクリックしたか計算
 		int cellX = (mouseX - startX) / cellSize;
 		int cellY = (mouseY - startY) / cellSize;
 
-		// ���N���b�N���ꂽ��ON/OFF�؂�ւ�
+		// 左クリックされたらON/OFF切り替え
 		if (InputManager::GetInstance().GetMouse().IsDown(MOUSE_INPUT_LEFT))
 		{
 			mShape[cellY][cellX] = !mShape[cellY][cellX];
 		}
 	}
 
-	// Enter�ŕό`���m��
+	// Enterで変形を確定
 	if (InputManager::GetInstance().GetButtonDown(Button::Confirm))
 	{
 		UpdateTransformCollider();
 
-		// �ό`�ɂ���đ傫���Ȃ����ꍇ�̂߂荞�ݖh�~
+		// 変形によって大きくなった場合のめり込み防止
 		VECTOR position = GetPosition();
 		position.y -= 10.0f;
 		SetPosition(position);
@@ -421,7 +398,7 @@ void Player::UpdateTransformCollider()
 				continue;
 			}
 
-			// �I������Ă���}�X����Collider��L���ɂ���
+			// 選択されているマスだけColliderを有効にする
 			collider->SetEnabled(mShape[y][x]);
 
 			if (!mShape[y][x])
@@ -429,14 +406,14 @@ void Player::UpdateTransformCollider()
 				continue;
 			}
 
-			// 3�~3�̒��S��Player�̈ʒu�ɂ���
+			// 3×3の中心をPlayerの位置にする
 			float offsetX =
 				(x - 1) * blockSize;
 
 			float offsetY =
 				(y - 1) * blockSize;
 
-			// Collider���e�}�X�̈ʒu�ֈړ�
+			// Colliderを各マスの位置へ移動
 			collider->SetOffset(
 				VGet(
 					offsetX,
@@ -445,7 +422,7 @@ void Player::UpdateTransformCollider()
 				)
 			);
 
-			// 1�u���b�N����Collider
+			// 1ブロック分のCollider
 			collider->SetHalfSize(
 				VGet(
 					blockSize / 2.0f,
