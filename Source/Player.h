@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "Object2D.h"
+#include <array>
 
 class Collider;
 class Gravity; // �ǉ�
@@ -21,6 +22,17 @@ private:
 	Collider* mpCollider;		// このオブジェクトが使用するコライダー
 		
 	float mfSpeed = 10.0f;		// 移動スピード(移動はPlayerくらいしかしないかな...と思ったのでPlayer持ち)
+	void ResolveStageCollision();
+	
+	// �ό`��ʂ�`��
+	void DrawTransformUI();
+	void UpdateTransformUI();
+
+	// �ό`���Collider���X�V
+	void UpdateTransformCollider();
+
+private:
+	std::array<Collider*, 9> mColliders;
 
 	Gravity* mpGravity; // �ǉ�
 
@@ -31,4 +43,10 @@ private:
 	float mMoveStepX = 0.0f; // �ړ��X�e�b�v�i����j
 
 	void Rotate();
+	bool mbIsTransforming = false; // �ǉ�
+
+	// 3�~3�̌`��f�[�^
+	bool mShape[3][3] = {};
+
+	float mfSpeed = 10.0f;
 };

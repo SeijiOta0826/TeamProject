@@ -38,6 +38,22 @@ void Texture::Draw()
 	);
 }
 
+void Texture::DrawAt(VECTOR centerPosition)
+{
+	VECTOR topLeft = VGet(
+		centerPosition.x - (mfSizeX / 2.0f),
+		centerPosition.y - (mfSizeY / 2.0f),
+		centerPosition.z
+	);
+
+	DrawGraph(
+		static_cast<int>(topLeft.x),
+		static_cast<int>(topLeft.y),
+		mnHandle,
+		TRUE
+	);
+}
+
 // 中心座標を、DrawGraph用に左上座標に変換する
 VECTOR Texture::CalculateTopLeftPosition()
 {

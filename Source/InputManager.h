@@ -14,6 +14,8 @@ enum class Button {
 	Attack,
 	Dash,
 
+	Transform, // 追加
+
 	Max
 };
 
@@ -83,6 +85,8 @@ public:
 	bool GetButtonUp(Button _button) const;
  
 	float GetAxis(Axis _axis) const;
+
+	Mouse& GetMouse() { return mMouse; }
 
 private:
 	void UpdateButtons();
