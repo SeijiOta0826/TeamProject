@@ -1,4 +1,6 @@
-﻿#include "Player.h"
+﻿#include <cmath>  //回転処理用
+
+#include "Player.h"
 #include "Texture.h"
 
 #include "Collider.h"
@@ -80,12 +82,23 @@ void Player::Update(float _deltaTime)
 	if (mbIsTransforming)
 	{
 		UpdateTransformUI();
+		return; //変形中は移動や重力処理を行わない
 	}
-	else
+	//else
+	//{
+	//	Move();
+
+	//	// 通常時だけ重力を処理
+	//	mpGravity->Update(_deltaTime);
+
+	//	// StageBlockとの当たり判定
+	//	ResolveStageCollision();
+	//}
+	Rotate();//回転処理
+
+	if (!mIsRolling)
 	{
 		Move();
-
-		// 通常時だけ重力を処理
 		mpGravity->Update(_deltaTime);
 
 		// StageBlockとの当たり判定
@@ -97,37 +110,36 @@ void Player::Update(float _deltaTime)
 
 void Player::Draw()
 {
-	// 追加されたブロックを描画
-	for (int y = 0; y < 3; y++)
+	float rad = mCurrentAngle * (3.14159265f / 180.0f);
+	VECTOR centerPos = GetPosition();
+	const float blockSize = 100.0f;
+
+
+	if (mpTexture != nullptr)
 	{
-		for (int x = 0; x < 3; x++)
+		for (int y = 0; y < 3; y++)
 		{
-			// 中央はPlayer本体が描画されているので飛ばす
-			if (x == 1 && y == 1)
+			for (int x = 0; x < 3; x++)
 			{
-				continue;
-			}
+				if (!mShape[y][x]) continue; // OFFのマスは描画しない
 
-			// OFFのマスは描画しない
-			if (!mShape[y][x])
-			{
-				continue;
-			}
+				// 中央(1, 1)からの相対座標
+				float localX = (x - 1) * blockSize;
+				float localY = (y - 1) * blockSize;
 
-			const float blockSize = 100.0f;
+				// 2D回転行列で角度radに合わせて回転
+				float rotatedX = localX * std::cos(rad) - localY * std::sin(rad);
+				float rotatedY = localX * std::sin(rad) + localY * std::cos(rad);
 
-			VECTOR position = GetPosition();
-
-			position.x += (x - 1) * blockSize;
-			position.y += (y - 1) * blockSize;
-
-			// Playerと同じ画像を描画
-			Texture* texture = mpTexture;
-
-			if (texture != nullptr)
-			{
-				texture->SetPosition(position);
-				texture->Draw();
+				// 中心座標 + 回転後オフセット に描画
+				DrawRotaGraphF(
+					centerPos.x + rotatedX,
+					centerPos.y + rotatedY,
+					1.0,
+					rad,
+					mpTexture->GetHandle(),
+					TRUE
+				);
 			}
 		}
 	}
@@ -339,3 +351,111 @@ void Player::UpdateTransformCollider()
 		}
 	}
 }
+
+//=========回転処理=========
+//=========回転処理=========
+void Player::Rotate()
+{
+	// 1. 押されているキーのチェック
+	bool isPressL = (CheckHitKey(KEY_INPUT_L) != 0);
+	bool isPressJ = (CheckHitKey(KEY_INPUT_J) != 0);
+
+	// まだ転がり始めていない時、キーが押されたら方向と開始位置を記録
+	if (!mIsRolling)
+	{
+		if (isPressL)
+		{
+			mDirection = 1.0f;       // 右
+			mIsRolling = true;
+			mRollTimer = 0;
+			mStartPos = GetPosition();
+			mStartAngle = mCurrentAngle;
+		}
+		else if (isPressJ)
+		{
+			mDirection = -1.0f;      // 左
+			mIsRolling = true;
+			mRollTimer = 0;
+			mStartPos = GetPosition();
+			mStartAngle = mCurrentAngle;
+		}
+	}
+
+	// 2. 転がりアニメーション（押し続け・離し判定）
+	if (mIsRolling)
+	{
+		// 該当する方向のキーが押され続けているか？
+		bool isHolding = (mDirection > 0.0f && isPressL) || (mDirection < 0.0f && isPressJ);
+
+		if (isHolding)
+		{
+			// 押し続けている間は進める
+			mRollTimer++;
+		}
+		else
+		{
+			// 離されたら巻き戻す（元の位置に戻る）
+			mRollTimer--;
+			if (mRollTimer <= 0)
+			{
+				mRollTimer = 0;
+				mIsRolling = false;
+				SetPosition(mStartPos);
+				mCurrentAngle = mStartAngle;
+				return;
+			}
+		}
+
+		// 進行度 t (0.0 〜 1.0)
+		float t = (float)mRollTimer / ROLL_FRAMES;
+
+		// 角度の更新
+		mCurrentAngle = mStartAngle + (90.0f * mDirection * t);
+
+		// 座標の更新
+		VECTOR pos = mStartPos;
+		pos.x += (BLOCK_SIZE * mDirection * t);
+
+		// 角の持ち上げ
+		float lift = std::sin(t * 3.14159265f) * 20.7f;
+		pos.y = mStartPos.y - lift;
+
+		SetPosition(pos);
+
+		// 完全に90度回しきった場合（押し続けた結果の完了処理）
+		if (mRollTimer >= ROLL_FRAMES)
+		{
+			mIsRolling = false;
+			mRollTimer = 0;
+
+			pos.y = mStartPos.y;
+			pos.x = mStartPos.x + (BLOCK_SIZE * mDirection);
+			SetPosition(pos);
+
+			mCurrentAngle = 0.0f;
+
+			// --- 3×3 配列 mShape を90度回転 ---
+			bool tempShape[3][3];
+			for (int y = 0; y < 3; y++) {
+				for (int x = 0; x < 3; x++) {
+					if (mDirection > 0.0f) {
+						tempShape[x][2 - y] = mShape[y][x]; // 時計回り
+					}
+					else {
+						tempShape[2 - x][y] = mShape[y][x]; // 反時計回り
+					}
+				}
+			}
+
+			// 配列を上書きしてColliderを再配置
+			for (int y = 0; y < 3; y++) {
+				for (int x = 0; x < 3; x++) {
+					mShape[y][x] = tempShape[y][x];
+				}
+			}
+			UpdateTransformCollider();
+		}
+	}
+}
+
+
