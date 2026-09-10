@@ -1,11 +1,11 @@
 ﻿#pragma once
-#include "Object2D.h"
+#include "GameObject.h"
 #include <array>
 
 class Collider;
-class Gravity; // 追加
+class Gravity;
 
-class Player : public Object2D
+class Player : public GameObject
 {
 public:
 	Player(std::string filename, VECTOR initPos);
@@ -16,15 +16,7 @@ public:
 
 private:
 	void Move();
-	void ResolveStageCollision();	// ステージとの衝突判定を受け取り、移動を制限する処理
 
-private:
-	Collider* mpCollider;		// このオブジェクトが使用するコライダー
-	Gravity* mpGravity; // 追加
-
-
-	float mfSpeed = 10.0f;		// 移動スピード(移動はPlayerくらいしかしないかな...と思ったのでPlayer持ち)
-	
 	// 変形画面を描画
 	void DrawTransformUI();
 	void UpdateTransformUI();
@@ -33,10 +25,10 @@ private:
 	void UpdateTransformCollider();
 
 private:
-	std::array<Collider*, 9> mColliders;
+	float mfSpeed = 10.0f;		// 移動スピード
 
-	bool mbIsTransforming = false; // 追加
+	std::array<Collider*, 9> mColliders;	// Playerが保有するColliderの配列	
 
-	// 3×3の形状データ
-	bool mShape[3][3] = {};
+	bool mShape[3][3] = {};			// 変形画面で選択するグリッドの配列
+	bool mbIsTransforming = false;	// 変形中であることを示す
 };

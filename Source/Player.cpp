@@ -17,14 +17,20 @@
 #include<DxLib.h>
 
 Player::Player(std::string filename, VECTOR initPos)
-	:Object2D(filename, initPos)
+	:GameObject(filename, initPos)
 {
+	// -- タグ設定 -- //
 	SetTag(Tag::PLAYER);
+
+	// -- 衝突判定を取得するObjを指定 -- //
+	mpCollider->AddCollisionTag(Tag::BLOCK);
+
 	// 3×3 = 9個のColliderを作成
 	for (int i = 0; i < 9; i++)
 	{
 		mColliders[i] = new Collider(this);
 		mColliders[i]->Initialize();
+		mColliders[i]->AddCollisionTag(Tag::BLOCK);
 		mColliders[i]->SetHalfSize(
 			VGet(
 				GameConfig::CELL_SIZE / 2,
@@ -38,10 +44,6 @@ Player::Player(std::string filename, VECTOR initPos)
 
 	// 初期状態は中央の1ブロックだけ有効
 	mColliders[4]->SetEnabled(true);
-
-	// 追加
-	mpGravity = new Gravity(this);
-	mpGravity->Initialize();
 
 	// 初期形状
 	mShape[1][1] = true;
@@ -87,8 +89,10 @@ void Player::Update(float _deltaTime)
 		mpGravity->Update(_deltaTime);
 
 		// StageBlockとの当たり判定
-		ResolveStageCollision();
+		//ResolveStageCollision();
 	}
+
+	GameObject::Update(_deltaTime);
 }
 
 void Player::Draw()
@@ -134,7 +138,7 @@ void Player::Draw()
 		DrawTransformUI();
 	}
 
-	Object2D::Draw();
+	GameObject::Draw();
 }
 
 void Player::Move()
@@ -155,65 +159,6 @@ void Player::Move()
 	);
 
 	SetPosition(nextPos);
-}
-
-void Player::ResolveStageCollision()
-{
-	auto* collisionManager =
-		Master::mpSceneManager
-		->GetCurrentScene()
-		->GetCollisionManager();
-
-	for (auto* collider : mColliders)
-	{
-		if (collider == nullptr || !collider->IsEnabled())
-		{
-			continue;
-		}
-
-		auto* stage =
-			collider->GetCollision(Tag::BLOCK);
-
-		if (stage == nullptr)
-		{
-			continue;
-		}
-
-		auto* stageObj =
-			dynamic_cast<StageBlock*>(stage);
-
-		if (stageObj == nullptr)
-		{
-			continue;
-		}
-
-		auto* stageCollider =
-			stageObj->GetCollider();
-
-		if (stageCollider == nullptr)
-		{
-			continue;
-		}
-
-		CollisionInfo info;
-
-		if (!collisionManager->GetBoxBoxCollision(
-			collider,
-			stageCollider,
-			info))
-		{
-			continue;
-		}
-
-		VECTOR position = GetPosition();
-
-		position = VAdd(
-			position,
-			VScale(info.normal, info.penetration)
-		);
-
-		SetPosition(position);
-	}
 }
 
 void Player::DrawTransformUI()

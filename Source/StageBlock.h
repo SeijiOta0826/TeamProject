@@ -1,9 +1,9 @@
-#pragma once
-#include "Object2D.h"
+﻿#pragma once
+#include "GameObject.h"
 
 class Collider;
 
-class StageBlock : public Object2D
+class StageBlock : public GameObject
 {
 public:
 	StageBlock(std::string filename, VECTOR initPos);
