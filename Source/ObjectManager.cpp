@@ -12,7 +12,17 @@ void ObjectManager::Update(float _deltaTime) {
 
 void ObjectManager::Draw() {
     for (auto& object : mObjects) {
-        object->Draw();
+        if (object->GetTag() != Tag::PLAYER)
+        {
+            object->Draw();
+        }
+    }
+
+    for (auto& object : mObjects) {
+        if (object->GetTag() == Tag::PLAYER)
+        {
+            object->Draw();
+        }
     }
 }
 
