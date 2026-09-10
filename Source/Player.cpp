@@ -12,19 +12,27 @@
 
 #include "StageBlock.h"
 
+#include "GameConfig.h"
+
+#include<DxLib.h>
+
 Player::Player(std::string filename, VECTOR initPos)
 	:Object2D(filename, initPos)
 {
 	SetTag(Tag::PLAYER);
-
 	// 3×3 = 9個のColliderを作成
 	for (int i = 0; i < 9; i++)
 	{
 		mColliders[i] = new Collider(this);
 		mColliders[i]->Initialize();
 		mColliders[i]->SetHalfSize(
-			VGet(50.0f, 50.0f, 0.0f)
+			VGet(
+				GameConfig::CELL_SIZE / 2,
+				GameConfig::CELL_SIZE / 2,
+				0.0f
+			)
 		);
+
 		mColliders[i]->SetEnabled(false);
 	}
 
@@ -85,9 +93,6 @@ void Player::Update(float _deltaTime)
 
 void Player::Draw()
 {
-	// Player本体
-	Object2D::Draw();
-
 	// 追加されたブロックを描画
 	for (int y = 0; y < 3; y++)
 	{
@@ -113,7 +118,7 @@ void Player::Draw()
 			position.y += (y - 1) * blockSize;
 
 			// Playerと同じ画像を描画
-			Texture* texture = GetTexture();
+			Texture* texture = mpTexture;
 
 			if (texture != nullptr)
 			{
@@ -128,6 +133,8 @@ void Player::Draw()
 	{
 		DrawTransformUI();
 	}
+
+	Object2D::Draw();
 }
 
 void Player::Move()

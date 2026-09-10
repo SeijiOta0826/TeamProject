@@ -21,7 +21,9 @@
   <ItemGroup>
     <ClCompile Include="Source\Collider.cpp" />
     <ClCompile Include="Source\CollisionManager.cpp" />
-    <ClCompile Include="Source\Debag.cpp" />
+    <ClCompile Include="Source\CsvLoader.cpp" />
+    <ClCompile Include="Source\Debug.cpp" />
+    <ClCompile Include="Source\GameObject.cpp" />
     <ClCompile Include="Source\GamePad.cpp" />
     <ClCompile Include="Source\GameScene.cpp" />
     <ClCompile Include="Source\Gravity.cpp" />
@@ -35,14 +37,17 @@
     <ClCompile Include="Source\ResourceManager.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
+    <ClCompile Include="Source\Stage.cpp" />
     <ClCompile Include="Source\StageBlock.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Collider.h" />
     <ClInclude Include="Source\CollisionManager.h" />
-    <ClInclude Include="Source\Debag.h" />
+    <ClInclude Include="Source\CsvLoader.h" />
+    <ClInclude Include="Source\Debug.h" />
     <ClInclude Include="Source\GameConfig.h" />
+    <ClInclude Include="Source\GameObject.h" />
     <ClInclude Include="Source\GamePad.h" />
     <ClInclude Include="Source\GameScene.h" />
     <ClInclude Include="Source\Gravity.h" />
@@ -57,6 +62,7 @@
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\SceneManager.h" />
     <ClInclude Include="Source\ScreenConfig.h" />
+    <ClInclude Include="Source\Stage.h" />
     <ClInclude Include="Source\StageBlock.h" />
     <ClInclude Include="Source\Texture.h" />
   </ItemGroup>

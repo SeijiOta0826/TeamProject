@@ -1,16 +1,20 @@
-#include "StageBlock.h"
+﻿#include "StageBlock.h"
 
 #include "Collider.h"
+
+#include "Texture.h"
+#include "GameConfig.h"
 
 StageBlock::StageBlock(std::string filename, VECTOR initPos)
 	:Object2D(filename, initPos)
 {
 	SetTag(Tag::BLOCK);
+	mpTexture->SetSize(VGet(GameConfig::CELL_SIZE, GameConfig::CELL_SIZE, 0.0f));
 
 	mpCollider = new Collider(this);
 	mpCollider->Initialize();
 
-	mpCollider->SetHalfSize(VGet(50.0f, 50.0f, 0.0f));
+	mpCollider->SetHalfSize(VGet(GameConfig::CELL_SIZE / 2, GameConfig::CELL_SIZE / 2, 0.0f));
 }
 
 void StageBlock::Update(float _deltaTime)

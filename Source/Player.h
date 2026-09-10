@@ -20,7 +20,9 @@ private:
 
 private:
 	Collider* mpCollider;		// このオブジェクトが使用するコライダー
-		
+	Gravity* mpGravity; // 追加
+
+
 	float mfSpeed = 10.0f;		// 移動スピード(移動はPlayerくらいしかしないかな...と思ったのでPlayer持ち)
 	
 	// 変形画面を描画
@@ -33,11 +35,8 @@ private:
 private:
 	std::array<Collider*, 9> mColliders;
 
-	Gravity* mpGravity; // 追加
-
 	bool mbIsTransforming = false; // 追加
 
 	// 3×3の形状データ
 	bool mShape[3][3] = {};
-
 };

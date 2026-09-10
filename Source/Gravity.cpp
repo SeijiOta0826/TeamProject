@@ -1,12 +1,16 @@
 ﻿#include "Gravity.h" // 追加
 #include "Object2D.h"
 
+#include "ScreenConfig.h"
+#include "GameConfig.h"
+
 Gravity::Gravity(Object2D* _owner)
 	: mpOwner(_owner)
 	, mbEnable(true)
-	, mfGravity(9.8f)
+	, mfGravity(GameConfig::GLAVITY)
 	, mfVelocityY(0.0f)
 {
+
 }
 
 Gravity::~Gravity()
@@ -22,6 +26,8 @@ void Gravity::Initialize()
 
 void Gravity::Finalize()
 {
+	// -- 所有するポインタの解放 -- //
+	delete mpOwner;
 	mpOwner = nullptr;
 }
 
@@ -39,15 +45,17 @@ void Gravity::Update(float _deltaTime)
 	VECTOR position = mpOwner->GetPosition();
 
 	// 重力による移動量を計算
+		// ota : ここdeltaTimeいるんか。僕は💩です
 	float moveAmount = mfVelocityY * _deltaTime;
 
 	// 2D座標ではYが下方向なので加算
 	position.y += moveAmount;
 
 	// y = 0 を地面として、それより下に行かないようにする
-	if (position.y >= 790.0f)
+		// ota : マジックナンバーを直させていただきます。僕は💩です
+	if (position.y >= ScreenConfig::SCREEN_HEIGHT)
 	{
-		position.y = 790.0f;
+		position.y = ScreenConfig::SCREEN_HEIGHT;
 		mfVelocityY = 0.0f;
 	}
 

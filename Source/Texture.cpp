@@ -17,8 +17,8 @@ Texture::Texture(std::string filename, VECTOR centerPosition)
 	int size_y;
 	GetGraphSize(mnHandle, &size_x, &size_y);
 	
-	mfSizeX = static_cast<float>(size_x);
-	mfSizeY = static_cast<float>(size_y);
+	mvSize.x = static_cast<float>(size_x);
+	mvSize.y = static_cast<float>(size_y);
 }
 
 Texture::~Texture()
@@ -28,11 +28,27 @@ Texture::~Texture()
 
 void Texture::Draw()
 {
-	VECTOR topLeft = CalculateTopLeftPosition();
+	/*VECTOR topLeft = CalculateTopLeftPosition();
 
 	DrawGraph(
 		static_cast<int>(topLeft.x),
 		static_cast<int>(topLeft.y),
+		mnHandle,
+		TRUE
+	);*/
+
+	VECTOR topLeft = CalculateTopLeftPosition();
+	VECTOR bottomRight = VGet(
+		topLeft.x + mvSize.x,
+		topLeft.y + mvSize.y,
+		0.0f
+	);
+
+	DrawExtendGraph(
+		static_cast<int>(topLeft.x),
+		static_cast<int>(topLeft.y),
+		static_cast<int>(bottomRight.x),
+		static_cast<int>(bottomRight.y),
 		mnHandle,
 		TRUE
 	);
@@ -41,8 +57,8 @@ void Texture::Draw()
 void Texture::DrawAt(VECTOR centerPosition)
 {
 	VECTOR topLeft = VGet(
-		centerPosition.x - (mfSizeX / 2.0f),
-		centerPosition.y - (mfSizeY / 2.0f),
+		centerPosition.x - (mvSize.x / 2.0f),
+		centerPosition.y - (mvSize.x / 2.0f),
 		centerPosition.z
 	);
 
@@ -58,8 +74,8 @@ void Texture::DrawAt(VECTOR centerPosition)
 VECTOR Texture::CalculateTopLeftPosition()
 {
 	return VGet(
-		mvPosition.x - (mfSizeX / 2.0f),
-		mvPosition.y - (mfSizeY / 2.0f),
+		mvPosition.x - (mvSize.x / 2.0f),
+		mvPosition.y - (mvSize.y / 2.0f),
 		mvPosition.z
 	);
 }

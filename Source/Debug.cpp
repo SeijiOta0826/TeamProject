@@ -1,4 +1,4 @@
-﻿#include "Debag.h"
+﻿#include "Debug.h"
 
 #include "ScreenConfig.h"
 #include "GameConfig.h"
