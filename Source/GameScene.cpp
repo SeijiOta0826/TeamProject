@@ -68,6 +68,7 @@ void GameScene::Initialize()
             "Resource/Obj/test_field.png",
             VGet(300.0f, 300.0f, 0.0f)
         );
+>>>>>>> koike
 }
 
 void GameScene::Update(float deltaTime)
