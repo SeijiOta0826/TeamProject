@@ -1,9 +1,9 @@
-#pragma once
+ï»¿#pragma once
 #include "Object2D.h"
 #include <array>
 
 class Collider;
-class Gravity; // ’Ç‰Á
+class Gravity; // è¿½åŠ 
 
 class Player : public Object2D
 {
@@ -18,21 +18,21 @@ private:
 	void Move();
 	void ResolveStageCollision();
 	
-	// •ÏŒ`‰æ–Ê‚ğ•`‰æ
+	// å¤‰å½¢ç”»é¢ã‚’æç”»
 	void DrawTransformUI();
 	void UpdateTransformUI();
 
-	// •ÏŒ`Œã‚ÌCollider‚ğXV
+	// å¤‰å½¢å¾Œã®Colliderã‚’æ›´æ–°
 	void UpdateTransformCollider();
 
 private:
 	std::array<Collider*, 9> mColliders;
 
-	Gravity* mpGravity; // ’Ç‰Á
+	Gravity* mpGravity; // è¿½åŠ 
 
-	bool mbIsTransforming = false; // ’Ç‰Á
+	bool mbIsTransforming = false; // è¿½åŠ 
 
-	// 3~3‚ÌŒ`óƒf[ƒ^
+	// 3Ã—3ã®å½¢çŠ¶ãƒ‡ãƒ¼ã‚¿
 	bool mShape[3][3] = {};
 
 	float mfSpeed = 10.0f;

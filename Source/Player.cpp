@@ -1,8 +1,8 @@
-#include "Player.h"
+ï»¿#include "Player.h"
 #include "Texture.h"
 
 #include "Collider.h"
-#include "Gravity.h" // ’Ç‰Á
+#include "Gravity.h" // è¿½åŠ 
 #include "InputManager.h"
 
 #include "Master.h"
@@ -17,7 +17,7 @@ Player::Player(std::string filename, VECTOR initPos)
 {
 	SetTag(Tag::PLAYER);
 
-	// 3~3 = 9ŒÂ‚ÌCollider‚ğì¬
+	// 3Ã—3 = 9å€‹ã®Colliderã‚’ä½œæˆ
 	for (int i = 0; i < 9; i++)
 	{
 		mColliders[i] = new Collider(this);
@@ -28,14 +28,14 @@ Player::Player(std::string filename, VECTOR initPos)
 		mColliders[i]->SetEnabled(false);
 	}
 
-	// ‰Šúó‘Ô‚Í’†‰›‚Ì1ƒuƒƒbƒN‚¾‚¯—LŒø
+	// åˆæœŸçŠ¶æ…‹ã¯ä¸­å¤®ã®1ãƒ–ãƒ­ãƒƒã‚¯ã ã‘æœ‰åŠ¹
 	mColliders[4]->SetEnabled(true);
 
-	// ’Ç‰Á
+	// è¿½åŠ 
 	mpGravity = new Gravity(this);
 	mpGravity->Initialize();
 
-	// ‰ŠúŒ`ó
+	// åˆæœŸå½¢çŠ¶
 	mShape[1][1] = true;
 
 	UpdateTransformCollider();
@@ -60,13 +60,13 @@ Player::~Player()
 
 void Player::Update(float _deltaTime)
 {
-	// EƒL[‚ğ‰Ÿ‚µ‚½‚ç•ÏŒ`ƒ‚[ƒh‚É“ü‚é
+	// Eã‚­ãƒ¼ã‚’æŠ¼ã—ãŸã‚‰å¤‰å½¢ãƒ¢ãƒ¼ãƒ‰ã«å…¥ã‚‹
 	if (InputManager::GetInstance().GetButtonDown(Button::Transform))
 	{
 		mbIsTransforming = true;
 	}
 
-	// •ÏŒ`’†‚©‚Ç‚¤‚©‚Å“ü—Í‚ğØ‚è‘Ö‚¦‚é
+	// å¤‰å½¢ä¸­ã‹ã©ã†ã‹ã§å…¥åŠ›ã‚’åˆ‡ã‚Šæ›¿ãˆã‚‹
 	if (mbIsTransforming)
 	{
 		UpdateTransformUI();
@@ -75,31 +75,31 @@ void Player::Update(float _deltaTime)
 	{
 		Move();
 
-		// ’Êí‚¾‚¯d—Í‚ğˆ—
+		// é€šå¸¸æ™‚ã ã‘é‡åŠ›ã‚’å‡¦ç†
 		mpGravity->Update(_deltaTime);
 
-		// StageBlock‚Æ‚Ì“–‚½‚è”»’è
+		// StageBlockã¨ã®å½“ãŸã‚Šåˆ¤å®š
 		ResolveStageCollision();
 	}
 }
 
 void Player::Draw()
 {
-	// Player–{‘Ì
+	// Playeræœ¬ä½“
 	Object2D::Draw();
 
-	// ’Ç‰Á‚³‚ê‚½ƒuƒƒbƒN‚ğ•`‰æ
+	// è¿½åŠ ã•ã‚ŒãŸãƒ–ãƒ­ãƒƒã‚¯ã‚’æç”»
 	for (int y = 0; y < 3; y++)
 	{
 		for (int x = 0; x < 3; x++)
 		{
-			// ’†‰›‚ÍPlayer–{‘Ì‚ª•`‰æ‚³‚ê‚Ä‚¢‚é‚Ì‚Å”ò‚Î‚·
+			// ä¸­å¤®ã¯Playeræœ¬ä½“ãŒæç”»ã•ã‚Œã¦ã„ã‚‹ã®ã§é£›ã°ã™
 			if (x == 1 && y == 1)
 			{
 				continue;
 			}
 
-			// OFF‚Ìƒ}ƒX‚Í•`‰æ‚µ‚È‚¢
+			// OFFã®ãƒã‚¹ã¯æç”»ã—ãªã„
 			if (!mShape[y][x])
 			{
 				continue;
@@ -112,7 +112,7 @@ void Player::Draw()
 			position.x += (x - 1) * blockSize;
 			position.y += (y - 1) * blockSize;
 
-			// Player‚Æ“¯‚¶‰æ‘œ‚ğ•`‰æ
+			// Playerã¨åŒã˜ç”»åƒã‚’æç”»
 			Texture* texture = GetTexture();
 
 			if (texture != nullptr)
@@ -123,7 +123,7 @@ void Player::Draw()
 		}
 	}
 
-	// •ÏŒ`‰æ–Ê
+	// å¤‰å½¢ç”»é¢
 	if (mbIsTransforming)
 	{
 		DrawTransformUI();
@@ -222,7 +222,7 @@ void Player::DrawTransformUI()
 	const int startX = (screenWidth - gridSize) / 2;
 	const int startY = (screenHeight - gridSize) / 2;
 
-	// ”wŒi
+	// èƒŒæ™¯
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 150);
 
 	DrawBox(
@@ -236,7 +236,7 @@ void Player::DrawTransformUI()
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
-	// 3~3
+	// 3Ã—3
 	for (int y = 0; y < 3; y++)
 	{
 		for (int x = 0; x < 3; x++)
@@ -268,7 +268,7 @@ void Player::DrawTransformUI()
 				TRUE
 			);
 
-			// ˜g
+			// æ 
 			DrawBox(
 				left,
 				top,
@@ -283,7 +283,7 @@ void Player::DrawTransformUI()
 	DrawString(
 		startX,
 		startY - 40,
-		"•ÏŒ`",
+		"å¤‰å½¢",
 		GetColor(255, 255, 255)
 	);
 }
@@ -304,29 +304,29 @@ void Player::UpdateTransformUI()
 	const int startX = (screenWidth - gridSize) / 2;
 	const int startY = (screenHeight - gridSize) / 2;
 
-	// ƒ}ƒEƒX‚ª3~3‚Ì”ÍˆÍ“à‚É‚ ‚é‚©
+	// ãƒã‚¦ã‚¹ãŒ3Ã—3ã®ç¯„å›²å†…ã«ã‚ã‚‹ã‹
 	if (mouseX >= startX &&
 		mouseX < startX + gridSize &&
 		mouseY >= startY &&
 		mouseY < startY + gridSize)
 	{
-		// ‰½—ñ–ÚE‰½s–Ú‚ğƒNƒŠƒbƒN‚µ‚½‚©ŒvZ
+		// ä½•åˆ—ç›®ãƒ»ä½•è¡Œç›®ã‚’ã‚¯ãƒªãƒƒã‚¯ã—ãŸã‹è¨ˆç®—
 		int cellX = (mouseX - startX) / cellSize;
 		int cellY = (mouseY - startY) / cellSize;
 
-		// ¶ƒNƒŠƒbƒN‚³‚ê‚½‚çON/OFFØ‚è‘Ö‚¦
+		// å·¦ã‚¯ãƒªãƒƒã‚¯ã•ã‚ŒãŸã‚‰ON/OFFåˆ‡ã‚Šæ›¿ãˆ
 		if (InputManager::GetInstance().GetMouse().IsDown(MOUSE_INPUT_LEFT))
 		{
 			mShape[cellY][cellX] = !mShape[cellY][cellX];
 		}
 	}
 
-	// Enter‚Å•ÏŒ`‚ğŠm’è
+	// Enterã§å¤‰å½¢ã‚’ç¢ºå®š
 	if (InputManager::GetInstance().GetButtonDown(Button::Confirm))
 	{
 		UpdateTransformCollider();
 
-		// •ÏŒ`‚É‚æ‚Á‚Ä‘å‚«‚­‚È‚Á‚½ê‡‚Ì‚ß‚è‚İ–h~
+		// å¤‰å½¢ã«ã‚ˆã£ã¦å¤§ãããªã£ãŸå ´åˆã®ã‚ã‚Šè¾¼ã¿é˜²æ­¢
 		VECTOR position = GetPosition();
 		position.y -= 10.0f;
 		SetPosition(position);
@@ -352,7 +352,7 @@ void Player::UpdateTransformCollider()
 				continue;
 			}
 
-			// ‘I‘ğ‚³‚ê‚Ä‚¢‚éƒ}ƒX‚¾‚¯Collider‚ğ—LŒø‚É‚·‚é
+			// é¸æŠã•ã‚Œã¦ã„ã‚‹ãƒã‚¹ã ã‘Colliderã‚’æœ‰åŠ¹ã«ã™ã‚‹
 			collider->SetEnabled(mShape[y][x]);
 
 			if (!mShape[y][x])
@@ -360,14 +360,14 @@ void Player::UpdateTransformCollider()
 				continue;
 			}
 
-			// 3~3‚Ì’†S‚ğPlayer‚ÌˆÊ’u‚É‚·‚é
+			// 3Ã—3ã®ä¸­å¿ƒã‚’Playerã®ä½ç½®ã«ã™ã‚‹
 			float offsetX =
 				(x - 1) * blockSize;
 
 			float offsetY =
 				(y - 1) * blockSize;
 
-			// Collider‚ğŠeƒ}ƒX‚ÌˆÊ’u‚ÖˆÚ“®
+			// Colliderã‚’å„ãƒã‚¹ã®ä½ç½®ã¸ç§»å‹•
 			collider->SetOffset(
 				VGet(
 					offsetX,
@@ -376,7 +376,7 @@ void Player::UpdateTransformCollider()
 				)
 			);
 
-			// 1ƒuƒƒbƒN•ª‚ÌCollider
+			// 1ãƒ–ãƒ­ãƒƒã‚¯åˆ†ã®Collider
 			collider->SetHalfSize(
 				VGet(
 					blockSize / 2.0f,
