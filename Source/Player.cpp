@@ -406,58 +406,85 @@ void Player::UpdateTransformCollider()
 }
 
 //=========回転処理=========
+//=========回転処理=========
 void Player::Rotate()
 {
-	// 1. 入力受付（止まっている時のみ）
+	// 1. 押されているキーのチェック
+	bool isPressL = (CheckHitKey(KEY_INPUT_L) != 0);
+	bool isPressJ = (CheckHitKey(KEY_INPUT_J) != 0);
+
+	// まだ転がり始めていない時、キーが押されたら方向と開始位置を記録
 	if (!mIsRolling)
 	{
-		if (CheckHitKey(KEY_INPUT_L)) 
+		if (isPressL)
 		{
 			mDirection = 1.0f;       // 右
 			mIsRolling = true;
+			mRollTimer = 0;
+			mStartPos = GetPosition();
+			mStartAngle = mCurrentAngle;
 		}
-		else if (CheckHitKey(KEY_INPUT_J)) 
+		else if (isPressJ)
 		{
 			mDirection = -1.0f;      // 左
 			mIsRolling = true;
-		}
-
-		// 転がり始めの座標と角度を保存
-		if (mIsRolling) {
 			mRollTimer = 0;
 			mStartPos = GetPosition();
 			mStartAngle = mCurrentAngle;
 		}
 	}
 
-	// 2. 転がりアニメーション
+	// 2. 転がりアニメーション（押し続け・離し判定）
 	if (mIsRolling)
 	{
-		mRollTimer++;
-		float t = (float)mRollTimer / ROLL_FRAMES; // 進行度 (0.0 〜 1.0)
+		// 該当する方向のキーが押され続けているか？
+		bool isHolding = (mDirection > 0.0f && isPressL) || (mDirection < 0.0f && isPressJ);
+
+		if (isHolding)
+		{
+			// 押し続けている間は進める
+			mRollTimer++;
+		}
+		else
+		{
+			// 離されたら巻き戻す（元の位置に戻る）
+			mRollTimer--;
+			if (mRollTimer <= 0)
+			{
+				mRollTimer = 0;
+				mIsRolling = false;
+				SetPosition(mStartPos);
+				mCurrentAngle = mStartAngle;
+				return;
+			}
+		}
+
+		// 進行度 t (0.0 〜 1.0)
+		float t = (float)mRollTimer / ROLL_FRAMES;
 
 		// 角度の更新
 		mCurrentAngle = mStartAngle + (90.0f * mDirection * t);
 
 		// 座標の更新
 		VECTOR pos = mStartPos;
-		pos.x += (BLOCK_SIZE * mDirection * t); // 横に1マス進む
+		pos.x += (BLOCK_SIZE * mDirection * t);
 
-		// ブロックの角がめり込まないように、上に持ち上げる
+		// 角の持ち上げ
 		float lift = std::sin(t * 3.14159265f) * 20.7f;
 		pos.y = mStartPos.y - lift;
 
 		SetPosition(pos);
 
-		// 完了処理
+		// 完全に90度回しきった場合（押し続けた結果の完了処理）
 		if (mRollTimer >= ROLL_FRAMES)
 		{
 			mIsRolling = false;
+			mRollTimer = 0;
+
 			pos.y = mStartPos.y;
 			pos.x = mStartPos.x + (BLOCK_SIZE * mDirection);
 			SetPosition(pos);
 
-			// 角度を 0 にリセット（配列側を回すため、描画角度はリセットして整合性を取る）
 			mCurrentAngle = 0.0f;
 
 			// --- 3×3 配列 mShape を90度回転 ---
@@ -465,12 +492,10 @@ void Player::Rotate()
 			for (int y = 0; y < 3; y++) {
 				for (int x = 0; x < 3; x++) {
 					if (mDirection > 0.0f) {
-						// 時計回り（右回転）: 新(x, y) = 旧(2 - y, x)
-						tempShape[x][2 - y] = mShape[y][x];
+						tempShape[x][2 - y] = mShape[y][x]; // 時計回り
 					}
 					else {
-						// 反時計回り（左回転）: 新(x, y) = 旧(y, 2 - x)
-						tempShape[2 - x][y] = mShape[y][x];
+						tempShape[2 - x][y] = mShape[y][x]; // 反時計回り
 					}
 				}
 			}
@@ -485,3 +510,5 @@ void Player::Rotate()
 		}
 	}
 }
+
+
