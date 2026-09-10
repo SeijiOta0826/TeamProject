@@ -22,7 +22,6 @@ private:
 	Collider* mpCollider;		// このオブジェクトが使用するコライダー
 		
 	float mfSpeed = 10.0f;		// 移動スピード(移動はPlayerくらいしかしないかな...と思ったのでPlayer持ち)
-	void ResolveStageCollision();
 	
 	// 変形画面を描画
 	void DrawTransformUI();
@@ -41,5 +40,4 @@ private:
 	// 3×3の形状データ
 	bool mShape[3][3] = {};
 
-	float mfSpeed = 10.0f;
 };

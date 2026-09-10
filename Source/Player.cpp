@@ -2,7 +2,7 @@
 #include "Texture.h"
 
 #include "Collider.h"
-#include "Gravity.h" 
+#include "Gravity.h" // 追加
 #include "InputManager.h"
 
 #include "Master.h"
@@ -11,10 +11,9 @@
 #include "CollisionManager.h"
 
 #include "StageBlock.h"
-#include "Texture.h"
 
 Player::Player(std::string filename, VECTOR initPos)
-	: Object2D(filename, initPos)
+	:Object2D(filename, initPos)
 {
 	SetTag(Tag::PLAYER);
 
@@ -151,7 +150,6 @@ void Player::Move()
 	SetPosition(nextPos);
 }
 
-void Player::ResolveStageCollision() 
 void Player::ResolveStageCollision()
 {
 	auto* collisionManager =
@@ -235,50 +233,6 @@ void Player::DrawTransformUI()
 		GetColor(0, 0, 0),
 		TRUE
 	);
-
-	this->SetPosition(position);
-}
-
-void Player::Rotate()
-{
-	//----1フレームあたりの回転角と移動量
-	// 例: 30フレームで90度・1ブロック分動かす場合
-	const float ROTATE_SPEED = 3.0f; //90f / 30f
-	const float MOVE_SPEED = BLOCK_SIZE / 30.0f; //1ブロック分 / 30フレーム
-
-	float angleDelta = 0.0f;
-	float moveDelta = 0.0f;
-
-	if (CheckHitKey(KEY_INPUT_L))
-	{
-		angleDelta = ROTATE_SPEED;
-		moveDelta = MOVE_SPEED;
-	}
-
-	else if (CheckHitKey(KEY_INPUT_J))
-	{
-		angleDelta = -ROTATE_SPEED;
-		moveDelta = -MOVE_SPEED;
-	}
-
-	//入力がある場合のみ回転する
-	if (angleDelta != 0.0f)
-	{
-		mCurrentAngle += angleDelta;
-
-		if (mCurrentAngle >= 360.0f)mCurrentAngle -= 360.0f;
-		if (mCurrentAngle < 0.0f)   mCurrentAngle += 360.0f;
-
-
-		VECTOR pos = GetPosition();
-		pos.x += moveDelta;
-		SetPosition(pos);
-
-
-	}
-
-
-}
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
