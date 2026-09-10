@@ -1,4 +1,6 @@
-﻿#include "Player.h"
+﻿#include <cmath>  //回転処理用
+
+#include "Player.h"
 #include "Texture.h"
 
 #include "Collider.h"
@@ -78,52 +80,62 @@ void Player::Update(float _deltaTime)
 	if (mbIsTransforming)
 	{
 		UpdateTransformUI();
+		return; //変形中は移動や重力処理を行わない
 	}
-	else
+	//else
+	//{
+	//	Move();
+
+	//	// 通常時だけ重力を処理
+	//	mpGravity->Update(_deltaTime);
+
+	//	// StageBlockとの当たり判定
+	//	ResolveStageCollision();
+	//}
+	Rotate();//回転処理
+
+	if (!mIsRolling)
 	{
 		Move();
-
-		// 通常時だけ重力を処理
 		mpGravity->Update(_deltaTime);
 
-		// StageBlockとの当たり判定
-		ResolveStageCollision();
 	}
+	ResolveStageCollision();
+
 }
 
 void Player::Draw()
 {
-	// 追加されたブロックを描画
-	for (int y = 0; y < 3; y++)
+	float rad = mCurrentAngle * (3.14159265f / 180.0f);
+	VECTOR centerPos = GetPosition();
+	const float blockSize = 100.0f;
+
+
+	if (mpTexture != nullptr)
 	{
-		for (int x = 0; x < 3; x++)
+		for (int y = 0; y < 3; y++)
 		{
-			// 中央はPlayer本体が描画されているので飛ばす
-			if (x == 1 && y == 1)
+			for (int x = 0; x < 3; x++)
 			{
-				continue;
-			}
+				if (!mShape[y][x]) continue; // OFFのマスは描画しない
 
-			// OFFのマスは描画しない
-			if (!mShape[y][x])
-			{
-				continue;
-			}
+				// 中央(1, 1)からの相対座標
+				float localX = (x - 1) * blockSize;
+				float localY = (y - 1) * blockSize;
 
-			const float blockSize = 100.0f;
+				// 2D回転行列で角度radに合わせて回転
+				float rotatedX = localX * std::cos(rad) - localY * std::sin(rad);
+				float rotatedY = localX * std::sin(rad) + localY * std::cos(rad);
 
-			VECTOR position = GetPosition();
-
-			position.x += (x - 1) * blockSize;
-			position.y += (y - 1) * blockSize;
-
-			// Playerと同じ画像を描画
-			Texture* texture = mpTexture;
-
-			if (texture != nullptr)
-			{
-				texture->SetPosition(position);
-				texture->Draw();
+				// 中心座標 + 回転後オフセット に描画
+				DrawRotaGraphF(
+					centerPos.x + rotatedX,
+					centerPos.y + rotatedY,
+					1.0,
+					rad,
+					mpTexture->GetHandle(),
+					TRUE
+				);
 			}
 		}
 	}
@@ -133,8 +145,6 @@ void Player::Draw()
 	{
 		DrawTransformUI();
 	}
-
-	Object2D::Draw();
 }
 
 void Player::Move()
@@ -391,6 +401,87 @@ void Player::UpdateTransformCollider()
 					0.0f
 				)
 			);
+		}
+	}
+}
+
+//=========回転処理=========
+void Player::Rotate()
+{
+	// 1. 入力受付（止まっている時のみ）
+	if (!mIsRolling)
+	{
+		if (CheckHitKey(KEY_INPUT_L)) 
+		{
+			mDirection = 1.0f;       // 右
+			mIsRolling = true;
+		}
+		else if (CheckHitKey(KEY_INPUT_J)) 
+		{
+			mDirection = -1.0f;      // 左
+			mIsRolling = true;
+		}
+
+		// 転がり始めの座標と角度を保存
+		if (mIsRolling) {
+			mRollTimer = 0;
+			mStartPos = GetPosition();
+			mStartAngle = mCurrentAngle;
+		}
+	}
+
+	// 2. 転がりアニメーション
+	if (mIsRolling)
+	{
+		mRollTimer++;
+		float t = (float)mRollTimer / ROLL_FRAMES; // 進行度 (0.0 〜 1.0)
+
+		// 角度の更新
+		mCurrentAngle = mStartAngle + (90.0f * mDirection * t);
+
+		// 座標の更新
+		VECTOR pos = mStartPos;
+		pos.x += (BLOCK_SIZE * mDirection * t); // 横に1マス進む
+
+		// ブロックの角がめり込まないように、上に持ち上げる
+		float lift = std::sin(t * 3.14159265f) * 20.7f;
+		pos.y = mStartPos.y - lift;
+
+		SetPosition(pos);
+
+		// 完了処理
+		if (mRollTimer >= ROLL_FRAMES)
+		{
+			mIsRolling = false;
+			pos.y = mStartPos.y;
+			pos.x = mStartPos.x + (BLOCK_SIZE * mDirection);
+			SetPosition(pos);
+
+			// 角度を 0 にリセット（配列側を回すため、描画角度はリセットして整合性を取る）
+			mCurrentAngle = 0.0f;
+
+			// --- 3×3 配列 mShape を90度回転 ---
+			bool tempShape[3][3];
+			for (int y = 0; y < 3; y++) {
+				for (int x = 0; x < 3; x++) {
+					if (mDirection > 0.0f) {
+						// 時計回り（右回転）: 新(x, y) = 旧(2 - y, x)
+						tempShape[x][2 - y] = mShape[y][x];
+					}
+					else {
+						// 反時計回り（左回転）: 新(x, y) = 旧(y, 2 - x)
+						tempShape[2 - x][y] = mShape[y][x];
+					}
+				}
+			}
+
+			// 配列を上書きしてColliderを再配置
+			for (int y = 0; y < 3; y++) {
+				for (int x = 0; x < 3; x++) {
+					mShape[y][x] = tempShape[y][x];
+				}
+			}
+			UpdateTransformCollider();
 		}
 	}
 }
