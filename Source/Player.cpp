@@ -367,6 +367,7 @@ void Player::Rotate()
 		{
 			mDirection = 1.0f;       // 右
 			mIsRolling = true;
+			mbCompleteRoll = false;//初期化
 			mRollTimer = 0;
 			mStartPos = GetPosition();
 			mStartAngle = mCurrentAngle;
@@ -375,6 +376,7 @@ void Player::Rotate()
 		{
 			mDirection = -1.0f;      // 左
 			mIsRolling = true;
+			mbCompleteRoll = false;//初期化
 			mRollTimer = 0;
 			mStartPos = GetPosition();
 			mStartAngle = mCurrentAngle;
@@ -385,12 +387,18 @@ void Player::Rotate()
 	if (mIsRolling)
 	{
 		// 該当する方向のキーが押され続けているか？
-		bool isHolding = (mDirection > 0.0f && isPressL) || (mDirection < 0.0f && isPressJ);
-
-		if (isHolding)
+		bool isHolding = (mDirection > 0.0f && isPressL) ||
+			(mDirection < 0.0f && isPressJ);
+		float currentProgress = (float)mRollTimer / ROLL_FRAMES;
+		if (currentProgress >= 0.5f || mbCompleteRoll)
 		{
-			// 押し続けている間は進める
-			mRollTimer++;
+			mbCompleteRoll = true;
+			
+			mRollTimer++;// 押し続けている間は進める
+		}
+		else if (isHolding)
+		{
+			mRollTimer++;//45度未満かつキーを押し続けていたら進める
 		}
 		else
 		{
@@ -400,6 +408,7 @@ void Player::Rotate()
 			{
 				mRollTimer = 0;
 				mIsRolling = false;
+				mbCompleteRoll = false;
 				SetPosition(mStartPos);
 				mCurrentAngle = mStartAngle;
 				return;
@@ -426,6 +435,7 @@ void Player::Rotate()
 		if (mRollTimer >= ROLL_FRAMES)
 		{
 			mIsRolling = false;
+			mbCompleteRoll = false;
 			mRollTimer = 0;
 
 			pos.y = mStartPos.y;
