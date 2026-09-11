@@ -10,6 +10,7 @@ enum class Tag
 
 	UNNKO,
 	PLAYER,
+	PLAYER_CELL,
 	BLOCK,
 };
 
