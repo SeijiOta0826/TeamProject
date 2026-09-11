@@ -1,13 +1,14 @@
-#include "Collider.h"
+﻿#include "Collider.h"
 
 #include "CollisionManager.h"
 #include "Master.h"
 #include "SceneManager.h"
 #include "Scene.h"
 
-#include "Object2D.h"
+#include "Object2D.h"	// memo : いつか消す
+#include "GameObject.h"
 
-Collider::Collider(Object2D* _obj) 
+Collider::Collider(GameObject* _obj)
 {
 	mpObj = _obj;
 }
@@ -33,7 +34,7 @@ bool Collider::IsColliding() const {
 bool Collider::IsColliding(Tag _tag) const
 {
 	for (auto* collider : mCollisions) {
-		if (collider->GetObject2D()->GetTag() == _tag) {
+		if (collider->GetGameObject()->GetTag() == _tag) {
 			return true;
 		}
 	}
@@ -41,16 +42,33 @@ bool Collider::IsColliding(Tag _tag) const
 	return false;
 }
 
-Object2D* Collider::GetCollision(Tag _tag) const
+//Object2D* Collider::GetCollision(Tag _tag) const
+//{
+//	for (auto* collider : mCollisions) {
+//		Tag tag = collider->GetObject2D()->GetTag();
+//		if (tag == _tag) {
+//			return collider->GetObject2D();
+//		}
+//	}
+//
+//	return nullptr;
+//}
+
+std::vector<GameObject*> Collider::GetCollisions(Tag _tag)
 {
-	for (auto* collider : mCollisions) {
-		Tag tag = collider->GetObject2D()->GetTag();
-		if (tag == _tag) {
-			return collider->GetObject2D();
+	std::vector<GameObject*> objects;
+
+	for (auto* collider : mCollisions)
+	{
+		auto* gameObject = collider->GetGameObject();
+		Tag tag = gameObject->GetTag();
+		if (tag == _tag)
+		{
+			objects.push_back(gameObject);
 		}
 	}
 
-	return nullptr;
+	return objects;
 }
 
 VECTOR Collider::GetWorldPosition() const {

@@ -6,7 +6,7 @@
 #include "GameConfig.h"
 
 StageBlock::StageBlock(std::string filename, VECTOR initPos)
-	:Object2D(filename, initPos)
+	:GameObject(filename, initPos)
 {
 	SetTag(Tag::BLOCK);
 	mpTexture->SetSize(VGet(GameConfig::CELL_SIZE, GameConfig::CELL_SIZE, 0.0f));

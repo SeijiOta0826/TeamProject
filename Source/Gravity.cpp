@@ -1,10 +1,10 @@
 ﻿#include "Gravity.h" // 追加
-#include "Object2D.h"
+#include "GameObject.h"
 
 #include "ScreenConfig.h"
 #include "GameConfig.h"
 
-Gravity::Gravity(Object2D* _owner)
+Gravity::Gravity(GameObject* _owner)
 	: mpOwner(_owner)
 	, mbEnable(true)
 	, mfGravity(GameConfig::GLAVITY)
@@ -35,6 +35,12 @@ void Gravity::Update(float _deltaTime)
 {
 	if (!mbEnable || mpOwner == nullptr)
 	{
+		return;
+	}
+
+	if (mpOwner->IsGrounded())
+	{
+		ResetVerticalVelocity();
 		return;
 	}
 
@@ -76,4 +82,9 @@ void Gravity::SetEnable(bool _enable)
 bool Gravity::IsEnable() const
 {
 	return mbEnable;
+}
+
+void Gravity::ResetVerticalVelocity()
+{
+	mfVelocityY = 0.0f;
 }

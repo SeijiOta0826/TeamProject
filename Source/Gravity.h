@@ -1,11 +1,11 @@
 ﻿#pragma once // 追加
 
-class Object2D;
+class GameObject;
 
 class Gravity
 {
 public:
-	Gravity(Object2D* _owner);
+	Gravity(GameObject* _owner);
 	~Gravity();
 
 	void Initialize();
@@ -14,10 +14,14 @@ public:
 	void Update(float _deltaTime);
 
 	void SetEnable(bool _enable);
+
 	bool IsEnable() const;
 
 private:
-	Object2D* mpOwner = nullptr;	// 付与先のObj
+	void ResetVerticalVelocity();
+
+private:
+	GameObject* mpOwner = nullptr;	// 付与先のObj
 
 	bool mbEnable = true;					// 有効であるかを示す
 		
