@@ -1,8 +1,6 @@
 ﻿#pragma once
 #include "GameObject.h"
 
-class Collider;
-
 class StageBlock : public GameObject
 {
 public:
@@ -11,9 +9,4 @@ public:
 
 	void Update(float _deltaTime) override;
 	void Draw() override;
-
-	Collider* GetCollider() { return mpCollider; }
-
-private:
-	Collider* mpCollider;
 };

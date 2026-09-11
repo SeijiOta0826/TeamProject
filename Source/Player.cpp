@@ -30,10 +30,9 @@ Player::Player(std::string filename, VECTOR initPos)
 	// 3×3 = 9個のColliderを作成
 	for (int i = 0; i < 9; i++)
 	{
-		mColliders[i] = new Collider(this);
-		mColliders[i]->Initialize();
-		mColliders[i]->AddCollisionTag(Tag::BLOCK);
-		mColliders[i]->SetHalfSize(
+		mColliders[i] = new GameObject("Resource/Player.png",VGet(0.0f,0.0f,0.0f));
+		mColliders[i]->GetCollider()->AddCollisionTag(Tag::BLOCK);
+		mColliders[i]->GetCollider()->SetHalfSize(
 			VGet(
 				GameConfig::CELL_SIZE / 2,
 				GameConfig::CELL_SIZE / 2,
@@ -41,11 +40,11 @@ Player::Player(std::string filename, VECTOR initPos)
 			)
 		);
 
-		mColliders[i]->SetEnabled(false);
+		mColliders[i]->GetCollider()->SetEnabled(false);
 	}
 
 	// 初期状態は中央の1ブロックだけ有効
-	mColliders[4]->SetEnabled(true);
+	mColliders[4]->GetCollider()->SetEnabled(true);
 
 	// 初期形状
 	mShape[1][1] = true;
@@ -62,7 +61,7 @@ Player::~Player()
 	{
 		if (collider != nullptr)
 		{
-			collider->Finalize();
+			collider->GetCollider()->Finalize();
 			delete collider;
 		}
 	}
@@ -309,7 +308,8 @@ void Player::UpdateTransformCollider()
 		{
 			int index = y * 3 + x;
 
-			Collider* collider = mColliders[index];
+			GameObject* gameObject = mColliders[index];
+			Collider* collider = gameObject->GetCollider();
 
 			if (collider == nullptr)
 			{

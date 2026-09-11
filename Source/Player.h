@@ -27,7 +27,7 @@ private:
 private:
 	float mfSpeed = 10.0f;		// 移動スピード
 
-	std::array<Collider*, 9> mColliders;	// Playerが保有するColliderの配列	
+	std::array<GameObject*, 9> mColliders;	// Playerが保有するColliderの配列	
 
 	bool mShape[3][3] = {};			// 変形画面で選択するグリッドの配列
 	bool mbIsTransforming = false;	// 変形中であることを示す
