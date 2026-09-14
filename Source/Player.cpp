@@ -30,10 +30,9 @@ Player::Player(std::string filename, VECTOR initPos)
 	// 3×3 = 9個のColliderを作成
 	for (int i = 0; i < 9; i++)
 	{
-		mColliders[i] = new Collider(this);
-		mColliders[i]->Initialize();
-		mColliders[i]->AddCollisionTag(Tag::BLOCK);
-		mColliders[i]->SetHalfSize(
+		mColliders[i] = new GameObject("Resource/Player.png",VGet(0.0f,0.0f,0.0f));
+		mColliders[i]->GetCollider()->AddCollisionTag(Tag::BLOCK);
+		mColliders[i]->GetCollider()->SetHalfSize(
 			VGet(
 				GameConfig::CELL_SIZE / 2,
 				GameConfig::CELL_SIZE / 2,
@@ -41,11 +40,11 @@ Player::Player(std::string filename, VECTOR initPos)
 			)
 		);
 
-		mColliders[i]->SetEnabled(false);
+		mColliders[i]->GetCollider()->SetEnabled(false);
 	}
 
 	// 初期状態は中央の1ブロックだけ有効
-	mColliders[4]->SetEnabled(true);
+	mColliders[4]->GetCollider()->SetEnabled(true);
 
 	// 初期形状
 	mShape[1][1] = true;
@@ -62,7 +61,7 @@ Player::~Player()
 	{
 		if (collider != nullptr)
 		{
-			collider->Finalize();
+			collider->GetCollider()->Finalize();
 			delete collider;
 		}
 	}
@@ -309,7 +308,8 @@ void Player::UpdateTransformCollider()
 		{
 			int index = y * 3 + x;
 
-			Collider* collider = mColliders[index];
+			GameObject* gameObject = mColliders[index];
+			Collider* collider = gameObject->GetCollider();
 
 			if (collider == nullptr)
 			{
@@ -367,6 +367,7 @@ void Player::Rotate()
 		{
 			mDirection = 1.0f;       // 右
 			mIsRolling = true;
+			mbCompleteRoll = false;//初期化
 			mRollTimer = 0;
 			mStartPos = GetPosition();
 			mStartAngle = mCurrentAngle;
@@ -375,6 +376,7 @@ void Player::Rotate()
 		{
 			mDirection = -1.0f;      // 左
 			mIsRolling = true;
+			mbCompleteRoll = false;//初期化
 			mRollTimer = 0;
 			mStartPos = GetPosition();
 			mStartAngle = mCurrentAngle;
@@ -385,12 +387,18 @@ void Player::Rotate()
 	if (mIsRolling)
 	{
 		// 該当する方向のキーが押され続けているか？
-		bool isHolding = (mDirection > 0.0f && isPressL) || (mDirection < 0.0f && isPressJ);
-
-		if (isHolding)
+		bool isHolding = (mDirection > 0.0f && isPressL) ||
+			(mDirection < 0.0f && isPressJ);
+		float currentProgress = (float)mRollTimer / ROLL_FRAMES;
+		if (currentProgress >= 0.5f || mbCompleteRoll)
 		{
-			// 押し続けている間は進める
-			mRollTimer++;
+			mbCompleteRoll = true;
+			
+			mRollTimer++;// 押し続けている間は進める
+		}
+		else if (isHolding)
+		{
+			mRollTimer++;//45度未満かつキーを押し続けていたら進める
 		}
 		else
 		{
@@ -400,6 +408,7 @@ void Player::Rotate()
 			{
 				mRollTimer = 0;
 				mIsRolling = false;
+				mbCompleteRoll = false;
 				SetPosition(mStartPos);
 				mCurrentAngle = mStartAngle;
 				return;
@@ -426,6 +435,7 @@ void Player::Rotate()
 		if (mRollTimer >= ROLL_FRAMES)
 		{
 			mIsRolling = false;
+			mbCompleteRoll = false;
 			mRollTimer = 0;
 
 			pos.y = mStartPos.y;

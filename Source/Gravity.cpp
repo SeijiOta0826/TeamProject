@@ -1,4 +1,5 @@
-﻿#include "Gravity.h" // 追加
+﻿#include "Gravity.h"
+
 #include "GameObject.h"
 
 #include "ScreenConfig.h"
