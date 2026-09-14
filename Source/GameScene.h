@@ -1,11 +1,16 @@
-#pragma once
+﻿#pragma once
 #include "Scene.h"
+
+class Player_test;
 
 class GameScene : public Scene
 {
 public:
-    void Initialize();
-    void Update(float deltaTime);
-    void Draw();
-    void Finalize();
+    void Initialize() override;
+    void Update(float deltaTime) override;
+    void Draw() override;
+    void Finalize() override;
+
+private:
+    Player_test* mpPlayer = nullptr;
 };

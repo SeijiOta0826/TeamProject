@@ -28,14 +28,8 @@ Texture::~Texture()
 
 void Texture::Draw()
 {
-	/*VECTOR topLeft = CalculateTopLeftPosition();
-
-	DrawGraph(
-		static_cast<int>(topLeft.x),
-		static_cast<int>(topLeft.y),
-		mnHandle,
-		TRUE
-	);*/
+	if (!mbEnabled)
+		return;
 
 	VECTOR topLeft = CalculateTopLeftPosition();
 	VECTOR bottomRight = VGet(

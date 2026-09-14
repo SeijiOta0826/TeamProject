@@ -6,7 +6,7 @@ StageBlock::StageBlock(std::string filename, VECTOR initPos)
 	:GameObject(filename, initPos)
 {
 	SetTag(Tag::BLOCK);
-	mpGravity->SetEnable(false);
+	mpGravity->SetEnabled(false);
 }
 
 void StageBlock::Update(float _deltaTime)

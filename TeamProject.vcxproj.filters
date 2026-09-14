@@ -120,6 +120,9 @@
     <ClCompile Include="Source\PlayerPiece.cpp">
       <Filter>ソース ファイル\Obj</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Player_test.cpp">
+      <Filter>ソース ファイル\Obj</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GamePad.h">
@@ -192,6 +195,9 @@
       <Filter>ヘッダー ファイル\Obj</Filter>
     </ClInclude>
     <ClInclude Include="Source\PlayerPiece.h">
+      <Filter>ヘッダー ファイル\Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Player_test.h">
       <Filter>ヘッダー ファイル\Obj</Filter>
     </ClInclude>
   </ItemGroup>

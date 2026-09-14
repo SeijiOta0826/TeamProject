@@ -35,6 +35,7 @@
     <ClCompile Include="Source\ObjectManager.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\PlayerPiece.cpp" />
+    <ClCompile Include="Source\Player_test.cpp" />
     <ClCompile Include="Source\ResourceManager.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
@@ -60,6 +61,7 @@
     <ClInclude Include="Source\ObjectManager.h" />
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\PlayerPiece.h" />
+    <ClInclude Include="Source\Player_test.h" />
     <ClInclude Include="Source\ResourceManager.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\SceneManager.h" />

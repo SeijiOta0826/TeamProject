@@ -7,7 +7,7 @@
 
 Gravity::Gravity(GameObject* _owner)
 	: mpOwner(_owner)
-	, mbEnable(true)
+	, mbEnabled(true)
 	, mfGravity(GameConfig::GLAVITY)
 	, mfVelocityY(0.0f)
 {
@@ -22,7 +22,7 @@ Gravity::~Gravity()
 void Gravity::Initialize()
 {
 	mfVelocityY = 0.0f;
-	mbEnable = true;
+	mbEnabled = true;
 }
 
 void Gravity::Finalize()
@@ -34,7 +34,7 @@ void Gravity::Finalize()
 
 void Gravity::Update(float _deltaTime)
 {
-	if (!mbEnable || mpOwner == nullptr)
+	if (!mbEnabled || mpOwner == nullptr)
 	{
 		return;
 	}
@@ -70,19 +70,19 @@ void Gravity::Update(float _deltaTime)
 	mpOwner->SetPosition(position);
 }
 
-void Gravity::SetEnable(bool _enable)
+void Gravity::SetEnabled(bool _enable)
 {
-	mbEnable = _enable;
+	mbEnabled = _enable;
 
-	if (!mbEnable)
+	if (!mbEnabled)
 	{
 		mfVelocityY = 0.0f;
 	}
 }
 
-bool Gravity::IsEnable() const
+bool Gravity::IsEnabled() const
 {
-	return mbEnable;
+	return mbEnabled;
 }
 
 void Gravity::ResetVerticalVelocity()

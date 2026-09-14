@@ -7,8 +7,8 @@
 
 #include "Stage.h"
 #include "Player.h"
+#include "Player_test.h"
 #include "StageBlock.h"
-
 
 #include "Debug.h"
 #include "GameConfig.h"
@@ -17,20 +17,24 @@
 void GameScene::Initialize()
 {
     // 初期化処理
-    auto* player =
+    /*auto* player =
        this
         ->GetObjectManager()
         ->CreateObject<Player>(
             "Resource/Player.png",
-            VGet(120.0f, 500.0f, 0.0f)
-        );
+            VGet(0.0f, 0.0f, 0.0f)
+        );*/
 
     auto* stage = new Stage();
     stage->Load("Resource/Stage/test_stage.csv");
+
+    mpPlayer =
+        new Player_test();
 }
 
 void GameScene::Update(float deltaTime)
 {
+    mpPlayer->Update();
     // 更新処理
     Scene::Update(deltaTime);
 }
@@ -51,4 +55,5 @@ void GameScene::Draw()
 void GameScene::Finalize()
 {
     // 終了処理
+    Scene::Finalize();
 }
