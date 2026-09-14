@@ -41,6 +41,7 @@
     <ClCompile Include="Source\StageBlock.cpp" />
     <ClCompile Include="Source\StageSelectScene.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
+    <ClCompile Include="Source\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Collider.h" />
@@ -67,6 +68,7 @@
     <ClInclude Include="Source\StageBlock.h" />
     <ClInclude Include="Source\StageSelectScene.h" />
     <ClInclude Include="Source\Texture.h" />
+    <ClInclude Include="Source\TitleScene.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

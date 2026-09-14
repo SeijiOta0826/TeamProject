@@ -1,16 +1,15 @@
-﻿#pragma once
+#pragma once
 
 #include "Scene.h"
 
-class StageSelectScene : public Scene
+class TitleScene : public Scene
 {
 public:
 	void Initialize() override;
 	void Update(float _deltaTime) override;
 	void Draw() override;
 	void Finalize() override;
-
 private:
-	int mnSelectedStage = 0;
-	bool mbPreviousMouseLeft = true;
+	bool mbStartSelected = false;
+	bool mbPreviousMouseLeft = false;
 };

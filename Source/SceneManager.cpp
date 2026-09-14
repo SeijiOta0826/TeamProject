@@ -4,6 +4,7 @@
 
 #include "GameScene.h"
 #include "StageSelectScene.h"
+#include "TitleScene.h"
 
 SceneManager::SceneManager()
 	:mnSceneType(SCENE_TYPE::SCENE_NONE)
@@ -16,7 +17,7 @@ SceneManager::SceneManager()
 void SceneManager::Initialize()
 {
 	// -- 初期シーンの設定 -- //
-	mnNextSceneType = SCENE_TYPE::STAGE_SELECT_SCENE;
+	mnNextSceneType = SCENE_TYPE::TITLE_SCENE;
 	ChangeSceneIfNeeded();
 }
 
@@ -44,6 +45,10 @@ void SceneManager::ChangeSceneIfNeeded()
 
 	switch (mnSceneType)
 	{
+	case SCENE_TYPE::TITLE_SCENE:
+		mpCurrentScene = new TitleScene();
+		break;
+
 	case SCENE_TYPE::STAGE_SELECT_SCENE:
 		mpCurrentScene = new StageSelectScene();
 		break;

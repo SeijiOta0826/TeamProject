@@ -2,10 +2,12 @@
 #include "Master.h"
 #include "SceneManager.h"
 #include "DxLib.h"
+#include "InputManager.h"
 
 void StageSelectScene::Initialize()
 {
-	// 初期化処理
+	mbPreviousMouseLeft =
+		(GetMouseInput() & MOUSE_INPUT_LEFT) != 0;
 }
 
 void StageSelectScene::Update(float _deltaTime)
@@ -21,12 +23,12 @@ void StageSelectScene::Update(float _deltaTime)
 	const int startY = 220;
 	const int interval = 100;
 
-	// マウスがどのステージに乗っているか調べる
+	// マウスがどのステージボタンの上にあるか
 	for (int i = 0; i < 3; i++)
 	{
 		int left = startX;
 		int top = startY + i * interval;
-		int right = startX + buttonWidth;
+		int right = left + buttonWidth;
 		int bottom = top + buttonHeight;
 
 		if (mouseX >= left &&
@@ -38,13 +40,28 @@ void StageSelectScene::Update(float _deltaTime)
 		}
 	}
 
-	// 左クリックで決定
-	if (GetMouseInput() & MOUSE_INPUT_LEFT)
-	{
-		Master::mpSceneManager->SetStageNumber(mnSelectedStage + 1);
+	// 左クリックが「押された瞬間」だけ判定
+	bool currentMouseLeft =
+		(GetMouseInput() & MOUSE_INPUT_LEFT) != 0;
 
-		Master::mpSceneManager->SetNextScene(SCENE_TYPE::GAME_SCENE);
+	bool mouseLeftDown =
+		currentMouseLeft && !mbPreviousMouseLeft;
+
+	if (mouseLeftDown)
+	{
+		// ステージを決定
+		Master::mpSceneManager->SetStageNumber(
+			mnSelectedStage + 1
+		);
+
+		// ゲーム画面へ
+		Master::mpSceneManager->SetNextScene(
+			SCENE_TYPE::GAME_SCENE
+		);
 	}
+
+	// 前フレームのクリック状態を保存
+	mbPreviousMouseLeft = currentMouseLeft;
 }
 
 void StageSelectScene::Draw()

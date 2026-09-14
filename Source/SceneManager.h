@@ -5,8 +5,9 @@ class Scene;
 enum class SCENE_TYPE
 {
 	SCENE_NONE = 0,		// 定義なし
-	STAGE_SELECT_SCENE = 1,
-	GAME_SCENE = 2,		// GameScene
+	TITLE_SCENE = 1,    // タイトル
+	STAGE_SELECT_SCENE = 2, // ステージセレクト
+	GAME_SCENE = 3,		// GameScene
 };
 
 class SceneManager
