@@ -8,4 +8,9 @@ public:
     void Update(float deltaTime);
     void Draw();
     void Finalize();
+
+    void SetStageNumber(int _stageNumber);
+
+private:
+    int mnStageNumber = 1;
 };

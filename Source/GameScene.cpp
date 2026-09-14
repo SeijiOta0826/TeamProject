@@ -9,7 +9,7 @@
 #include "Player.h"
 #include "StageBlock.h"
 
-
+#include <string>
 #include "Debug.h"
 #include "GameConfig.h"
 
@@ -26,7 +26,22 @@ void GameScene::Initialize()
         );
 
     auto* stage = new Stage();
-    stage->Load("Resource/Stage/test_stage.csv");
+
+    /*if (mnStageNumber == 1)
+    {
+        stageFileName = "Resource/Stage/test_stage.csv";
+    }
+
+    stage->Load(stageFileName);*/
+    
+    std::string stageFileName =
+        "Resource/Stage/Stage"
+        + std::to_string(mnStageNumber)
+        + ".csv";
+
+    stage->Load(stageFileName);
+
+    // ステージを増やす際はCSVの名前を Stage1.csv Stage2.csv … にしとけば読み込んでくれる
 }
 
 void GameScene::Update(float deltaTime)
@@ -46,6 +61,11 @@ void GameScene::Draw()
 
     Debug::Draw();
     Scene::Draw();
+}
+
+void GameScene::SetStageNumber(int _stageNumber)
+{
+    mnStageNumber = _stageNumber;
 }
 
 void GameScene::Finalize()

@@ -39,6 +39,7 @@
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\Stage.cpp" />
     <ClCompile Include="Source\StageBlock.cpp" />
+    <ClCompile Include="Source\StageSelectScene.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -64,6 +65,7 @@
     <ClInclude Include="Source\ScreenConfig.h" />
     <ClInclude Include="Source\Stage.h" />
     <ClInclude Include="Source\StageBlock.h" />
+    <ClInclude Include="Source\StageSelectScene.h" />
     <ClInclude Include="Source\Texture.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

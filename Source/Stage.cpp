@@ -14,6 +14,15 @@
 void Stage::Load(const std::string& _filename)
 {
 	mStageData = CsvLoader::Load(_filename);
+    
+    if (mStageData.empty())
+    {
+        OutputDebugStringA("Stage CSVが読み込めていません\n");
+    }
+    else
+    {
+        OutputDebugStringA("Stage CSV読み込み成功\n");
+    }
 
 	CreateObjects();
 }
