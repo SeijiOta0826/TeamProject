@@ -10,4 +10,6 @@ public:
 
 	void Update(float _deltaTime) override;
 	void Draw() override;
+
+	bool IsPlayerTouching() const;
 };

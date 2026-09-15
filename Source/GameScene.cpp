@@ -29,7 +29,8 @@ void GameScene::Initialize()
 		);
 
 	// ゴール画像 できたら誰か変えといて
-	this
+	mpGoal =
+		this
 		->GetObjectManager()
 		->CreateObject<Goal>(
 			"Resource/Help.png",
@@ -67,8 +68,8 @@ void GameScene::Update(float deltaTime)
 	// 更新処理
 	Scene::Update(deltaTime);
 
-	if (mpPlayer != nullptr &&
-		mpPlayer->IsGoalReached())
+	if (mpGoal != nullptr &&
+		mpGoal->IsPlayerTouching())
 	{
 		mbIsClear = true;
 	}

@@ -2,6 +2,7 @@
 #include "Scene.h"
 
 class Player;
+class Goal;
 
 class GameScene : public Scene
 {
@@ -27,4 +28,6 @@ private:
 
     Player* mpPlayer = nullptr;
     bool mbIsClear = false;
+
+    Goal* mpGoal = nullptr;
 };

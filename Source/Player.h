@@ -14,8 +14,6 @@ public:
 	void Update(float _deltaTime) override;
 	void Draw() override;
 
-	bool IsGoalReached() const;
-
 private:
 	void Move();
 
