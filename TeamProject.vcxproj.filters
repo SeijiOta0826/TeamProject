@@ -117,6 +117,9 @@
     <ClCompile Include="Source\Stage.cpp">
       <Filter>ソース ファイル\Obj</Filter>
     </ClCompile>
+    <ClCompile Include="Source\SoundManager.cpp">
+      <Filter>ソース ファイル\Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GamePad.h">
@@ -187,6 +190,9 @@
     </ClInclude>
     <ClInclude Include="Source\Stage.h">
       <Filter>ヘッダー ファイル\Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SoundManager.h">
+      <Filter>ヘッダー ファイル\Manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
