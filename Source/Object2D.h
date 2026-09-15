@@ -11,6 +11,7 @@ enum class Tag
 	UNNKO,
 	PLAYER,
 	BLOCK,
+	GOAL,
 };
 
 /* memo : 

@@ -32,6 +32,7 @@ Player::Player(std::string filename, VECTOR initPos)
 	{
 		mColliders[i] = new GameObject("Resource/Player.png",VGet(0.0f,0.0f,0.0f));
 		mColliders[i]->GetCollider()->AddCollisionTag(Tag::BLOCK);
+		mColliders[i]->GetCollider()->AddCollisionTag(Tag::GOAL);
 		mColliders[i]->GetCollider()->SetHalfSize(
 			VGet(
 				GameConfig::CELL_SIZE / 2,
@@ -103,6 +104,8 @@ void Player::Update(float _deltaTime)
 		// StageBlockとの当たり判定
 		//ResolveStageCollision();
 	}
+
+	UpdateTransformCollider();
 
 	GameObject::Update(_deltaTime);
 }
@@ -310,6 +313,7 @@ void Player::UpdateTransformCollider()
 
 			GameObject* gameObject = mColliders[index];
 			Collider* collider = gameObject->GetCollider();
+			gameObject->SetPosition(GetPosition());
 
 			if (collider == nullptr)
 			{
@@ -352,7 +356,6 @@ void Player::UpdateTransformCollider()
 	}
 }
 
-//=========回転処理=========
 //=========回転処理=========
 void Player::Rotate()
 {
@@ -467,5 +470,30 @@ void Player::Rotate()
 		}
 	}
 }
+
+bool Player::IsGoalReached() const
+{
+	for (auto* gameObject : mColliders)
+	{
+		if (gameObject == nullptr)
+			continue;
+
+		Collider* collider = gameObject->GetCollider();
+
+		if (collider == nullptr)
+			continue;
+
+		if (!collider->IsEnabled())
+			continue;
+
+		if (collider->IsColliding(Tag::GOAL))
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
 
 

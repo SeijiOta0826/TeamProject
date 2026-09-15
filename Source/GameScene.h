@@ -1,6 +1,8 @@
 #pragma once
 #include "Scene.h"
 
+class Player;
+
 class GameScene : public Scene
 {
 public:
@@ -13,4 +15,16 @@ public:
 
 private:
     int mnStageNumber = 1;
+
+    bool mbIsPaused = false;
+    bool mbPreviousP = false;
+    bool mbPreviousMouseLeft = false;
+
+    void UpdatePause();
+    void DrawPause();
+    void DrawClear();
+    void UpdateClear();
+
+    Player* mpPlayer = nullptr;
+    bool mbIsClear = false;
 };

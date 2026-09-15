@@ -76,7 +76,8 @@ void StageSelectScene::Draw()
 
 	// タイトル
 	DrawString(
-		500, 100,
+		580, 
+		100,
 		"ステージ選択",
 		GetColor(0, 0, 0)
 	);

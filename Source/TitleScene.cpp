@@ -7,7 +7,8 @@
 
 void TitleScene::Initialize()
 {
-	// 初期化処理
+	// シーンに入った瞬間のマウス状態を記録
+	mbPreviousMouseLeft = (GetMouseInput() & MOUSE_INPUT_LEFT) != 0;
 }
 
 void TitleScene::Update(float _deltaTime)
