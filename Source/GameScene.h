@@ -11,11 +11,11 @@ public:
     void Update(float deltaTime);
     void Draw();
     void Finalize();
-
-    private:
-		int mFontHandle = -1; // �t�H���g�n���h��
-
     void SetStageNumber(int _stageNumber);
+    private:
+		int mFontHandle = -1; // フォントハンドル
+
+   
 
 private:
     int mnStageNumber = 1;
