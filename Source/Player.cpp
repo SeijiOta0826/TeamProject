@@ -54,9 +54,6 @@ Player::Player(std::string filename, VECTOR initPos)
 
 Player::~Player()
 {
-	delete mpGravity;
-	mpGravity = nullptr;
-
 	for (auto* collider : mColliders)
 	{
 		if (collider != nullptr)
@@ -71,6 +68,17 @@ Player::~Player()
 
 void Player::Update(float _deltaTime)
 {
+	// ポーズ中のバックグラウンドの停止
+	if (_deltaTime <= 0.0f)
+	{
+		return;
+	}
+
+	if (InputManager::GetInstance().GetButtonDown(Button::Transform))
+	{
+		mbIsTransforming = true;
+	}
+
 	// Eキーを押したら変形モードに入る
 	if (InputManager::GetInstance().GetButtonDown(Button::Transform))
 	{

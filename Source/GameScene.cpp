@@ -29,12 +29,20 @@ void GameScene::Initialize()
 		);
 
 	// ゴール画像 できたら誰か変えといて
+	bool goalShape[3][3] =
+	{
+		{ false, false, false },
+		{ false, true,  false },
+		{ false, false, false }
+	};
+
 	mpGoal =
 		this
 		->GetObjectManager()
 		->CreateObject<Goal>(
 			"Resource/Help.png",
-			VGet(1100.0f, 500.0f, 0.0f)
+			VGet(1100.0f, 500.0f, 0.0f),
+			goalShape
 		);
 
     auto* stage = new Stage();
@@ -65,11 +73,19 @@ void GameScene::Update(float deltaTime)
 		return;
 	}
 
+	UpdatePause();
+
+	if (mbIsPaused)
+	{
+		deltaTime = 0.0f;
+	}
+
 	// 更新処理
 	Scene::Update(deltaTime);
 
 	if (mpGoal != nullptr &&
-		mpGoal->IsPlayerTouching())
+		mpGoal->IsShapeMatched(mpPlayer) &&
+		mpGoal->IsWithinDistance(mpPlayer))
 	{
 		mbIsClear = true;
 	}
