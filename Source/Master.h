@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include "SceneManager.h"
 #include "ResourceManager.h"
+#include "FontManager.h"
+
 // #include "Loading.h"
 
 /* memo : 
@@ -11,5 +13,6 @@ class Master
 public:
 	static SceneManager* mpSceneManager;
 	static ResourceManager* mpResource;
+	static FontManager* mpFontManager;
 	// static LoadingManager* mpLoading;
 };
