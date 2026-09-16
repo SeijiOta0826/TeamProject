@@ -17,7 +17,7 @@
 void GameScene::Initialize()
 {
     // 初期化処理
-    /*auto* player =
+   /* auto* player =
        this
         ->GetObjectManager()
         ->CreateObject<Player>(
@@ -48,6 +48,7 @@ void GameScene::Draw()
         TRUE
     );
 
+    mpPlayer->Draw();
     Debug::Draw();
     Scene::Draw();
 }

@@ -72,9 +72,6 @@
     <ClCompile Include="Source\Main.cpp">
       <Filter>ソース ファイル\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Object2D.cpp">
-      <Filter>ソース ファイル\Obj</Filter>
-    </ClCompile>
     <ClCompile Include="Source\ObjectManager.cpp">
       <Filter>ソース ファイル\Manager</Filter>
     </ClCompile>
@@ -86,9 +83,6 @@
     </ClCompile>
     <ClCompile Include="Source\SceneManager.cpp">
       <Filter>ソース ファイル\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Texture.cpp">
-      <Filter>ソース ファイル\Obj</Filter>
     </ClCompile>
     <ClCompile Include="Source\Collider.cpp">
       <Filter>ソース ファイル\Module</Filter>
@@ -105,9 +99,6 @@
     <ClCompile Include="Source\Debug.cpp">
       <Filter>ソース ファイル\System</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Gravity.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Source\GameObject.cpp">
       <Filter>ソース ファイル\Obj</Filter>
     </ClCompile>
@@ -122,6 +113,9 @@
     </ClCompile>
     <ClCompile Include="Source\Player_test.cpp">
       <Filter>ソース ファイル\Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gravity.cpp">
+      <Filter>ソース ファイル\Module</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -143,9 +137,6 @@
     <ClInclude Include="Source\Master.h">
       <Filter>ヘッダー ファイル\System</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Object2D.h">
-      <Filter>ヘッダー ファイル\Obj</Filter>
-    </ClInclude>
     <ClInclude Include="Source\ObjectManager.h">
       <Filter>ヘッダー ファイル\Manager</Filter>
     </ClInclude>
@@ -160,9 +151,6 @@
     </ClInclude>
     <ClInclude Include="Source\ScreenConfig.h">
       <Filter>ヘッダー ファイル\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Texture.h">
-      <Filter>ヘッダー ファイル\Obj</Filter>
     </ClInclude>
     <ClInclude Include="Source\Collider.h">
       <Filter>ヘッダー ファイル\Module</Filter>
@@ -182,9 +170,6 @@
     <ClInclude Include="Source\GameConfig.h">
       <Filter>ヘッダー ファイル\System</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Gravity.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Source\GameObject.h">
       <Filter>ヘッダー ファイル\Obj</Filter>
     </ClInclude>
@@ -199,6 +184,15 @@
     </ClInclude>
     <ClInclude Include="Source\Player_test.h">
       <Filter>ヘッダー ファイル\Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Module.h">
+      <Filter>ヘッダー ファイル\Module</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Transform.h">
+      <Filter>ヘッダー ファイル\Module</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gravity.h">
+      <Filter>ヘッダー ファイル\Module</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

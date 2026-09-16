@@ -1,55 +1,27 @@
 ﻿#include "Gravity.h"
 
+#include <DxLib.h>
+
 #include "GameObject.h"
+#include "Transform.h"
 
 #include "ScreenConfig.h"
 #include "GameConfig.h"
 
-Gravity::Gravity(GameObject* _owner)
-	: mpOwner(_owner)
-	, mbEnabled(true)
-	, mfGravity(GameConfig::GLAVITY)
-	, mfVelocityY(0.0f)
-{
-
-}
-
-Gravity::~Gravity()
-{
-	Finalize();
-}
-
-void Gravity::Initialize()
-{
-	mfVelocityY = 0.0f;
-	mbEnabled = true;
-}
-
-void Gravity::Finalize()
-{
-	// -- 所有するポインタの解放 -- //
-	delete mpOwner;
-	mpOwner = nullptr;
-}
-
 void Gravity::Update(float _deltaTime)
 {
-	if (!mbEnabled || mpOwner == nullptr)
-	{
-		return;
-	}
-
-	if (mpOwner->IsGrounded())
+	if (mpGameObject->IsGrounded())
 	{
 		ResetVerticalVelocity();
 		return;
 	}
 
 	// 重力加速度によって落下速度を計算
-	mfVelocityY += mfGravity * _deltaTime;
+	mfVelocityY += GameConfig::GLAVITY * _deltaTime;
 
-	// 現在位置を取得
-	VECTOR position = mpOwner->GetPosition();
+	// -- 座標を取得 -- //
+	auto transform = mpGameObject->GetModule<Transform>();
+	VECTOR position = transform->GetPosition();
 
 	// 重力による移動量を計算
 		// ota : ここdeltaTimeいるんか。僕は💩です
@@ -67,22 +39,7 @@ void Gravity::Update(float _deltaTime)
 	}
 
 	// Objに座標を反映
-	mpOwner->SetPosition(position);
-}
-
-void Gravity::SetEnabled(bool _enable)
-{
-	mbEnabled = _enable;
-
-	if (!mbEnabled)
-	{
-		mfVelocityY = 0.0f;
-	}
-}
-
-bool Gravity::IsEnabled() const
-{
-	return mbEnabled;
+	transform->SetPosition(position);
 }
 
 void Gravity::ResetVerticalVelocity()

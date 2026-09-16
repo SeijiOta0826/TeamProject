@@ -5,13 +5,8 @@
 #include "SceneManager.h"
 #include "Scene.h"
 
-#include "Object2D.h"	// memo : いつか消す
 #include "GameObject.h"
-
-Collider::Collider(GameObject* _obj)
-{
-	mpObj = _obj;
-}
+#include "Transform.h"
 
 void Collider::Initialize() {
 	Master::mpSceneManager
@@ -33,8 +28,10 @@ bool Collider::IsColliding() const {
 
 bool Collider::IsColliding(Tag _tag) const
 {
-	for (auto* collider : mCollisions) {
-		if (collider->GetGameObject()->GetTag() == _tag) {
+	for (auto collider : mCollisions) 
+	{
+		if (collider->GetGameObject()->GetTag() == _tag)
+		{
 			return true;
 		}
 	}
@@ -42,23 +39,11 @@ bool Collider::IsColliding(Tag _tag) const
 	return false;
 }
 
-//Object2D* Collider::GetCollision(Tag _tag) const
-//{
-//	for (auto* collider : mCollisions) {
-//		Tag tag = collider->GetObject2D()->GetTag();
-//		if (tag == _tag) {
-//			return collider->GetObject2D();
-//		}
-//	}
-//
-//	return nullptr;
-//}
-
 std::vector<GameObject*> Collider::GetCollisions(Tag _tag)
 {
 	std::vector<GameObject*> objects;
 
-	for (auto* collider : mCollisions)
+	for (auto collider : mCollisions)
 	{
 		auto* gameObject = collider->GetGameObject();
 		Tag tag = gameObject->GetTag();
@@ -71,10 +56,15 @@ std::vector<GameObject*> Collider::GetCollisions(Tag _tag)
 	return objects;
 }
 
-VECTOR Collider::GetWorldPosition() const {
+VECTOR Collider::GetWorldPosition() const
+{
+	auto transform = mpGameObject->GetModule<Transform>();
+	if (transform == nullptr)
+		return;
+
 	return
 		VAdd(
-			mpObj->GetPosition(),
+			transform->GetPosition(),
 			mvOffSetPos
 		);
 }

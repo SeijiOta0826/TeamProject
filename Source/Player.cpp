@@ -1,7 +1,6 @@
 ﻿#include <cmath>  //回転処理用
 
 #include "Player.h"
-#include "Texture.h"
 
 #include "Collider.h"
 #include "Gravity.h" // 追加
@@ -19,7 +18,7 @@
 #include<DxLib.h>
 
 Player::Player(std::string filename, VECTOR initPos)
-	:GameObject(filename, initPos)
+	:GameObject()
 {
 	// -- タグ設定 -- //
 	SetTag(Tag::PLAYER);

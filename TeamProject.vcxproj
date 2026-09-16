@@ -31,7 +31,6 @@
     <ClCompile Include="Source\Keyboard.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\Mouse.cpp" />
-    <ClCompile Include="Source\Object2D.cpp" />
     <ClCompile Include="Source\ObjectManager.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\PlayerPiece.cpp" />
@@ -41,11 +40,11 @@
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\Stage.cpp" />
     <ClCompile Include="Source\StageBlock.cpp" />
-    <ClCompile Include="Source\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Collider.h" />
     <ClInclude Include="Source\CollisionManager.h" />
+    <ClInclude Include="Source\Module.h" />
     <ClInclude Include="Source\CsvLoader.h" />
     <ClInclude Include="Source\Debug.h" />
     <ClInclude Include="Source\GameConfig.h" />
@@ -57,7 +56,6 @@
     <ClInclude Include="Source\Keyboard.h" />
     <ClInclude Include="Source\Master.h" />
     <ClInclude Include="Source\Mouse.h" />
-    <ClInclude Include="Source\Object2D.h" />
     <ClInclude Include="Source\ObjectManager.h" />
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\PlayerPiece.h" />
@@ -68,7 +66,7 @@
     <ClInclude Include="Source\ScreenConfig.h" />
     <ClInclude Include="Source\Stage.h" />
     <ClInclude Include="Source\StageBlock.h" />
-    <ClInclude Include="Source\Texture.h" />
+    <ClInclude Include="Source\Transform.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
