@@ -14,9 +14,12 @@
 
 #include "StageBlock.h"
 
+
 #include "GameConfig.h"
 
 #include<DxLib.h>
+
+
 
 Player::Player(std::string filename, VECTOR initPos)
 	:GameObject(filename, initPos)

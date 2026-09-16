@@ -7,9 +7,14 @@
 #include "SceneManager.h"
 #include "ResourceManager.h"
 #include "InputManager.h"
+#include "FontManager.h"
 
+
+// -- 静的メンバ変数の定義 -- //
 SceneManager* Master::mpSceneManager = new SceneManager();
 ResourceManager* Master::mpResource = new ResourceManager();
+FontManager* Master::mpFontManager = new FontManager();
+
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	LPSTR lpCmdLine, int nCmdShow)
@@ -81,7 +86,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	// -- 終了処理　-- // 
 	// 終了処理をここへ
 	Master::mpSceneManager->Finalize();
-
+		Master::mpFontManager->Clear();
 	DxLib_End();	// DXライブラリ使用の終了
 	return 0;	//ソフトの終了
 }

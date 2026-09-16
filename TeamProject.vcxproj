@@ -23,6 +23,7 @@
     <ClCompile Include="Source\CollisionManager.cpp" />
     <ClCompile Include="Source\CsvLoader.cpp" />
     <ClCompile Include="Source\Debug.cpp" />
+    <ClCompile Include="Source\FontManager.cpp" />
     <ClCompile Include="Source\GameObject.cpp" />
     <ClCompile Include="Source\GamePad.cpp" />
     <ClCompile Include="Source\GameScene.cpp" />
@@ -47,6 +48,7 @@
     <ClInclude Include="Source\CollisionManager.h" />
     <ClInclude Include="Source\CsvLoader.h" />
     <ClInclude Include="Source\Debug.h" />
+    <ClInclude Include="Source\FontManager.h" />
     <ClInclude Include="Source\GameConfig.h" />
     <ClInclude Include="Source\GameObject.h" />
     <ClInclude Include="Source\GamePad.h" />
