@@ -5,7 +5,9 @@ class Scene;
 enum class SCENE_TYPE
 {
 	SCENE_NONE = 0,		// 定義なし
-	GAME_SCENE = 1,		// GameScene
+	TITLE_SCENE = 1,    // タイトル
+	STAGE_SELECT_SCENE = 2, // ステージセレクト
+	GAME_SCENE = 3,		// GameScene
 };
 
 class SceneManager
@@ -25,8 +27,13 @@ public:
 	Scene* GetCurrentScene() { return mpCurrentScene; }			// 現在シーンの取得
 	SCENE_TYPE GetCurrentSceneType() { return mnSceneType; }	// シーンタイプの取得関数
 
+	void SetStageNumber(int _stageNumber);
+	int GetStageNumber() const;
+
 private:
 	SCENE_TYPE mnSceneType;      // 現在シーンのタイプ
 	SCENE_TYPE mnNextSceneType;  // 次シーンのタイプ
 	Scene* mpCurrentScene;       // 現在シーンのポインタ
+
+	int mnStageNumber = 1;
 };

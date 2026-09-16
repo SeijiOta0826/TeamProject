@@ -3,6 +3,8 @@
 #include "Master.h"
 
 #include "GameScene.h"
+#include "StageSelectScene.h"
+#include "TitleScene.h"
 
 SceneManager::SceneManager()
 	:mnSceneType(SCENE_TYPE::SCENE_NONE)
@@ -15,7 +17,7 @@ SceneManager::SceneManager()
 void SceneManager::Initialize()
 {
 	// -- 初期シーンの設定 -- //
-	mnNextSceneType = SCENE_TYPE::GAME_SCENE;
+	mnNextSceneType = SCENE_TYPE::TITLE_SCENE;
 	ChangeSceneIfNeeded();
 }
 
@@ -29,18 +31,11 @@ void SceneManager::Draw()
 	mpCurrentScene->Draw();
 }
 
-void SceneManager::Finalize()
-{
-	// -- 解放 -- //
-	delete mpCurrentScene;
-	mpCurrentScene = nullptr;
-}
-
 void SceneManager::ChangeSceneIfNeeded()
 {
 	if (mnSceneType == mnNextSceneType)
 		return;
-	
+
 	if (mpCurrentScene != nullptr)
 	{
 		mpCurrentScene->Finalize();	// 旧シーンの終了処理をする
@@ -50,12 +45,45 @@ void SceneManager::ChangeSceneIfNeeded()
 
 	switch (mnSceneType)
 	{
-	case SCENE_TYPE::GAME_SCENE:
-		mpCurrentScene = new GameScene();
+	case SCENE_TYPE::TITLE_SCENE:
+		mpCurrentScene = new TitleScene();
 		break;
+
+	case SCENE_TYPE::STAGE_SELECT_SCENE:
+		mpCurrentScene = new StageSelectScene();
+		break;
+
+	case SCENE_TYPE::GAME_SCENE:
+	{
+		auto* gameScene = new GameScene();
+
+		gameScene->SetStageNumber(mnStageNumber);
+
+		mpCurrentScene = gameScene;
+		break;
+	}
+
 	default:
 		break;
 	}
 
 	mpCurrentScene->Initialize();	// 新シーンの初期処理をする
 }
+
+void SceneManager::SetStageNumber(int _stageNumber)
+{
+	mnStageNumber = _stageNumber;
+}
+
+int SceneManager::GetStageNumber() const
+{
+	return mnStageNumber;
+}
+
+void SceneManager::Finalize()
+{
+	// -- 解放 -- //
+	delete mpCurrentScene;
+	mpCurrentScene = nullptr;
+}
+

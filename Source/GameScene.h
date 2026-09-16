@@ -1,6 +1,9 @@
 #pragma once
 #include "Scene.h"
 
+class Player;
+class Goal;
+
 class GameScene : public Scene
 {
 public:
@@ -10,5 +13,24 @@ public:
     void Finalize();
 
     private:
-		int mFontHandle = -1; // ƒtƒHƒ“ƒgƒnƒ“ƒhƒ‹
+		int mFontHandle = -1; // ï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½nï¿½ï¿½ï¿½hï¿½ï¿½
+
+    void SetStageNumber(int _stageNumber);
+
+private:
+    int mnStageNumber = 1;
+
+    bool mbIsPaused = false;
+    bool mbPreviousP = false;
+    bool mbPreviousMouseLeft = false;
+
+    void UpdatePause();
+    void DrawPause();
+    void DrawClear();
+    void UpdateClear();
+
+    Player* mpPlayer = nullptr;
+    bool mbIsClear = false;
+
+    Goal* mpGoal = nullptr;
 };

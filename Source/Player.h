@@ -14,6 +14,11 @@ public:
 	void Update(float _deltaTime) override;
 	void Draw() override;
 
+	const bool* GetShape() const
+	{
+		return &mShape[0][0];
+	}
+
 private:
 	void Move();
 

@@ -117,11 +117,14 @@
     <ClCompile Include="Source\Stage.cpp">
       <Filter>ソース ファイル\Obj</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SoundManager.cpp">
-      <Filter>ソース ファイル\Manager</Filter>
+    <ClCompile Include="Source\StageSelectScene.cpp">
+      <Filter>ソース ファイル\Obj</Filter>
     </ClCompile>
-    <ClCompile Include="Source\FontManager.cpp">
-      <Filter>ソース ファイル\Manager</Filter>
+    <ClCompile Include="Source\TitleScene.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Goal.cpp">
+      <Filter>ソース ファイル\Obj</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -194,11 +197,14 @@
     <ClInclude Include="Source\Stage.h">
       <Filter>ヘッダー ファイル\Obj</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SoundManager.h">
-      <Filter>ヘッダー ファイル\Manager</Filter>
+    <ClInclude Include="Source\StageSelectScene.h">
+      <Filter>ヘッダー ファイル\Obj</Filter>
     </ClInclude>
-    <ClInclude Include="Source\FontManager.h">
-      <Filter>ヘッダー ファイル\Manager</Filter>
+    <ClInclude Include="Source\TitleScene.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Goal.h">
+      <Filter>ヘッダー ファイル\Obj</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
