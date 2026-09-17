@@ -109,13 +109,6 @@ void Player::InitComponent()
 {
 	// -- Module追加 -- //
 	AddModule<Transform>();
-	/*AddModule<Graphic>();
-	AddModule<Collider>();
-	AddModule<Gravity>();*/
-
-	// -- 衝突判定を取得するObjを指定 -- //
-	/*auto collider = GetModule<Collider>();
-	collider->AddCollisionTag(Tag::BLOCK);*/
 }
 
 void Player::Update(float _deltaTime)

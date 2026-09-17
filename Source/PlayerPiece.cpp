@@ -26,7 +26,7 @@ void PlayerPiece::InitComponent()
 {
 	// -- Module追加 -- //
 	AddModule<Transform>();
-	AddModule<Graphic>();
+	AddModule<Graphic>(GetModelFilename());
 	AddModule<Collider>();
 	AddModule<Gravity>();
 

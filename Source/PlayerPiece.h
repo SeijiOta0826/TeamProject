@@ -22,6 +22,11 @@ public:
 	VECTOR GetLocalPosition() { return mvLocalPosition; }
 
 	void SetEnabled(bool _enabled);	// 有効状態のセッター
+protected:
+	const char* GetModelFilename() const override
+	{
+		return "Resource/Player.png";
+	}
 private:
 	void UpdateWorldPosition();
 private:

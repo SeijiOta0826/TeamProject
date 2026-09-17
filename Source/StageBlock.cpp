@@ -5,12 +5,6 @@
 #include "Graphic.h"
 #include "Collider.h"
 
-StageBlock::StageBlock()
-	:GameObject()
-{
-
-}
-
 void StageBlock::Init()
 {
 	// -- タグ設定 -- //
@@ -21,7 +15,7 @@ void StageBlock::InitComponent()
 {
 	// -- Module追加 -- //
 	AddModule<Transform>();
-	AddModule<Graphic>();
+	AddModule<Graphic>(GetModelFilename());
 	AddModule<Collider>();
 
 	// -- 衝突判定を取得するObjを指定 -- //

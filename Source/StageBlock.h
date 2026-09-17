@@ -4,7 +4,6 @@
 class StageBlock : public GameObject
 {
 public:
-	StageBlock();
 	~StageBlock() = default;
 
 	void Init() override;

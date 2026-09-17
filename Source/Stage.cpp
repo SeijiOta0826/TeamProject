@@ -12,6 +12,8 @@
 #include "Player.h"
 #include "StageBlock.h"
 
+#include "Transform.h"
+
 #include "GameConfig.h"
 
 #include <DxLib.h>  // VECTOR用
@@ -43,11 +45,21 @@ void Stage::CreateObjects()
                 break;
 
             case 1:
+            {
                 // 床を生成
-                objectManager
+                auto stageBlock = objectManager
                     ->CreateObject<StageBlock>();
-                break;
 
+                stageBlock->GetModule<Transform>()
+                    ->SetPosition(
+                        VGet(
+                            (x * GameConfig::CELL_SIZE) + GameConfig::CELL_SIZE,
+                            (y * GameConfig::CELL_SIZE) + GameConfig::CELL_SIZE,
+                            0.0f
+                        )
+                    );
+                break;
+            }
             default:
                 break;
             }

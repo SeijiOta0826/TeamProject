@@ -18,6 +18,12 @@ void GameObject::Initialize(ObjectManager* _manager) {
 	mpObjectManager = _manager;
 	this->InitComponent();	// 継承先が持つコンポーネント初期設定
 	this->Init();			// 継承先特有の初期化処理
+
+	for (auto& component : mModules) {
+		if (component->IsEnabled()) {
+			component->Initialize();
+		}
+	}
 }
 
 void GameObject::Finalize() {
