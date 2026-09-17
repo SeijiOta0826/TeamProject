@@ -52,8 +52,6 @@ void GameScene::Initialize()
 
     stage->Load(stageFileName);*/
 
-    stage->Load(stageFileName);
-
     // ステージを増やす際はCSVの名前を Stage1.csv Stage2.csv … にしとけば読み込んでくれる
 
 
