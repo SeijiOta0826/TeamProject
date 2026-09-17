@@ -60,7 +60,7 @@ void Stage::CreateObjects()
                         )
                     );
                 break;
-
+           
             case 2:
             {
                 // ゴールの形
