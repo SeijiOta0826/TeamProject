@@ -12,6 +12,10 @@ public:
     void Draw();
     void Finalize();
     void SetStageNumber(int _stageNumber);
+    private:
+		int mFontHandle = -1; // フォントハンドル
+
+   
 
 private:
     int mFontHandle = -1; // �t�H���g�n���h��

@@ -66,6 +66,14 @@ void GameScene::Initialize()
 
     // ステージを増やす際はCSVの名前を Stage1.csv Stage2.csv … にしとけば読み込んでくれる
 
+
+	// ★フォントの取得（サイズ32、太さ3、アンチエイリアス）
+	// 引数を省略した場合は既定の太さ(-1)になります
+	mFontHandle = Master::mpFontManager->GetFont("メイリオ", 32, 3);
+
+
+
+
 }
 
 void GameScene::Update(float deltaTime)
