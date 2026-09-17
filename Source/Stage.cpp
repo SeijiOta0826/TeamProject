@@ -60,21 +60,7 @@ void Stage::CreateObjects()
                         )
                     );
                 break;
-            case 2:
-                // Goalを生成
-                objectManager
-                    ->CreateObject<Goal>(
-                        "Resource/Stage/Stage.png",
-                        VGet(
-                            (x * GameConfig::CELL_SIZE) + GameConfig::CELL_SIZE / 2.0f,
-                            (y * GameConfig::CELL_SIZE) + GameConfig::CELL_SIZE / 2.0f,
-                            0.0f
-                        )
-                    );
-
-
-				break;
-
+           
             case 2:
             {
                 // ゴールの形
