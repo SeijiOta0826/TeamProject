@@ -75,6 +75,31 @@ void Stage::CreateObjects()
 
 				break;
 
+            case 2:
+            {
+                // ゴールの形
+                bool goalShape[3][3] =
+                {
+                    { false, false, false },
+                    { false, true,  false },
+                    { false, false, false }
+                };
+
+                // ゴールを生成
+                objectManager
+                    ->CreateObject<Goal>(
+                        "Resource/Help.png",
+                        VGet(
+                            (x * GameConfig::CELL_SIZE) + GameConfig::CELL_SIZE / 2.0f,
+                            (y * GameConfig::CELL_SIZE) + GameConfig::CELL_SIZE / 2.0f,
+                            0.0f
+                        ),
+                        goalShape
+                    );
+
+                break;
+            }
+
             default:
                 break;
             }
