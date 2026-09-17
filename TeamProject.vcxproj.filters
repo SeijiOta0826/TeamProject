@@ -111,10 +111,10 @@
     <ClCompile Include="Source\PlayerPiece.cpp">
       <Filter>ソース ファイル\Obj</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Player_test.cpp">
-      <Filter>ソース ファイル\Obj</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Gravity.cpp">
+      <Filter>ソース ファイル\Module</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Graphic.cpp">
       <Filter>ソース ファイル\Module</Filter>
     </ClCompile>
   </ItemGroup>
@@ -182,9 +182,6 @@
     <ClInclude Include="Source\PlayerPiece.h">
       <Filter>ヘッダー ファイル\Obj</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Player_test.h">
-      <Filter>ヘッダー ファイル\Obj</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Module.h">
       <Filter>ヘッダー ファイル\Module</Filter>
     </ClInclude>
@@ -192,6 +189,9 @@
       <Filter>ヘッダー ファイル\Module</Filter>
     </ClInclude>
     <ClInclude Include="Source\Gravity.h">
+      <Filter>ヘッダー ファイル\Module</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Graphic.h">
       <Filter>ヘッダー ファイル\Module</Filter>
     </ClInclude>
   </ItemGroup>

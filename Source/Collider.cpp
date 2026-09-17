@@ -60,7 +60,7 @@ VECTOR Collider::GetWorldPosition() const
 {
 	auto transform = mpGameObject->GetModule<Transform>();
 	if (transform == nullptr)
-		return;
+		return VGet(0.0f, 0.0f, 0.0f);
 
 	return
 		VAdd(

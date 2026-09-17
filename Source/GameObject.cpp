@@ -11,6 +11,9 @@
 
 #include "GameConfig.h"
 
+#include "Transform.h"
+#include "Collider.h"
+
 void GameObject::Initialize(ObjectManager* _manager) {
 	mpObjectManager = _manager;
 	this->InitComponent();	// 継承先が持つコンポーネント初期設定
@@ -43,6 +46,13 @@ void GameObject::Draw() {
 
 void GameObject::ResolveCollision()
 {
+	// nullCheack
+	auto transform = GetModule<Transform>();
+	auto collider = GetModule<Collider>();
+	if (transform
+		|| collider)
+		return;
+
 	mbGrounded = false;
 
 	auto* collisionManager =
@@ -51,24 +61,25 @@ void GameObject::ResolveCollision()
 		->GetCollisionManager();
 
 	if (collisionManager == nullptr
-		|| !mpCollider->IsEnabled())
+		|| !collider->IsEnabled())
 		return;
 
-	auto tags = mpCollider->GetCollisionTag();
+	auto tags = collider->GetCollisionTag();
 
 	for (auto tag : tags)
 	{
-		auto collisions = mpCollider->GetCollisions(tag);
+		auto collisions = collider->GetCollisions(tag);
 		for (auto collision : collisions)
 		{
-			auto collider = collision->GetCollider();
+			//auto collider = collision->GetCollider();
+			auto collider = collision->GetModule<Collider>();
 			if (collider == nullptr)
 				continue;
 
 			CollisionInfo info;
 
 			if (!collisionManager->GetBoxBoxCollision(
-				mpCollider,
+				collider,
 				collider,
 				info))
 			{
@@ -80,14 +91,14 @@ void GameObject::ResolveCollision()
 				mbGrounded = true;
 			}
 
-			VECTOR position = GetPosition();
+			VECTOR position = transform->GetPosition();
 
 			position = VAdd(
 				position,
 				VScale(info.normal, info.penetration)
 			);
 
-			SetPosition(position);
+			transform->SetPosition(position);
 		}
 	}
 }

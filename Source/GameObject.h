@@ -68,7 +68,7 @@ private:
 	void ResolveCollision();
 
 protected:
-	virtual const char* GetModelFilename() const = 0;
+	virtual const char* GetModelFilename() const { return ""; }
 
 private:
 	friend class ObjectManager;

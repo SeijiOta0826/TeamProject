@@ -26,6 +26,7 @@
     <ClCompile Include="Source\GameObject.cpp" />
     <ClCompile Include="Source\GamePad.cpp" />
     <ClCompile Include="Source\GameScene.cpp" />
+    <ClCompile Include="Source\Graphic.cpp" />
     <ClCompile Include="Source\Gravity.cpp" />
     <ClCompile Include="Source\InputManager.cpp" />
     <ClCompile Include="Source\Keyboard.cpp" />
@@ -34,7 +35,6 @@
     <ClCompile Include="Source\ObjectManager.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\PlayerPiece.cpp" />
-    <ClCompile Include="Source\Player_test.cpp" />
     <ClCompile Include="Source\ResourceManager.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
@@ -44,6 +44,7 @@
   <ItemGroup>
     <ClInclude Include="Source\Collider.h" />
     <ClInclude Include="Source\CollisionManager.h" />
+    <ClInclude Include="Source\Graphic.h" />
     <ClInclude Include="Source\Module.h" />
     <ClInclude Include="Source\CsvLoader.h" />
     <ClInclude Include="Source\Debug.h" />
@@ -59,7 +60,6 @@
     <ClInclude Include="Source\ObjectManager.h" />
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\PlayerPiece.h" />
-    <ClInclude Include="Source\Player_test.h" />
     <ClInclude Include="Source\ResourceManager.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\SceneManager.h" />

@@ -2,14 +2,19 @@
 
 #include "CsvLoader.h"
 
+// Obj生成用
 #include "Master.h"
 #include "SceneManager.h"
 #include "Scene.h"
 #include "ObjectManager.h"
 
+// 生成するObj関係
+#include "Player.h"
 #include "StageBlock.h"
 
 #include "GameConfig.h"
+
+#include <DxLib.h>  // VECTOR用
 
 void Stage::Load(const std::string& _filename)
 {
@@ -40,14 +45,7 @@ void Stage::CreateObjects()
             case 1:
                 // 床を生成
                 objectManager
-                    ->CreateObject<StageBlock>(
-                        "Resource/Stage/Stage.png",
-                        VGet(
-                            (x * GameConfig::CELL_SIZE) + GameConfig::CELL_SIZE / 2.0f,
-                            (y * GameConfig::CELL_SIZE) + GameConfig::CELL_SIZE / 2.0f,
-                            0.0f
-                        )
-                    );
+                    ->CreateObject<StageBlock>();
                 break;
 
             default:

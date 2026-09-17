@@ -1,13 +1,18 @@
 ﻿#pragma once
 #include "GameObject.h"
 
-class Player_test;
+#include <DxLib.h>	// VECTOR用
+
+class Player;
 
 class PlayerPiece : public GameObject
 {
 public:
-	PlayerPiece(Player_test* player, std::string filename, VECTOR initPos);
+	PlayerPiece(Player* _player);
 	~PlayerPiece() = default;
+
+	void Init() override;
+	void InitComponent() override;
 
 	void Update(float _deltaTime) override;
 	void Draw() override;
@@ -16,10 +21,11 @@ public:
 	void SetLocalPosition(VECTOR _pos) { mvLocalPosition = _pos; }
 	VECTOR GetLocalPosition() { return mvLocalPosition; }
 
-	void SetEnabled(bool _enabled);
+	void SetEnabled(bool _enabled);	// 有効状態のセッター
 private:
 	void UpdateWorldPosition();
 private:
-	Player_test* mpPlayer;
-	VECTOR mvLocalPosition;	// Playerからの相対座標
+	Player* mpPlayer = nullptr;	// ハブとなるPlayerのポインタ
+
+	VECTOR mvLocalPosition = VGet(0.0f, 0.0f, 0.0f);		// Playerからの相対座標
 };

@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include <vector>
-#include"Object2D.h"
 
 /* memo : 
 * // -- 概要 -- //
@@ -46,6 +45,8 @@
 *	これはとても価値のあることです。
 */
 
+class GameObject;
+
 class ObjectManager
 {
 public:
@@ -59,13 +60,12 @@ public:
 	template <class T, class...Args>
 	T* CreateObject(Args&&... args) {
 		static_assert(
-			std::is_base_of_v<Object2D, T>,
+			std::is_base_of_v<GameObject, T>,
 			"T must derive from GameObject"
 			);
 
 		auto obj = new T(std::forward<Args>(args)...);
-
-		// obj->Initialize(this);
+		 obj->Initialize(this);	// 初期化処理を生成と同時に行う
 
 		mObjects.push_back(obj);
 
@@ -86,7 +86,7 @@ public:
 	template<class T>
 	std::vector<T*> FindObjects() {
 		static_assert(
-			std::is_base_of_v<Object2D, T>,
+			std::is_base_of_v<GameObject, T>,
 			"T must derive from GameObject"
 			);
 
@@ -107,7 +107,7 @@ private:
 	void RemoveDestroyObjects();
 
 private:
-	std::vector<Object2D*> mObjects;	// Objのリスト
+	std::vector<GameObject*> mObjects;	// Objのリスト
 };
 
 

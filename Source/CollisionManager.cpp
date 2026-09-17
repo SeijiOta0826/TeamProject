@@ -1,7 +1,6 @@
 ﻿#include "CollisionManager.h"
 
 #include "Collider.h"
-#include "Object2D.h"
 
 #include <DxLib.h>	// デバッグ表示のカラー指定のため使用
 #include <cmath>

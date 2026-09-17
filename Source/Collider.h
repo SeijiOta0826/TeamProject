@@ -1,12 +1,13 @@
 ﻿#pragma once
+#include "Module.h"
+
+#include "GameObject.h"	// Tag参照用。循環参照に注意
 
 #include <DxLib.h>
 #include <vector>
 
-#include "Module.h"
 
 class CollisionManager;
-class GameObject;
 
 class Collider : public Module
 {

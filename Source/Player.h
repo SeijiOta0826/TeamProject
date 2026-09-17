@@ -2,14 +2,18 @@
 #include "GameObject.h"
 #include <array>
 
-class Collider;
-class Gravity;
+#include <DxLib.h>
+
+class PlayerPiece;
 
 class Player : public GameObject
 {
 public:
-	Player(std::string filename, VECTOR initPos);
+	Player();
 	~Player();
+
+	void Init() override;
+	void InitComponent() override;
 
 	void Update(float _deltaTime) override;
 	void Draw() override;
@@ -18,19 +22,24 @@ private:
 	void Move();
 
 	// 変形画面を描画
-	void DrawTransformUI();
-	void UpdateTransformUI();
+	//void DrawTransformUI();
+	//void UpdateTransformUI();
 
 	// 変形後のColliderを更新
-	void UpdateTransformCollider();
+	//void UpdateTransformCollider();
+
+protected:
+	const char* GetModelFilename() const override {
+		return "Resource/Player.png";
+	}
 
 private:
-	float mfSpeed = 10.0f;		// 移動スピード
-
-	std::array<GameObject*, 9> mColliders;	// Playerが保有するColliderの配列	
-
-	bool mShape[3][3] = {};			// 変形画面で選択するグリッドの配列
+	int SIZE = 3;
+	PlayerPiece* mPieces[3][3]{};
+	bool mShape[3][3] = { true };			// 変形画面で選択するグリッドの配列
 	bool mbIsTransforming = false;	// 変形中であることを示す
+
+	float mfSpeed = 10.0f;		// 移動スピード
 
     // --- 転がり・回転用メンバ変数 ---
     bool mIsRolling = false;          // 転がり中フラグ
@@ -43,5 +52,5 @@ private:
     float mStartAngle = 0.0f;         // 開始時の角度
     float mCurrentAngle = 0.0f;       // 現在の描画角度
 
-    void Rotate();                    // 転がり関数の宣言
+    // void Rotate();                    // 転がり関数の宣言
 };

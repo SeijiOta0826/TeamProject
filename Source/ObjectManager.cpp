@@ -1,6 +1,6 @@
 ﻿#include "ObjectManager.h"
 
-#include "Object2D.h"
+#include "GameObject.h"
 
 void ObjectManager::Update(float _deltaTime) {
     for (auto& object : mObjects) {

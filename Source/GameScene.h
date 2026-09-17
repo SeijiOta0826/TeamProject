@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "Scene.h"
 
-class Player_test;
+//class Player_test;
 
 class GameScene : public Scene
 {
@@ -12,5 +12,5 @@ public:
     void Finalize() override;
 
 private:
-    Player_test* mpPlayer = nullptr;
+   // Player_test* mpPlayer = nullptr;
 };
