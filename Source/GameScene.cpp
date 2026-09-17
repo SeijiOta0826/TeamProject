@@ -31,24 +31,19 @@ void GameScene::Initialize()
 			VGet(120.0f, 500.0f, 0.0f)
 		);
 
-	// ゴール画像 できたら誰か変えといて
-	bool goalShape[3][3] =
-	{
-		{ false, false, false },
-		{ false, true,  false },
-		{ false, false, false }
-	};
+	auto* stage = new Stage();
+
+	std::string stageFileName =
+		"Resource/Stage/Stage"
+		+ std::to_string(mnStageNumber)
+		+ ".csv";
+
+	stage->Load(stageFileName);
 
 	mpGoal =
 		this
 		->GetObjectManager()
-		->CreateObject<Goal>(
-			"Resource/Help.png",
-			VGet(1100.0f, 500.0f, 0.0f),
-			goalShape
-		);
-
-    auto* stage = new Stage();
+		->FindObject<Goal>();
 
     /*if (mnStageNumber == 1)
     {
@@ -56,11 +51,6 @@ void GameScene::Initialize()
     }
 
     stage->Load(stageFileName);*/
-    
-    std::string stageFileName =
-        "Resource/Stage/Stage"
-        + std::to_string(mnStageNumber)
-        + ".csv";
 
     stage->Load(stageFileName);
 
