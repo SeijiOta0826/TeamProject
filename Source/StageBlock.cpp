@@ -5,6 +5,8 @@
 #include "Graphic.h"
 #include "Collider.h"
 
+#include "GameConfig.h"
+
 void StageBlock::Init()
 {
 	// -- タグ設定 -- //
@@ -21,6 +23,7 @@ void StageBlock::InitComponent()
 	// -- 衝突判定を取得するObjを指定 -- //
 	auto collider = GetModule<Collider>();
 	collider->AddCollisionTag(Tag::PLAYER_CELL);
+	collider->SetHalfSize(VGet(GameConfig::CELL_SIZE, GameConfig::CELL_SIZE, 0.0f));
 }
 
 void StageBlock::Update(float _deltaTime)

@@ -9,6 +9,8 @@
 // ハブPlayer参照用
 #include "Player.h"
 
+#include "GameConfig.h"
+
 PlayerPiece::PlayerPiece(Player* _player)
 	: GameObject()
 {
@@ -33,6 +35,7 @@ void PlayerPiece::InitComponent()
 	// -- 衝突判定を取得するObjを指定 -- //
 	auto collider = GetModule<Collider>();
 	collider->AddCollisionTag(Tag::BLOCK);
+	collider->SetHalfSize(VGet(GameConfig::CELL_SIZE, GameConfig::CELL_SIZE, 0.0f));
 }
 
 void PlayerPiece::Update(float _deltaTime)

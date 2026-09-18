@@ -13,10 +13,10 @@ public:
 	void SetPosition(const VECTOR& _position) { mvPosition = _position; }
 	const VECTOR& GetPosition() const{ return mvPosition; }
 
-	void SetRotation(const VECTOR& _position) { mvRotation = _position; }
+	void SetRotation(const VECTOR& _rotation) { mvRotation = _rotation; }
 	const VECTOR& GetRotation() const { return mvRotation; }
 
-	void SetScale(const VECTOR& _position) { mvScale = _position; }
+	void SetScale(const VECTOR& _scale) { mvScale = _scale; }
 	const VECTOR& GetScale() const { return mvScale; }
 private:
 	VECTOR mvPosition = VGet(0.0f, 0.0f, 0.0f);

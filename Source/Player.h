@@ -18,6 +18,10 @@ public:
 	void Update(float _deltaTime) override;
 	void Draw() override;
 
+	// -- 角度(度数法)のアクセサ -- //
+	void SetAngle(float _angle) { mfAngle = _angle; }
+	float GetAngle() { return mfAngle; }
+
 private:
 	void Move();
 
@@ -41,7 +45,12 @@ private:
 
 	float mfSpeed = 10.0f;		// 移動スピード
 
-    // --- 転がり・回転用メンバ変数 ---
+	float mfAngle = 0.0f;		// 回転の角度(-180 ~ 180)
+	
+	
+	
+	
+	// --- 転がり・回転用メンバ変数 ---
     bool mIsRolling = false;          // 転がり中フラグ
     int mRollTimer = 0;               // 経過フレーム（0〜30）
     const int ROLL_FRAMES = 30;       // 転がりにかかるフレーム数（約0.5秒）
@@ -53,4 +62,6 @@ private:
     float mCurrentAngle = 0.0f;       // 現在の描画角度
 
     // void Rotate();                    // 転がり関数の宣言
+
+	
 };

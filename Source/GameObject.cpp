@@ -40,6 +40,8 @@ void GameObject::Update(float _deltaTime) {
 			component->Update();
 		}
 	}
+
+	ResolveCollision();
 }
 
 void GameObject::Draw() {
@@ -53,10 +55,10 @@ void GameObject::Draw() {
 void GameObject::ResolveCollision()
 {
 	// nullCheack
-	auto transform = GetModule<Transform>();
-	auto collider = GetModule<Collider>();
-	if (transform
-		|| collider)
+	auto myTransform = GetModule<Transform>();
+	auto myCollider = GetModule<Collider>();
+	if (!myTransform
+		|| !myCollider)
 		return;
 
 	mbGrounded = false;
@@ -67,25 +69,25 @@ void GameObject::ResolveCollision()
 		->GetCollisionManager();
 
 	if (collisionManager == nullptr
-		|| !collider->IsEnabled())
+		|| !myCollider->IsEnabled())
 		return;
 
-	auto tags = collider->GetCollisionTag();
+	auto tags = myCollider->GetCollisionTag();
 
 	for (auto tag : tags)
 	{
-		auto collisions = collider->GetCollisions(tag);
-		for (auto collision : collisions)
+		auto objects = myCollider->GetCollisions(tag);
+		for (auto obj : objects)
 		{
 			//auto collider = collision->GetCollider();
-			auto collider = collision->GetModule<Collider>();
+			auto collider = obj->GetModule<Collider>();
 			if (collider == nullptr)
 				continue;
 
 			CollisionInfo info;
 
 			if (!collisionManager->GetBoxBoxCollision(
-				collider,
+				myCollider,
 				collider,
 				info))
 			{
@@ -97,14 +99,14 @@ void GameObject::ResolveCollision()
 				mbGrounded = true;
 			}
 
-			VECTOR position = transform->GetPosition();
+			VECTOR position = myTransform->GetPosition();
 
 			position = VAdd(
 				position,
 				VScale(info.normal, info.penetration)
 			);
 
-			transform->SetPosition(position);
+			myTransform->SetPosition(position);
 		}
 	}
 }
