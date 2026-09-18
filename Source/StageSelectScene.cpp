@@ -17,17 +17,28 @@ void StageSelectScene::Update(float _deltaTime)
 
 	GetMousePoint(&mouseX, &mouseY);
 
-	const int buttonWidth = 280;
-	const int buttonHeight = 70;
-	const int startX = 500;
+	// ステージボタン設定
+	const int buttonWidth = 300;
+	const int buttonHeight = 100;
+
+	const int startX = 340;
 	const int startY = 220;
-	const int interval = 100;
+
+	const int horizontalInterval = 320;
+	const int verticalInterval = 130;
 
 	// マウスがどのステージボタンの上にあるか
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 6; i++)
 	{
-		int left = startX;
-		int top = startY + i * interval;
+		int column = i % 2;
+		int row = i / 2;
+
+		int left =
+			startX + column * horizontalInterval;
+
+		int top =
+			startY + row * verticalInterval;
+
 		int right = left + buttonWidth;
 		int bottom = top + buttonHeight;
 
@@ -49,7 +60,7 @@ void StageSelectScene::Update(float _deltaTime)
 
 	if (mouseLeftDown)
 	{
-		// ステージを決定
+		// ステージ番号を設定
 		Master::mpSceneManager->SetStageNumber(
 			mnSelectedStage + 1
 		);
@@ -67,6 +78,7 @@ void StageSelectScene::Update(float _deltaTime)
 void StageSelectScene::Draw()
 {
 	// 背景
+
 	DrawBox(
 		0, 0,
 		1280, 720,
@@ -74,27 +86,56 @@ void StageSelectScene::Draw()
 		TRUE
 	);
 
+	// 背景の上側に帯
+	DrawBox(
+		0, 0,
+		1280, 180,
+		GetColor(190, 170, 115),
+		TRUE
+	);
+
 	// タイトル
+
 	DrawString(
-		580, 
-		100,
-		"ステージ選択",
+		520,
+		55,
+		"STAGE SELECT",
+		GetColor(255, 255, 255)
+	);
+
+	DrawString(
+		545,
+		110,
+		"ステージを選択してください",
 		GetColor(0, 0, 0)
 	);
 
-	const int buttonWidth = 280;
-	const int buttonHeight = 70;
-	const int startX = 500;
-	const int startY = 220;
-	const int interval = 100;
+	// ステージボタン
 
-	for (int i = 0; i < 3; i++)
+	const int buttonWidth = 300;
+	const int buttonHeight = 100;
+
+	const int startX = 340;
+	const int startY = 220;
+
+	const int horizontalInterval = 320;
+	const int verticalInterval = 130;
+
+	for (int i = 0; i < 6; i++)
 	{
-		int left = startX;
-		int top = startY + i * interval;
+		int column = i % 2;
+		int row = i / 2;
+
+		int left =
+			startX + column * horizontalInterval;
+
+		int top =
+			startY + row * verticalInterval;
+
 		int right = left + buttonWidth;
 		int bottom = top + buttonHeight;
 
+		// 選択状態によって色を変更
 		int color;
 
 		if (mnSelectedStage == i)
@@ -105,9 +146,10 @@ void StageSelectScene::Draw()
 		else
 		{
 			// 通常
-			color = GetColor(200, 200, 200);
+			color = GetColor(235, 225, 190);
 		}
 
+		// ボタン本体
 		DrawBox(
 			left,
 			top,
@@ -117,16 +159,35 @@ void StageSelectScene::Draw()
 			TRUE
 		);
 
+		// 外枠
 		DrawBox(
 			left,
 			top,
 			right,
 			bottom,
-			GetColor(0, 0, 0),
+			GetColor(60, 50, 35),
 			FALSE
 		);
 
+		// ステージ番号
+		char stageNumber[32];
+
+		sprintf_s(
+			stageNumber,
+			"STAGE %d",
+			i + 1
+		);
+
+		DrawString(
+			left + 25,
+			top + 22,
+			stageNumber,
+			GetColor(80, 65, 40)
+		);
+
+		// パターン名
 		char stageName[32];
+
 		sprintf_s(
 			stageName,
 			"パターン%d",
@@ -134,12 +195,21 @@ void StageSelectScene::Draw()
 		);
 
 		DrawString(
-			left + 90,
-			top + 25,
+			left + 25,
+			top + 55,
 			stageName,
 			GetColor(0, 0, 0)
 		);
 	}
+
+	// 下部説明
+
+	DrawString(
+		480,
+		640,
+		"マウスでステージを選択",
+		GetColor(80, 70, 50)
+	);
 }
 
 void StageSelectScene::Finalize()
