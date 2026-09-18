@@ -52,18 +52,21 @@ void GameScene::Initialize()
 
     stage->Load(stageFileName);*/
 
-    stage->Load(stageFileName);
+   // stage->Load(stageFileName);
 
     // ステージを増やす際はCSVの名前を Stage1.csv Stage2.csv … にしとけば読み込んでくれる
 
 
 	// ★フォントの取得（サイズ32、太さ3、アンチエイリアス）
 	// 引数を省略した場合は既定の太さ(-1)になります
-	mFontHandle = Master::mpFontManager->GetFont("メイリオ", 32, 3);
+	//mFontHandle = Master::mpFontManager->GetFont("メイリオ", 32, 3);
 
+	mAddedFontHandle = static_cast<void*>(AddFontFile("Resource/Font/PixelMplus10-Regular.ttf"));
 
-
-
+	// 2. アンチエイリアスを切ってフォントハンドルを作成
+//    フォント名にはファイル名ではなく、フォント自体の「フォントファミリー名」を指定
+	int fontType = DX_FONTTYPE_NORMAL; // アンチエイリアス無効（ドットがくっきり残る）
+	mFontHandle = CreateFontToHandle("PixelMplus10", 30, -1, fontType);
 }
 
 void GameScene::Update(float deltaTime)
@@ -104,8 +107,8 @@ void GameScene::Draw()
 	//文字描画(テスト)
     DrawStringToHandle(
         10, 10,
-        "BLOCK ブロック TEST",
-        GetColor(255, 255, 255),
+        "Stage1\nステージ１",
+        GetColor(0, 0, 0),
         mFontHandle
 	);
 
@@ -349,5 +352,21 @@ void GameScene::SetStageNumber(int _stageNumber)
 
 void GameScene::Finalize()
 {
+	//===リソースの開放===//
+	if (mFontHandle != -1)
+	{
+		DeleteFontToHandle(mFontHandle);
+		mFontHandle = -1;
+	}
+
+	if (mAddedFontHandle != nullptr)
+	{
+		//===登録したフォントの削除===//
+		RemoveFontFile(static_cast<HANDLE>(mAddedFontHandle));
+		mAddedFontHandle = nullptr;
+	}
+
+
+
     // 終了処理
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include "Scene.h"
-
+#include <cstddef>
+#include "DxLib.h"
 class Player;
 class Goal;
 
@@ -15,7 +16,8 @@ public:
 
 private:
 		int mFontHandle = -1; // フォントハンドル
-
+		
+        void*  mAddedFontHandle = nullptr; // フォントハンドル
 private:
     int mnStageNumber = 1;
 
