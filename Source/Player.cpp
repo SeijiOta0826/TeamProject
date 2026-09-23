@@ -26,83 +26,17 @@ Player::Player()
 	:GameObject()
 {
 
-	// 3×3 = 9個のColliderを作成
-	//for (int i = 0; i < 9; i++)
-	//{
-	//	mColliders[i] = new GameObject("Resource/Player.png",VGet(0.0f,0.0f,0.0f));
-	//	mColliders[i]->GetCollider()->AddCollisionTag(Tag::BLOCK);
-	//	mColliders[i]->GetCollider()->SetHalfSize(
-	//		VGet(
-	//			GameConfig::CELL_SIZE / 2,
-	//			GameConfig::CELL_SIZE / 2,
-	//			0.0f
-	//		)
-	//	);
-
-	//	mColliders[i]->GetCollider()->SetEnabled(false);
-	//}
-
-	//// 初期状態は中央の1ブロックだけ有効
-	//mColliders[4]->GetCollider()->SetEnabled(true);
-
-	//// 初期形状
-	//mShape[1][1] = true;
-
-	//UpdateTransformCollider();
 }
 
 Player::~Player()
 {
-	/*delete mpGravity;
-	mpGravity = nullptr;
 
-	for (auto* collider : mColliders)
-	{
-		if (collider != nullptr)
-		{
-			collider->GetCollider()->Finalize();
-			delete collider;
-		}
-	}
-
-	mColliders.fill(nullptr);*/
 }
 
 void Player::Init()
 {
 	// -- タグ設定 -- //
 	SetTag(Tag::PLAYER);
-
-	for (int column = 0;
-		column < 1;
-		column++)
-	{
-		for (int row = 0;
-			row < 1;
-			row++)
-		{
-			// -- Playerに基づく相対座標を取得 -- //
-			VECTOR offset = VGet(0.0f, 0.0f, 0.0f);
-
-			offset.x =
-				(row - 1) * GameConfig::CELL_SIZE;
-
-			offset.y =
-				(column - 1) * GameConfig::CELL_SIZE;
-
-			// -- Playerが保有するPieceの生成 & 初期設定-- //
-			mPieces[row][column] =
-				Master::mpSceneManager
-				->GetCurrentScene()
-				->GetObjectManager()
-				->CreateObject<PlayerPiece>(this);
-
-			mPieces[row][column]
-				->SetLocalPosition(
-					offset
-				);
-		}
-	}
 }
 
 void Player::InitComponent()
@@ -111,26 +45,21 @@ void Player::InitComponent()
 	AddModule<Transform>();
 }
 
-void Player::Update(float _deltaTime)
+void Player::InitPiece()
 {
-	// Eキーを押したら変形モードに入る
-	if (InputManager::GetInstance().GetButtonDown(Button::Transform))
-	{
-		mbIsTransforming = true;
-	}
+	// -- piece生成 & 初期処理 -- //
+	mpPiece = Master::mpSceneManager
+		->GetCurrentScene()
+		->GetObjectManager()
+		->CreateObject<PlayerPiece>(this);
 
-	// 変形中かどうかで入力を切り替える
-	if (mbIsTransforming)
-	{
-		// UpdateTransformUI();
-		return; //変形中は移動や重力処理を行わない
-	}
+	if (auto transform = GetModule<Transform>())
+		mpPiece->SetLocalPosition(VGet(0.0f, 0.0f, 0.0f));
+}
 
-	if (!mIsRolling)
-	{
-		Move();
-	}
-
+void Player::Update(float _deltaTime)
+{	
+	Move();
 	GameObject::Update(_deltaTime);
 }
 
@@ -160,4 +89,16 @@ void Player::Move()
 	);
 
 	transform->SetPosition(nextPos);
+
+	// Pieceにも移動を反映 -- //
+	auto pieceTransform = mpPiece->GetModule<Transform>();
+	pieceTransform->SetPosition(
+		VAdd(
+			pieceTransform->GetPosition(),
+			moveAmount
+		)
+	);
 }
+
+
+

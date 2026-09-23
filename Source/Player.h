@@ -14,6 +14,7 @@ public:
 
 	void Init() override;
 	void InitComponent() override;
+	void InitPiece();
 
 	void Update(float _deltaTime) override;
 	void Draw() override;
@@ -47,7 +48,7 @@ private:
 
 	float mfAngle = 0.0f;		// 回転の角度(-180 ~ 180)
 	
-	
+	PlayerPiece* mpPiece;
 	
 	
 	// --- 転がり・回転用メンバ変数 ---

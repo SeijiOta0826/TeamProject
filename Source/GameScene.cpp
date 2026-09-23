@@ -20,6 +20,7 @@ void GameScene::Initialize()
         this
         ->GetObjectManager()
         ->CreateObject<Player>();
+    player->InitPiece();
 
     auto* stage = new Stage();
     stage->Load("Resource/Stage/test_stage.csv");

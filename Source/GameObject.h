@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include <DxLib.h>
 #include <vector>
 #include <utility>
 #include <string>
@@ -63,13 +64,15 @@ public:
 	Tag GetTag() const { return mTag; }
 
 	bool IsGrounded() const { return mbGrounded; }
+	//VECTOR GetCorrection() { return mvCorrection; }
 
 private:
-	void ResolveCollision();
+	//void ResolveCollision();
 
 protected:
 	virtual const char* GetModelFilename() const { return ""; }
 
+	bool mbGrounded = true;
 private:
 	friend class ObjectManager;
 	ObjectManager* mpObjectManager;
@@ -81,5 +84,5 @@ private:
 	bool mbDestroy = false;
 	Tag mTag;
 
-	bool mbGrounded = true;
+	//VECTOR mvCorrection = VGet(0.0f, 0.0f, 0.0f);
 };

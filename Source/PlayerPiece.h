@@ -22,6 +22,10 @@ public:
 	VECTOR GetLocalPosition() { return mvLocalPosition; }
 
 	void SetEnabled(bool _enabled);	// 有効状態のセッター
+
+	//VECTOR GetCollisionCorrection() { return mvCollisionCorrection; }
+
+	void ResolveStageCollision();
 protected:
 	const char* GetModelFilename() const override
 	{
@@ -33,4 +37,5 @@ private:
 	Player* mpPlayer = nullptr;	// ハブとなるPlayerのポインタ
 
 	VECTOR mvLocalPosition = VGet(0.0f, 0.0f, 0.0f);		// Playerからの相対座標
+	VECTOR mvCollisionCorrection = VGet(0.0f, 0.0f, 0.0f);	// 弾かれる分の値
 };

@@ -22,8 +22,8 @@ void StageBlock::InitComponent()
 
 	// -- 衝突判定を取得するObjを指定 -- //
 	auto collider = GetModule<Collider>();
-	collider->AddCollisionTag(Tag::PLAYER_CELL);
-	collider->SetHalfSize(VGet(GameConfig::CELL_SIZE, GameConfig::CELL_SIZE, 0.0f));
+	//collider->AddCollisionTag(Tag::PLAYER_CELL);
+	collider->SetHalfSize(VGet(GameConfig::CELL_SIZE / 2.0f, GameConfig::CELL_SIZE / 2.0f, 0.0f));
 }
 
 void StageBlock::Update(float _deltaTime)
