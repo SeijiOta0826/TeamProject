@@ -22,6 +22,7 @@
     <ClCompile Include="Source\Collider.cpp" />
     <ClCompile Include="Source\CollisionManager.cpp" />
     <ClCompile Include="Source\CsvLoader.cpp" />
+    <ClCompile Include="Source\Cursor.cpp" />
     <ClCompile Include="Source\Debug.cpp" />
     <ClCompile Include="Source\FontManager.cpp" />
     <ClCompile Include="Source\GameObject.cpp" />
@@ -50,6 +51,7 @@
     <ClInclude Include="Source\Collider.h" />
     <ClInclude Include="Source\CollisionManager.h" />
     <ClInclude Include="Source\CsvLoader.h" />
+    <ClInclude Include="Source\Cursor.h" />
     <ClInclude Include="Source\Debug.h" />
     <ClInclude Include="Source\FloatingMotion.h" />
     <ClInclude Include="Source\FontManager.h" />

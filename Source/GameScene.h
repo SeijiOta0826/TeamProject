@@ -22,6 +22,11 @@ private:
 		int mFontHandle = -1; // フォントハンドル
 		
         void*  mAddedFontHandle = nullptr; // フォントハンドル
+
+    int mCursorHandle = -1;
+
+    void DrawCursor();
+
 private:
     int mnStageNumber = 1;
 

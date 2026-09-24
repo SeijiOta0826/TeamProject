@@ -8,6 +8,7 @@
 #include "ResourceManager.h"
 #include "InputManager.h"
 #include "FontManager.h"
+#include "Cursor.h"
 
 
 // -- 静的メンバ変数の定義 -- //
@@ -19,6 +20,8 @@ FontManager* Master::mpFontManager = new FontManager();
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	LPSTR lpCmdLine, int nCmdShow)
 {
+	Cursor cursor;
+
 	// -- 初期設定 -- //
 	ChangeWindowMode(true);
 	SetGraphMode(
@@ -32,6 +35,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	{
 		return -1;
 	}
+
+	cursor.Initialize();
 
 	//Todo:	初期化処理系をここへ
 	Master::mpSceneManager->Initialize();
@@ -64,10 +69,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		Master::mpSceneManager->Update(deltaTime);
 		InputManager::GetInstance().Update();
 
+		cursor.Update();
+
 		// -- 描画処理 -- //
 		ClearDrawScreen();
 
 		Master::mpSceneManager->Draw();
+
+		cursor.Draw();
 
 		//Todo:	描画処理をここへ
 		ScreenFlip();
@@ -87,6 +96,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	// 終了処理をここへ
 	Master::mpSceneManager->Finalize();
 		Master::mpFontManager->Clear();
+		cursor.Finalize();
 	DxLib_End();	// DXライブラリ使用の終了
 	return 0;	//ソフトの終了
 }
