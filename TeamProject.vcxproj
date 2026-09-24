@@ -51,6 +51,7 @@
     <ClInclude Include="Source\CollisionManager.h" />
     <ClInclude Include="Source\CsvLoader.h" />
     <ClInclude Include="Source\Debug.h" />
+    <ClInclude Include="Source\FloatingMotion.h" />
     <ClInclude Include="Source\FontManager.h" />
     <ClInclude Include="Source\GameConfig.h" />
     <ClInclude Include="Source\GameObject.h" />
@@ -73,8 +74,10 @@
     <ClInclude Include="Source\Stage.h" />
     <ClInclude Include="Source\StageBlock.h" />
     <ClInclude Include="Source\StageSelectScene.h" />
+    <ClInclude Include="Source\TextRenderer.h" />
     <ClInclude Include="Source\Texture.h" />
     <ClInclude Include="Source\TitleScene.h" />
+    <ClInclude Include="Source\UILabel.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

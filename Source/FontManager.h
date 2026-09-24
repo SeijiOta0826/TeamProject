@@ -32,4 +32,5 @@ private:
     std::unordered_map<std::string, int> fontMap_;
     // Windows API等で読み込んだフォントファイルのリソースハンドル保持リスト（終了時の一括解放用）
     std::vector<HANDLE> loadedFontFiles_;
+
 };

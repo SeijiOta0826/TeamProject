@@ -65,6 +65,13 @@ void GameScene::Initialize()
 //    フォント名にはファイル名ではなく、フォント自体の「フォントファミリー名」を指定
 	int fontType = DX_FONTTYPE_NORMAL; // アンチエイリアス無効（ドットがくっきり残る）
 	mFontHandle = CreateFontToHandle("PixelMplus10", 30, -1, fontType);
+
+	//Stage文字ラベルの初期化
+	std::string stageText = "Stage" + std::to_string(mnStageNumber) + " ";
+	FloatingMotion stageMotion(120, 15.0f);
+	mStageTextMotion = UILabel(10, 10, stageText, GetColor(0, 0, 0), mFontHandle,stageMotion);
+
+
 }
 
 void GameScene::Update(float deltaTime)
@@ -82,6 +89,11 @@ void GameScene::Update(float deltaTime)
 		deltaTime = 0.0f;
 	}
 
+
+	// ★通常時：ステージ番号の文字を更新
+	mStageTextMotion.Update();
+
+
 	// 更新処理
 	Scene::Update(deltaTime);
 
@@ -93,6 +105,7 @@ void GameScene::Update(float deltaTime)
 	}
 }
 
+
 void GameScene::Draw()
 {
     DrawBox(
@@ -101,14 +114,8 @@ void GameScene::Draw()
         GetColor(217, 198, 143),
         TRUE
     );
-
-	//文字描画(テスト)
-    DrawStringToHandle(
-        10, 10,
-        "Stage1\nステージ１",
-        GetColor(0, 0, 0),
-        mFontHandle
-	);
+	//Stage文字描画
+	mStageTextMotion.Draw();
 
 
     Debug::Draw();

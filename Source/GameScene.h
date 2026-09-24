@@ -2,6 +2,10 @@
 #include "Scene.h"
 #include <cstddef>
 #include "DxLib.h"
+
+#include "FloatingMotion.h"//＜－－－追加
+#include "UILabel.h"
+
 class Player;
 class Goal;
 
@@ -34,4 +38,12 @@ private:
     bool mbIsClear = false;
 
     Goal* mpGoal = nullptr;
+
+    //FontやTitleLogoなどのアニメーションをするためのコンポジション
+private:
+
+    UILabel mStageTextMotion; //Stage用
+    FloatingMotion mClearTextMotion; //Clear用
+
+
 };
