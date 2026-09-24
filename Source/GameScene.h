@@ -16,6 +16,10 @@ public:
 private:
 		int mFontHandle = -1; // フォントハンドル
 
+    int mCursorHandle = -1;
+
+    void DrawCursor();
+
 private:
     int mnStageNumber = 1;
 
