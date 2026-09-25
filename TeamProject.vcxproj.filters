@@ -215,9 +215,9 @@
     <ClInclude Include="Source\Goal.h">
       <Filter>ヘッダー ファイル\Obj</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SoundManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
+	<ClCompile Include="Source\SoundManager.cpp">
+	  <Filter>ソース ファイル\Manager</Filter>
+	</ClCompile>
     <ClInclude Include="Source\FontManager.h">
       <Filter>ヘッダー ファイル\Manager</Filter>
     </ClInclude>
