@@ -15,6 +15,8 @@ InputManager& InputManager::GetInstance() {
 void InputManager::InitializeButton() {
 	mButtonBindings[(int)Button::Confirm] =
 	{
+		InputMode::Normal,
+
 		KEY_INPUT_RETURN,
 		MOUSE_INPUT_LEFT,
 		PAD_INPUT_1
@@ -22,6 +24,8 @@ void InputManager::InitializeButton() {
 
 	mButtonBindings[(int)Button::Cancel] =
 	{
+		InputMode::Normal,
+
 		KEY_INPUT_ESCAPE,
 		-1,
 		PAD_INPUT_2
@@ -29,6 +33,8 @@ void InputManager::InitializeButton() {
 
 	mButtonBindings[(int)Button::Jump] =
 	{
+		InputMode::Normal,
+
 		KEY_INPUT_SPACE,
 		-1,
 		PAD_INPUT_3
@@ -36,6 +42,8 @@ void InputManager::InitializeButton() {
 
 	mButtonBindings[(int)Button::Attack] =
 	{
+		InputMode::Normal,
+
 		KEY_INPUT_Z,
 		-1,
 		PAD_INPUT_4
@@ -43,14 +51,17 @@ void InputManager::InitializeButton() {
 
 	mButtonBindings[(int)Button::Dash] =
 	{
+		InputMode::Normal,
+
 		KEY_INPUT_LSHIFT,
 		-1,
 		PAD_INPUT_5
 	};
 
-	// 追加
 	mButtonBindings[(int)Button::Transform] =
 	{
+		InputMode::Normal,
+
 		KEY_INPUT_E,
 		-1,
 		-1
@@ -60,6 +71,8 @@ void InputManager::InitializeButton() {
 void InputManager::InitializeAxis() {
 	mAxisBindings[(int)Axis::MoveX] =
 	{
+		InputMode::Normal,
+
 		KEY_INPUT_D,
 		KEY_INPUT_A,
 		PadAxis::LeftX
@@ -67,6 +80,28 @@ void InputManager::InitializeAxis() {
 
 	mAxisBindings[(int)Axis::MoveY] =
 	{
+		InputMode::Normal,
+
+		KEY_INPUT_S,
+		KEY_INPUT_W,
+		PadAxis::LeftY
+	};
+
+	// デバック用
+	mAxisBindings[(int)Axis::MoveX_FAKE] =
+	{
+		InputMode::Fake,
+
+		KEY_INPUT_D,
+		KEY_INPUT_A,
+		PadAxis::LeftX
+	};
+
+	// デバック用
+	mAxisBindings[(int)Axis::MoveY_FAKE] =
+	{
+		InputMode::Fake,
+
 		KEY_INPUT_S,
 		KEY_INPUT_W,
 		PadAxis::LeftY
@@ -74,6 +109,8 @@ void InputManager::InitializeAxis() {
 
 	mAxisBindings[(int)Axis::LookX] =
 	{
+		InputMode::Normal,
+
 		KEY_INPUT_RIGHT,
 		KEY_INPUT_LEFT,
 		PadAxis::RightX
@@ -81,6 +118,8 @@ void InputManager::InitializeAxis() {
 
 	mAxisBindings[(int)Axis::LookY] =
 	{
+		InputMode::Normal,
+
 		KEY_INPUT_UP,
 		KEY_INPUT_DOWN,
 		PadAxis::RightY
@@ -105,6 +144,11 @@ void InputManager::UpdateButtons() {
 		++i) {
 		const ButtonBinding& binding = mButtonBindings[i];
 
+		if (binding.mode != mMode) {
+			mButtonStates[i] = {};
+			continue;
+		}
+
 		mButtonStates[i].Press =
 			IsButtonPressed(binding);
 
@@ -122,6 +166,11 @@ void InputManager::UpdateAxes() {
 		i < static_cast<size_t>(Axis::Max);
 		++i) {
 		const AxisBinding& binding = mAxisBindings[i];
+
+		if (binding.mode != mMode) {
+			mAxisStates[i] = 0.0f;
+			continue;
+		}
 
 		mAxisStates[i] =
 			GetAxisValue(binding);
