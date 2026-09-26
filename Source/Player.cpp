@@ -59,6 +59,9 @@ void Player::InitPiece()
 
 void Player::Update(float _deltaTime)
 {	
+	if (InputManager::GetInstance().GetButtonDown(Button::OperationChange_toFakePlayer))
+		InputManager::GetInstance().SetInputMode(InputMode::Fake);
+
 	Move();
 	GameObject::Update(_deltaTime);
 }

@@ -66,6 +66,24 @@ void InputManager::InitializeButton() {
 		-1,
 		-1
 	};
+
+	mButtonBindings[(int)Button::OperationChange_toFakePlayer] =
+	{
+		InputMode::Normal,
+
+		KEY_INPUT_C,
+		-1,
+		-1
+	};
+
+	mButtonBindings[(int)Button::OperationChange_toPlayer] =
+	{
+		InputMode::Fake,
+
+		KEY_INPUT_C,
+		-1,
+		-1
+	};
 }
 
 void InputManager::InitializeAxis() {

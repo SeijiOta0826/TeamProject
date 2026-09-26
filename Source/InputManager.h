@@ -16,6 +16,9 @@ enum class Button {
 
 	Transform,
 
+	OperationChange_toPlayer,	// (デバック用)
+	OperationChange_toFakePlayer,	// (デバック用)
+
 	Max
 };
 
@@ -104,6 +107,7 @@ public:
 	Mouse& GetMouse() { return mMouse; }
 
 	void SetInputMode(InputMode _mode) { mMode = _mode; }
+	InputMode GetInputMode() { return mMode; }
 private:
 	void UpdateButtons();
 	void UpdateAxes();
