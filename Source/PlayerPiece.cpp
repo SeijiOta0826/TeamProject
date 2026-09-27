@@ -35,7 +35,7 @@ void PlayerPiece::InitComponent()
 	AddModule<Transform>();
 	AddModule<Graphic>(GetModelFilename());
 	AddModule<Collider>();
-	AddModule<Gravity>();
+	//AddModule<Gravity>();
 
 	// -- 衝突判定を取得するObjを指定 -- //
 	auto collider = GetModule<Collider>();
@@ -46,8 +46,6 @@ void PlayerPiece::InitComponent()
 void PlayerPiece::Update(float _deltaTime)
 {
 	GameObject::Update(_deltaTime);
-	ResolveStageCollision();
-	UpdateWorldPosition();
 }
 
 void PlayerPiece::Draw()
@@ -83,13 +81,12 @@ void PlayerPiece::UpdateWorldPosition()
 	);
 
 	// -- 座標を更新 -- //
-	auto piece_transform = GetModule<Transform>();
+	auto piece_transform = this->GetModule<Transform>();
 	piece_transform->SetPosition(nextPos);
 }
 
 void PlayerPiece::ResolveStageCollision()
 {
-	mvCollisionCorrection = VGet(0.0f, 0.0f, 0.0f);
 	// nullCheack
 	auto myTransform = GetModule<Transform>();
 	auto myCollider = GetModule<Collider>();
@@ -102,8 +99,10 @@ void PlayerPiece::ResolveStageCollision()
 		|| !myCollider->IsEnabled())
 		return;
 
+	// -- 衝突しているStageBlockのコンテナを取得 -- //
 	Tag tag = Tag::BLOCK;
 	auto objects = myCollider->GetCollisions(tag);
+
 	for (auto obj : objects)
 	{
 		// -- 衝突objのCollider取得 & nullCheck -- //
@@ -127,19 +126,12 @@ void PlayerPiece::ResolveStageCollision()
 		if (info.normal.y < -0.5f)
 			mbGrounded = true;
 
-		mvCollisionCorrection = VAdd(
-			mvCollisionCorrection,
-			VScale(info.normal, info.penetration
-			)
-		);
+		mpPlayer
+			->AddCollisionCorrection(
+				VScale(
+					info.normal,
+					info.penetration
+				)
+			);
 	}
-
-
-	auto playerTransform = mpPlayer->GetModule<Transform>();
-	playerTransform->SetPosition(
-		VAdd(
-			playerTransform->GetPosition(),
-			mvCollisionCorrection
-		)
-	);
 }

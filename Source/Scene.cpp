@@ -43,6 +43,8 @@ void Scene::Update(float _deltaTime)
 	{
 		mpCollisionManager->Update();
 	}
+
+
 }
 
 void Scene::Draw()

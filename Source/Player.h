@@ -23,8 +23,14 @@ public:
 	void SetAngle(float _angle) { mfAngle = _angle; }
 	float GetAngle() { return mfAngle; }
 
+	void AddCollisionCorrection(VECTOR _correction);	// 修正値を集約する処理(主にPlayerPieceのResolve処理後、修正値が存在する場合に加算していく)
+	void ResetCollisionCorrection();					// 修正値をリセットする処理(毎フレーム用いる)
+
+	void ApplyCollisionCorrection();					// 修正値をPlayerへ適応する処理
+
 private:
 	void Move();
+	void UpdatePiecePositions();	// 所有するPiece座標の更新
 
 	// 変形画面を描画
 	//void DrawTransformUI();
@@ -49,6 +55,8 @@ private:
 	float mfAngle = 0.0f;		// 回転の角度(-180 ~ 180)
 	
 	PlayerPiece* mpPiece;
+
+	VECTOR mvCollisionCorrection = VGet(0.0f, 0.0f, 0.0f);	
 	
 	
 	// --- 転がり・回転用メンバ変数 ---

@@ -7,6 +7,8 @@
 #include <cmath>
 #include <algorithm>
 
+#include "Debug.h"
+
 void CollisionManager::Finalize() 
 {
 	// -- 当たり判定データのコンテナを解放 -- //
@@ -247,10 +249,10 @@ bool CollisionManager::GetBoxBoxCollision(
 	);
 
 	// Z方向の判定
-	if (fabsf(posA.z - posB.z) > halfA.z + halfB.z)
+	/*if (fabsf(posA.z - posB.z) > halfA.z + halfB.z)
 	{
 		return false;
-	}
+	}*/
 
 	// 中心間ベクトル
 	const VECTOR centerDiff = VSub(posB, posA);
@@ -301,14 +303,20 @@ bool CollisionManager::GetBoxBoxCollision(
 
 			collisionNormal = axis;
 
-			// A -> B の方向に法線を向ける
-			if (VDot(centerDiff, collisionNormal) < 0.0f)
+			// B -> A の方向に法線を向ける
+			if (VDot(centerDiff, collisionNormal) > 0.0f)
 			{
 				collisionNormal =
 					VScale(collisionNormal, -1.0f);
 			}
 		}
 	}
+
+	Debug::Print(
+		"A:(", posA.x, ",", posA.y, ")", "B:(", posB.x, ",", posB.y, ")", "Pen :", minPenetration);
+
+	Debug::Print(
+		"HalfA:(", halfA.x, ",", halfA.y, ")", "HalfB:(", halfB.x, ",", halfB.y, ")");
 
 	_info.penetration = minPenetration;
 	_info.normal = collisionNormal;

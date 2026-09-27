@@ -47,6 +47,8 @@ void Player::InitComponent()
 
 void Player::InitPiece()
 {
+	// Todo : 複数Pieceに対応させる
+	
 	// -- piece生成 & 初期処理 -- //
 	mpPiece = Master::mpSceneManager
 		->GetCurrentScene()
@@ -58,14 +60,56 @@ void Player::InitPiece()
 }
 
 void Player::Update(float _deltaTime)
-{	
-	Move();
+{
 	GameObject::Update(_deltaTime);
+
+	Move();						// 移動処理
+	UpdatePiecePositions();		// Pieceの座標を更新
+
+	ResetCollisionCorrection();
+	mpPiece->ResolveStageCollision();
+
+	ApplyCollisionCorrection();
+	UpdatePiecePositions();		// Pieceの座標を更新
 }
 
 void Player::Draw()
 {
 	GameObject::Draw();
+}
+
+void Player::AddCollisionCorrection(VECTOR _correction)
+{
+	if (fabsf(_correction.x) > fabsf(mvCollisionCorrection.x))
+	{
+		mvCollisionCorrection.x = _correction.x;
+	}
+
+	if (fabsf(_correction.y) > fabsf(mvCollisionCorrection.y))
+	{
+		mvCollisionCorrection.y = _correction.y;
+	}
+
+	if (fabsf(_correction.z) > fabsf(mvCollisionCorrection.z))
+	{
+		mvCollisionCorrection.z = _correction.z;
+	}
+}
+
+void Player::ResetCollisionCorrection()
+{
+	mvCollisionCorrection = VGet(0.0f, 0.0f, 0.0f);
+}
+
+void Player::ApplyCollisionCorrection()
+{
+	auto transform = GetModule<Transform>();
+	transform->SetPosition(
+		VAdd(
+			transform->GetPosition(),
+			mvCollisionCorrection
+		)
+	);
 }
 
 void Player::Move()
@@ -89,15 +133,12 @@ void Player::Move()
 	);
 
 	transform->SetPosition(nextPos);
+}
 
-	// Pieceにも移動を反映 -- //
-	auto pieceTransform = mpPiece->GetModule<Transform>();
-	pieceTransform->SetPosition(
-		VAdd(
-			pieceTransform->GetPosition(),
-			moveAmount
-		)
-	);
+void Player::UpdatePiecePositions()
+{
+	// Todo : 複数Pieceに対応させる
+	mpPiece->UpdateWorldPosition();
 }
 
 
