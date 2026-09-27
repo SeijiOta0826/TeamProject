@@ -7,11 +7,13 @@
 
 #include "Stage.h"
 #include "Player.h"
+#include "FakePlayer.h" // デバック用
 #include "StageBlock.h"
 
 #include "Debug.h"
 #include "GameConfig.h"
 
+#include "InputManager.h"
 
 void GameScene::Initialize()
 {
@@ -22,6 +24,11 @@ void GameScene::Initialize()
         ->CreateObject<Player>();
     player->InitPiece();
 
+    auto* fakePlayer = 
+        this
+        ->GetObjectManager()
+        ->CreateObject<FakePlayer>();
+
     auto* stage = new Stage();
     stage->Load("Resource/Stage/test_stage.csv");
 
@@ -29,7 +36,6 @@ void GameScene::Initialize()
 
 void GameScene::Update(float deltaTime)
 {
-    //mpPlayer->Update();
     // 更新処理
     Scene::Update(deltaTime);
 }
@@ -43,7 +49,10 @@ void GameScene::Draw()
         TRUE
     );
 
-    //mpPlayer->Draw();
+    Debug::Print(
+        "InputMode : ",
+        static_cast<int>(InputManager::GetInstance().GetInputMode())
+    );
     Debug::Draw();
     Scene::Draw();
 }

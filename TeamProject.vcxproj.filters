@@ -117,6 +117,9 @@
     <ClCompile Include="Source\Graphic.cpp">
       <Filter>ソース ファイル\Module</Filter>
     </ClCompile>
+    <ClCompile Include="Source\FakePlayer.cpp">
+      <Filter>ソース ファイル\Obj</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GamePad.h">
@@ -193,6 +196,9 @@
     </ClInclude>
     <ClInclude Include="Source\Graphic.h">
       <Filter>ヘッダー ファイル\Module</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FakePlayer.h">
+      <Filter>ヘッダー ファイル\Obj</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

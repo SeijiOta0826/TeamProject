@@ -23,6 +23,7 @@
     <ClCompile Include="Source\CollisionManager.cpp" />
     <ClCompile Include="Source\CsvLoader.cpp" />
     <ClCompile Include="Source\Debug.cpp" />
+    <ClCompile Include="Source\FakePlayer.cpp" />
     <ClCompile Include="Source\GameObject.cpp" />
     <ClCompile Include="Source\GamePad.cpp" />
     <ClCompile Include="Source\GameScene.cpp" />
@@ -44,6 +45,7 @@
   <ItemGroup>
     <ClInclude Include="Source\Collider.h" />
     <ClInclude Include="Source\CollisionManager.h" />
+    <ClInclude Include="Source\FakePlayer.h" />
     <ClInclude Include="Source\Graphic.h" />
     <ClInclude Include="Source\Module.h" />
     <ClInclude Include="Source\CsvLoader.h" />
