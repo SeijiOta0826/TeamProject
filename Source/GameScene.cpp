@@ -8,6 +8,7 @@
 #include "Stage.h"
 #include "Player.h"
 #include "StageBlock.h"
+#include "MovingBlock.h"
 
 #include <string>
 #include "Debug.h"
@@ -40,10 +41,9 @@ void GameScene::Initialize()
 
 	stage->Load(stageFileName);
 
-	mpGoal =
-		this
-		->GetObjectManager()
-		->FindObject<Goal>();
+	mpGoal = this->GetObjectManager()->FindObject<Goal>();
+
+	mpMovingBlock = this->GetObjectManager()->FindObject<MovingBlock>();
 
     /*if (mnStageNumber == 1)
     {
@@ -143,12 +143,19 @@ void GameScene::Update(float deltaTime)
 	// 更新処理
 	Scene::Update(deltaTime);
 
+	// 移動床に乗っているPlayerを運ぶ
+	if (mpMovingBlock != nullptr)
+	{
+		mpMovingBlock->CarryPlayer();
+	}
+
 	if (mpGoal != nullptr &&
 		mpGoal->IsShapeMatched(mpPlayer) &&
 		mpGoal->IsWithinDistance(mpPlayer))
 	{
 		mbIsClear = true;
 	}
+
 }
 
 

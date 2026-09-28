@@ -11,6 +11,7 @@
 
 class Player;
 class Goal;
+class MovingBlock;
 
 class GameScene : public Scene
 {
@@ -29,6 +30,8 @@ private:
     int mCursorHandle = -1;
 
     void DrawCursor();
+
+    MovingBlock* mpMovingBlock = nullptr;
 
 private:
     int mnStageNumber = 1;
