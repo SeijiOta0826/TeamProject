@@ -125,6 +125,24 @@ void InputManager::InitializeAxis() {
 		PadAxis::LeftY
 	};
 
+	mAxisBindings[(int)Axis::Rotation] =
+	{
+		InputMode::Normal,
+
+		KEY_INPUT_L,
+		KEY_INPUT_J,
+		PadAxis::RightX
+	};
+
+	mAxisBindings[(int)Axis::Rotation_FAKE] =
+	{
+		InputMode::Fake,
+
+		KEY_INPUT_L,
+		KEY_INPUT_J,
+		PadAxis::RightX
+	};
+
 	mAxisBindings[(int)Axis::LookX] =
 	{
 		InputMode::Normal,

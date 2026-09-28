@@ -17,7 +17,7 @@
 
 void FakePlayer::Init()
 {
-
+	mController.Initialize(this);
 }
 
 void FakePlayer::InitComponent()
@@ -41,13 +41,9 @@ void FakePlayer::Finalize()
 
 void FakePlayer::Update(float _deltaTime)
 {
-	if (InputManager::GetInstance().GetButtonDown(Button::OperationChange_toPlayer))
-		InputManager::GetInstance().SetInputMode(InputMode::Normal);
-
 	GameObject::Update(_deltaTime);
+	mController.Update();
 
-	Move();
-	// ResolveStageCollision();
 }
 
 void FakePlayer::Draw()
@@ -55,19 +51,11 @@ void FakePlayer::Draw()
 	GameObject::Draw();
 }
 
-void FakePlayer::Move()
+void FakePlayer::Move(VECTOR _direction)
 {
-	// -- 入力値を取得 -- //
-	VECTOR inputDirection = VGet(0.0f, 0.0f, 0.0f);
-
-	inputDirection.x += InputManager::GetInstance().GetAxis(Axis::MoveX_FAKE);
-	inputDirection.y += InputManager::GetInstance().GetAxis(Axis::MoveY_FAKE);
-
-	if (VSize(inputDirection) == 0.0f)
-		return;
-
+	
 	// -- 移動量を取得 & 座標反映 -- //
-	VECTOR moveAmount = VScale(inputDirection, mfSpeed);
+	VECTOR moveAmount = VScale(_direction, mfSpeed);
 
 	auto transform = GetModule<Transform>();
 	VECTOR nextPos = VAdd(
@@ -76,6 +64,22 @@ void FakePlayer::Move()
 	);
 
 	transform->SetPosition(nextPos);
+}
+
+void FakePlayer::Rotation(float _rotateDirection)
+{
+	// -- 回転値を取得 -- //
+	float rotationAmount = _rotateDirection * mfRotationPower;	// 回転の値(度数)
+	float rotationRadian = rotationAmount * DX_PI_F / 180.0f;	// 回転の値(ラジアン)
+
+	// -- 回転値を適用 -- //
+	if (auto transform = GetModule<Transform>())
+		transform->SetRotation(
+			VAdd(
+				transform->GetRotation(),
+				VGet(0.0f, 0.0f, rotationRadian)
+			)
+		);
 }
 
 void FakePlayer::ResolveCollision()

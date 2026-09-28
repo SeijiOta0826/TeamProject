@@ -29,6 +29,9 @@ enum class Axis {
 	MoveX_FAKE,	// デバック用
 	MoveY_FAKE,	// デバック用
 
+	Rotation,
+	Rotation_FAKE,
+
 	LookX,
 	LookY,
 

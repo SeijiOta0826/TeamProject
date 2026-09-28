@@ -14,6 +14,8 @@
 #include "Transform.h"
 #include "Collider.h"
 
+#include <cmath>
+
 void GameObject::Initialize(ObjectManager* _manager) {
 	mpObjectManager = _manager;
 	this->InitComponent();	// 継承先が持つコンポーネント初期設定
@@ -97,11 +99,21 @@ void GameObject::ResolveCollision()
 
 			if (info.normal.y < -0.5f)
 				mbGrounded = true;
-			mvCollisionCorrection = VAdd(
-				mvCollisionCorrection,
-				VScale(info.normal, info.penetration
-				)
+
+			VECTOR correction = VScale(
+				info.normal,
+				info.penetration
 			);
+
+			if (fabsf(correction.x) > fabsf(mvCollisionCorrection.x))
+			{
+				mvCollisionCorrection.x = correction.x;
+			}
+
+			if (fabsf(correction.y) > fabsf(mvCollisionCorrection.y))
+			{
+				mvCollisionCorrection.y = correction.y;
+			}
 		}
 	}
 }

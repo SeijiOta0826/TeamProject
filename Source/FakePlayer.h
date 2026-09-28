@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include "GameObject.h"
 
+#include "FakePlayerController.h"
+
 class FakePlayer : public GameObject
 {
 public:
@@ -15,9 +17,9 @@ public:
 
 	//void ResolveStageCollision();	// ステージブロックとの衝突解決処理
 	void ResolveCollision() override;
-private:
-	void Move();					// 移動処理
 
+	void Move(VECTOR _direction);					// 移動処理
+	void Rotation(float _rotateDirection);
 protected:
 	const char* GetModelFilename() const override
 	{
@@ -25,7 +27,10 @@ protected:
 	}
 
 private:
+	FakePlayerController mController;	// コントローラー
+
 	float mfSpeed = 10.0f;
+	float mfRotationPower = 5.0f;	// 回転力(単位は度数)
 
 	VECTOR mvCollisionCorrection = VGet(0.0f, 0.0f, 0.0f);
 };

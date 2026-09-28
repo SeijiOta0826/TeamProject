@@ -50,8 +50,8 @@ void Graphic::Draw()
 	DrawRotaGraph3(
 		static_cast<int>(position.x),
 		static_cast<int>(position.y),
-		static_cast<int>(mvSize.x),
-		static_cast<int>(mvSize.y),
+		static_cast<int>(mvSize.x / 2.0f),
+		static_cast<int>(mvSize.y / 2.0f),
 		scale.x,
 		scale.y,
 		rotation.z,
