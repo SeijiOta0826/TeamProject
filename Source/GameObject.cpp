@@ -41,7 +41,7 @@ void GameObject::Update(float _deltaTime) {
 		}
 	}
 
-	//ResolveCollision();
+	// ResolveCollision();
 }
 
 void GameObject::Draw() {
@@ -52,7 +52,7 @@ void GameObject::Draw() {
 	}
 }
 
-/*void GameObject::ResolveCollision()
+void GameObject::ResolveCollision()
 {
 	// nullCheack
 	auto myTransform = GetModule<Transform>();
@@ -62,7 +62,7 @@ void GameObject::Draw() {
 		return;
 
 	mbGrounded = false;
-	mvCorrection = VGet(0.0f, 0.0f, 0.0f);
+	mvCollisionCorrection = VGet(0.0f, 0.0f, 0.0f);
 
 	auto* collisionManager =
 		Master::mpSceneManager
@@ -97,20 +97,11 @@ void GameObject::Draw() {
 
 			if (info.normal.y < -0.5f)
 				mbGrounded = true;
-			mvCorrection = VAdd(
-				mvCorrection,
+			mvCollisionCorrection = VAdd(
+				mvCollisionCorrection,
 				VScale(info.normal, info.penetration
 				)
 			);
-
-			VECTOR position = myTransform->GetPosition();
-
-			position = VAdd(
-				position,
-				VScale(info.normal, info.penetration)
-			);
-
-			myTransform->SetPosition(position);
 		}
 	}
-}*/
+}

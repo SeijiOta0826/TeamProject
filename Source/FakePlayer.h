@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "GameObject.h"
 
 class FakePlayer : public GameObject
@@ -13,9 +13,10 @@ public:
 	void Update(float _deltaTime) override;
 	void Draw() override;
 
+	//void ResolveStageCollision();	// ステージブロックとの衝突解決処理
+	void ResolveCollision() override;
 private:
 	void Move();					// 移動処理
-	void ResolveStageCollision();	// ステージブロックとの衝突解決処理
 
 protected:
 	const char* GetModelFilename() const override

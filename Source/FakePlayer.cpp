@@ -1,4 +1,4 @@
-#include "FakePlayer.h"
+﻿#include "FakePlayer.h"
 
 // -- Module -- //
 #include "Transform.h"
@@ -47,7 +47,7 @@ void FakePlayer::Update(float _deltaTime)
 	GameObject::Update(_deltaTime);
 
 	Move();
-	ResolveStageCollision();
+	// ResolveStageCollision();
 }
 
 void FakePlayer::Draw()
@@ -78,59 +78,19 @@ void FakePlayer::Move()
 	transform->SetPosition(nextPos);
 }
 
-void FakePlayer::ResolveStageCollision()
+void FakePlayer::ResolveCollision()
 {
-	VECTOR collisionCorrection = VGet(0.0f, 0.0f, 0.0f);
-	// nullCheack
-	auto myTransform = GetModule<Transform>();
-	auto myCollider = GetModule<Collider>();
-	if (!myTransform
-		|| !myCollider)
+	GameObject::ResolveCollision();
+
+	auto transform = GetModule<Transform>();
+	if (!transform)
 		return;
+	VECTOR position = transform->GetPosition();
 
-	// 有効check
-	if (!myTransform->IsEnabled()
-		|| !myCollider->IsEnabled())
-		return;
-
-	Tag tag = Tag::BLOCK;
-	auto objects = myCollider->GetCollisions(tag);
-	for (auto obj : objects)
-	{
-		// -- 衝突objのCollider取得 & nullCheck -- //
-		auto collider = obj->GetModule<Collider>();
-		if (!collider)
-			continue;
-
-		CollisionInfo info;
-		if (!Master::mpSceneManager
-			->GetCurrentScene()
-			->GetCollisionManager()
-			->GetBoxBoxCollision(
-				myCollider,
-				collider,
-				info)
-			)
-		{
-			continue;
-		}
-
-		if (info.normal.y < -0.5f)
-			mbGrounded = true;
-
-		collisionCorrection = VAdd(
-			collisionCorrection,
-			VScale(info.normal, info.penetration
-			)
-		);
-	}
-
-
-	auto transform = this->GetModule<Transform>();
-	transform->SetPosition(
-		VAdd(
-			transform->GetPosition(),
-			collisionCorrection
-		)
+	position = VAdd(
+		position,
+		this->GetCollisionCorrection()
 	);
+
+	transform->SetPosition(position);
 }

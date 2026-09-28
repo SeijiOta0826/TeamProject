@@ -38,6 +38,16 @@ void GameScene::Update(float deltaTime)
 {
     // 更新処理
     Scene::Update(deltaTime);
+
+   /* if (auto fakePlayer =
+        this
+        ->GetObjectManager()
+        ->FindObject<FakePlayer>()
+        )
+    {
+        fakePlayer->ResolveStageCollision();
+    }*/
+
 }
 
 void GameScene::Draw()

@@ -29,6 +29,8 @@ public:
 	virtual void Update(float _deltaTime);		// 保有するコンポーネントの更新処理
 	virtual void Draw();		// 保有するコンポーネントの描画処理
 
+	virtual void ResolveCollision();
+
 	// 自身にコンポーネントを追加する
 	template <class T, class...Args>
 	T* AddModule(Args&&...args) {
@@ -64,10 +66,8 @@ public:
 	Tag GetTag() const { return mTag; }
 
 	bool IsGrounded() const { return mbGrounded; }
-	//VECTOR GetCorrection() { return mvCorrection; }
 
-private:
-	//void ResolveCollision();
+	VECTOR GetCollisionCorrection() { return mvCollisionCorrection; }
 
 protected:
 	virtual const char* GetModelFilename() const { return ""; }
@@ -84,5 +84,5 @@ private:
 	bool mbDestroy = false;
 	Tag mTag;
 
-	//VECTOR mvCorrection = VGet(0.0f, 0.0f, 0.0f);
+	VECTOR mvCollisionCorrection = VGet(0.0f, 0.0f, 0.0f);
 };

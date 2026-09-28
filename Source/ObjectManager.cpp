@@ -16,6 +16,13 @@ void ObjectManager::Draw() {
     }
 }
 
+void ObjectManager::ResolveCollision()
+{
+    for (auto& object : mObjects) {
+        object->ResolveCollision();
+    }
+}
+
 void ObjectManager::RemoveDestroyObjects() {
     std::erase_if(
         mObjects,

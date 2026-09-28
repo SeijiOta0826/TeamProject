@@ -57,6 +57,8 @@ public:
 	void Update(float _deltaTime);
 	void Draw();
 
+	void ResolveCollision();
+
 	template <class T, class...Args>
 	T* CreateObject(Args&&... args) {
 		static_assert(
