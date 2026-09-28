@@ -135,6 +135,9 @@
     <ClCompile Include="Source\Cursor.cpp">
       <Filter>ソース ファイル\Input</Filter>
     </ClCompile>
+    <ClCompile Include="Source\MovingBlock.cpp">
+      <Filter>ソース ファイル\Obj</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GamePad.h">
@@ -215,9 +218,9 @@
     <ClInclude Include="Source\Goal.h">
       <Filter>ヘッダー ファイル\Obj</Filter>
     </ClInclude>
-	<ClCompile Include="Source\SoundManager.cpp">
-	  <Filter>ソース ファイル\Manager</Filter>
-	</ClCompile>
+    <ClCompile Include="Source\SoundManager.cpp">
+      <Filter>ソース ファイル\Manager</Filter>
+    </ClCompile>
     <ClInclude Include="Source\FontManager.h">
       <Filter>ヘッダー ファイル\Manager</Filter>
     </ClInclude>
@@ -229,9 +232,15 @@
     </ClInclude>
     <ClInclude Include="Source\UILabel.h">
       <Filter>ヘッダー ファイル</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="Source\Cursor.h">
       <Filter>ヘッダー ファイル\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SoundManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MovingBlock.h">
+      <Filter>ヘッダー ファイル\Obj</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

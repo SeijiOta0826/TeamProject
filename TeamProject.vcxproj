@@ -34,6 +34,7 @@
     <ClCompile Include="Source\Keyboard.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\Mouse.cpp" />
+    <ClCompile Include="Source\MovingBlock.cpp" />
     <ClCompile Include="Source\Object2D.cpp" />
     <ClCompile Include="Source\ObjectManager.cpp" />
     <ClCompile Include="Source\Player.cpp" />
@@ -65,6 +66,7 @@
     <ClInclude Include="Source\Keyboard.h" />
     <ClInclude Include="Source\Master.h" />
     <ClInclude Include="Source\Mouse.h" />
+    <ClInclude Include="Source\MovingBlock.h" />
     <ClInclude Include="Source\Object2D.h" />
     <ClInclude Include="Source\ObjectManager.h" />
     <ClInclude Include="Source\Player.h" />
