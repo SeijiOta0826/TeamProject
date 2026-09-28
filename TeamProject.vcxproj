@@ -79,6 +79,7 @@
     <ClInclude Include="Source\TextRenderer.h" />
     <ClInclude Include="Source\Texture.h" />
     <ClInclude Include="Source\TitleScene.h" />
+    <ClInclude Include="Source\TypewriterText.h" />
     <ClInclude Include="Source\UILabel.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
