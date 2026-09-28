@@ -66,10 +66,21 @@ void GameScene::Initialize()
 	int fontType = DX_FONTTYPE_NORMAL; // アンチエイリアス無効（ドットがくっきり残る）
 	mFontHandle = CreateFontToHandle("PixelMplus10", 30, -1, fontType);
 
+
+
 	//Stage文字ラベルの初期化
 	std::string stageText = "Stage" + std::to_string(mnStageNumber) + " ";
 	FloatingMotion stageMotion(120, 15.0f);
 	mStageTextMotion = UILabel(10, 10, stageText, GetColor(0, 0, 0), mFontHandle,stageMotion);
+
+
+	//Typewriter
+	mTypewriter = TypewriterText(3); //3フレームに1文字送る設定
+
+	std::string startMessage = "Stage" + std::to_string(mnStageNumber) + "スタート! ゴールをめざせ!";
+	mTypewriter.SetText(startMessage);
+	mbIsMessageActive = true;//メッセージ表示開始
+
 
 
 }
@@ -87,6 +98,41 @@ void GameScene::Update(float deltaTime)
 	if (mbIsPaused)
 	{
 		deltaTime = 0.0f;
+	}
+
+
+	// ★ メッセージ表示中の制御
+	if (mbIsMessageActive)
+	{
+		mTypewriter.Update();
+
+		// 左クリック または Zキー/SPACEキーが押されたか判定
+		bool currentMouseLeft = (GetMouseInput() & MOUSE_INPUT_LEFT) != 0;
+		bool isClickTriggered = currentMouseLeft && !mbPreviousMouseLeft;
+		mbPreviousMouseLeft = currentMouseLeft;
+
+		// キーボード入力判定（必要に応じて）
+		static bool prevActionKey = false;
+		bool curActionKey = (CheckHitKey(KEY_INPUT_Z) != 0 || CheckHitKey(KEY_INPUT_SPACE) != 0);
+		bool isKeyTriggered = curActionKey && !prevActionKey;
+		prevActionKey = curActionKey;
+
+		if (isClickTriggered || isKeyTriggered)
+		{
+			if (!mTypewriter.IsFinished())
+			{
+				// ① まだ流れている最中なら全文スキップ
+				mTypewriter.Skip();
+			}
+			else
+			{
+				// ② 既に全部出ているならメッセージを閉じてゲーム開始
+				mbIsMessageActive = false;
+			}
+		}
+
+		// メッセージ表示中はゲーム本編の進行（移動など）を止める場合
+		return;
 	}
 
 
@@ -120,6 +166,29 @@ void GameScene::Draw()
 
     Debug::Draw();
     Scene::Draw();
+
+
+	// ★ メッセージウィンドウ描画
+	if (mbIsMessageActive)
+	{
+		// 背景の半透明黒帯ウィンドウ
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 180);
+		DrawBox(140, 520, 1140, 680, GetColor(0, 0, 0), TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+		// ウィンドウの外枠
+		DrawBox(140, 520, 1140, 680, GetColor(255, 255, 255), FALSE);
+
+		// 文字の描画（PixelMplus10 フォントを適用）
+		mTypewriter.Draw(170, 550, GetColor(255, 255, 255), mFontHandle);
+
+		// 読み終えて次に進める合図（点滅アイコンなど）
+		if (mTypewriter.IsFinished())
+		{
+			DrawString(1100, 640, "▼", GetColor(255, 255, 255));
+		}
+	}
+
 
     if (mbIsPaused)
     {

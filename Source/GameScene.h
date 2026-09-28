@@ -3,8 +3,11 @@
 #include <cstddef>
 #include "DxLib.h"
 
-#include "FloatingMotion.h"//＜－－－追加
+
+//---コンポジション系統
+#include "FloatingMotion.h"
 #include "UILabel.h"
+#include "TypewriterText.h"
 
 class Player;
 class Goal;
@@ -49,6 +52,9 @@ private:
 
     UILabel mStageTextMotion; //Stage用
     FloatingMotion mClearTextMotion; //Clear用
+
+    TypewriterText mTypewriter;
+    bool mbIsMessageActive = false; //メッセージ表示フラグ
 
 
 };
