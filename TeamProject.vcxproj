@@ -42,6 +42,7 @@
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\SoundManager.cpp" />
+    <ClCompile Include="Source\Spike.cpp" />
     <ClCompile Include="Source\Stage.cpp" />
     <ClCompile Include="Source\StageBlock.cpp" />
     <ClCompile Include="Source\StageSelectScene.cpp" />
@@ -75,6 +76,7 @@
     <ClInclude Include="Source\SceneManager.h" />
     <ClInclude Include="Source\ScreenConfig.h" />
     <ClInclude Include="Source\SoundManager.h" />
+    <ClInclude Include="Source\Spike.h" />
     <ClInclude Include="Source\Stage.h" />
     <ClInclude Include="Source\StageBlock.h" />
     <ClInclude Include="Source\StageSelectScene.h" />

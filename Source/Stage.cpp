@@ -6,10 +6,12 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include "ObjectManager.h"
+#include "Player.h"
 
 #include "StageBlock.h"
 #include "Goal.h"
 #include "MovingBlock.h"
+#include "Spike.h"
 
 #include "GameConfig.h"
 
@@ -106,9 +108,43 @@ void Stage::CreateObjects()
                 break;
             }
 
+            case 4:
+            {
+                objectManager
+                    ->CreateObject<Spike>(
+                        "Resource/Spike.png",
+                        VGet(
+                            (x * GameConfig::CELL_SIZE) + GameConfig::CELL_SIZE / 2.0f,
+                            (y * GameConfig::CELL_SIZE) + GameConfig::CELL_SIZE / 2.0f,
+                            0.0f
+                        )
+                    );
+                break;
+            }
+
+            case 5:
+            {
+                // リスポーン地点を設定
+                mvRespawnPos = VGet(
+                    (x * GameConfig::CELL_SIZE) + GameConfig::CELL_SIZE / 2.0f,
+                    (y * GameConfig::CELL_SIZE) + GameConfig::CELL_SIZE / 2.0f,
+                    0.0f
+                );
+
+                break;
+            }
+
             default:
                 break;
             }
         }
     }
+}
+
+void Stage::SetPlayerRespawn(Player* _player)
+{
+    if (_player == nullptr)
+        return;
+
+    _player->SetRespawnPos(mvRespawnPos);
 }

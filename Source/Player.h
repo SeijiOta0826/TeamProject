@@ -19,6 +19,23 @@ public:
 		return &mShape[0][0];
 	}
 
+	VECTOR GetStartPos() const
+	{
+		return mStartPos;
+	}
+
+	VECTOR GetRespawnPos() const
+	{
+		return mvRespawnPos;
+	}
+
+	void SetRespawnPos(VECTOR _pos)
+	{
+		mvRespawnPos = _pos;
+	}
+
+	void Respawn();
+
 private:
 	void Move();
 
@@ -28,6 +45,8 @@ private:
 
 	// 変形後のColliderを更新
 	void UpdateTransformCollider();
+
+	VECTOR mvRespawnPos = VGet(0.0f, 0.0f, 0.0f); 
 
 private:
 	float mfSpeed = 10.0f;		// 移動スピード
