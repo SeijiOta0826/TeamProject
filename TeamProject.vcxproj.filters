@@ -52,6 +52,24 @@
     <Filter Include="ソース ファイル\System">
       <UniqueIdentifier>{0ff01531-2269-46a4-bcb7-4399ab66fa8b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Controller">
+      <UniqueIdentifier>{d4f07357-c421-41ea-9ad2-2add896e2005}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Controller">
+      <UniqueIdentifier>{80901028-d935-4f54-873a-b90acd6fc3a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI">
+      <UniqueIdentifier>{df60fce1-d9ea-49a5-b2cd-07c5722ff151}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\UI">
+      <UniqueIdentifier>{d0fe5d07-0269-4b74-88ac-8b834f440a49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UIModule">
+      <UniqueIdentifier>{ccebcf21-7322-4cc3-8182-dedcc3452f12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\UIModule">
+      <UniqueIdentifier>{8cb60fb6-049e-43bf-a30d-c4720ed3f631}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GamePad.cpp">
@@ -121,7 +139,19 @@
       <Filter>ソース ファイル\Obj</Filter>
     </ClCompile>
     <ClCompile Include="Source\FakePlayerController.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UI.cpp">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UIManager.cpp">
+      <Filter>ソース ファイル\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UIGraphic.cpp">
+      <Filter>ソース ファイル\UIModule</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UIText.cpp">
+      <Filter>ソース ファイル\UIModule</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -204,7 +234,22 @@
       <Filter>ヘッダー ファイル\Obj</Filter>
     </ClInclude>
     <ClInclude Include="Source\FakePlayerController.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UI.h">
+      <Filter>ヘッダー ファイル\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UIManager.h">
+      <Filter>ヘッダー ファイル\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UITransform.h">
+      <Filter>ヘッダー ファイル\UIModule</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UIGraphic.h">
+      <Filter>ヘッダー ファイル\UIModule</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UIText.h">
+      <Filter>ヘッダー ファイル\UIModule</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

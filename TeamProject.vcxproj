@@ -42,6 +42,10 @@
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\Stage.cpp" />
     <ClCompile Include="Source\StageBlock.cpp" />
+    <ClCompile Include="Source\UI.cpp" />
+    <ClCompile Include="Source\UIGraphic.cpp" />
+    <ClCompile Include="Source\UIManager.cpp" />
+    <ClCompile Include="Source\UIText.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Collider.h" />
@@ -71,6 +75,11 @@
     <ClInclude Include="Source\Stage.h" />
     <ClInclude Include="Source\StageBlock.h" />
     <ClInclude Include="Source\Transform.h" />
+    <ClInclude Include="Source\UI.h" />
+    <ClInclude Include="Source\UIGraphic.h" />
+    <ClInclude Include="Source\UIManager.h" />
+    <ClInclude Include="Source\UIText.h" />
+    <ClInclude Include="Source\UITransform.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
