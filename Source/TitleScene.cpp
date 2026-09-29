@@ -5,14 +5,37 @@
 #include "Master.h"
 #include "SceneManager.h"
 
+TitleScene::TitleScene()
+	:mTitleLogoHandle(-1)
+	,mbPreviousMouseLeft(false)
+	,mbStartSelected(false)
+	,mTitleFloatingMotion(90,10.0f)
+{
+}
+
+
+
+
+
 void TitleScene::Initialize()
 {
 	// シーンに入った瞬間のマウス状態を記録
 	mbPreviousMouseLeft = (GetMouseInput() & MOUSE_INPUT_LEFT) != 0;
+
+	mTitleLogoHandle = LoadGraph("Resource/Logo/TitleLogo.png");
+
+	// 読み込み失敗の安全対策 (ロード失敗時は -1 が返る)
+	if (mBgGroundHandle == -1)
+	{
+		// ログ出力やエラーハンドリング
+	}
 }
 
 void TitleScene::Update(float _deltaTime)
 {
+	//==ふわふわアニメーションの更新==//
+	mTitleFloatingMotion.Update();
+
 	int mouseX;
 	int mouseY;
 
@@ -59,13 +82,39 @@ void TitleScene::Draw()
 		TRUE
 	);
 
+	const int baseLogoX = 270;
+	const int baseLogoY = 100;
+	// FloatingMotionから取得したYオフセットを基準Y座標に加算
+	int drawLogoY = baseLogoY + static_cast<int>(mTitleFloatingMotion.GetOffsetY());
+
+	if (mTitleLogoHandle != -1)
+	{
+		DrawGraph(baseLogoX, drawLogoY, mTitleLogoHandle, TRUE);
+	}
+	else
+	{
+		DrawString(500, drawLogoY, "TITLE", GetColor(255, 255, 255));
+	}
+
 	// タイトル
-	DrawString(
+	if (mTitleLogoHandle != -1)
+	{
+		DrawGraph(270, 100, mTitleLogoHandle, TRUE);
+	}
+	else 
+	{
+		DrawString(500, 250, "TITLE", GetColor(255, 255, 255));
+	}
+
+
+
+
+	/*DrawString(
 		500,
 		250,
 		"AAAAAA",
 		GetColor(0, 0, 0)
-	);
+	);*/
 
 	// スタート
 	const int startX = 500;
@@ -112,5 +161,13 @@ void TitleScene::Draw()
 
 void TitleScene::Finalize()
 {
+	//==画像メモリ解放==//
+	if (mTitleLogoHandle != -1)
+	{
+		DeleteGraph(mTitleLogoHandle);
+		mTitleLogoHandle = -1;
+
+	}
+
 	// 終了処理
 }
