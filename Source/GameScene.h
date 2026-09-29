@@ -23,7 +23,8 @@ public:
     void SetStageNumber(int _stageNumber);
 
 private:
-		int mFontHandle = -1; // フォントハンドル
+    int StageNumberFontHandle = -1;//左上のステージ番号用フォントハンドル
+    int mMessageFontHandle = -1;   //下のTypeWriter用のフォントハンドル
 		
         void*  mAddedFontHandle = nullptr; // フォントハンドル
 
@@ -55,7 +56,7 @@ private:
 
     UILabel mStageTextMotion; //Stage用
     FloatingMotion mClearTextMotion; //Clear用
-
+    FloatingMotion mMessageMotion;//メッセージ用
     TypewriterText mTypewriter;
     bool mbIsMessageActive = false; //メッセージ表示フラグ
 
