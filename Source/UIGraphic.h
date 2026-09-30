@@ -5,8 +5,10 @@ class UI;
 class UIGraphic
 {
 public:
-	UIGraphic(UI* _pUI,std::string _graphicFileName);
+	UIGraphic();
 	~UIGraphic() = default;
+
+	void Initialize(UI* _pUI, std::string _graphicFileName);
 
 	void Draw();
 

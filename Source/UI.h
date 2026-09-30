@@ -25,6 +25,9 @@ private:
 	UIManager* mpUIManager;
 	void Initialize(UIManager* _manager);
 
+protected:
+	virtual const char* GetGraphFilename() const { return ""; }
+
 private:
 	// コンポジットする部品の実体の宣言をここへ
 	UITransform mTransform;

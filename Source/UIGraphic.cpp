@@ -7,7 +7,7 @@
 
 #include <DxLib.h>	// 画像のサイズ取得用
 
-UIGraphic::UIGraphic(UI* _pUI,std::string _graphicFileName)
+void UIGraphic::Initialize(UI* _pUI, std::string _graphicFileName)
 {
 	// -- 所有権先のポインタを取得 -- //
 	mpUI = _pUI;

@@ -3,6 +3,8 @@
 #include <string>
 #include <DxLib.h>
 
+class UI;
+
 enum class TextAlign
 {
 	LEFT,
@@ -10,11 +12,13 @@ enum class TextAlign
 	RIGHT
 };
 
-class UItext
+class UIText
 {
 public:
-	UItext() = default;
-	~UItext() = default;
+	UIText() = default;
+	~UIText() = default;
+
+	void Initialize(UI* _pUI);
 
 	void SetText(std::string _text) { mText = _text; }
 	std::string GetText() { return mText; }
@@ -34,4 +38,6 @@ private:
 	unsigned int mColor = GetColor(255, 255, 255);
 
 	TextAlign mAlign = TextAlign::CENTER;
+
+	UI* mpUI;
 };
