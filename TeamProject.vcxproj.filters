@@ -159,6 +159,9 @@
     <ClCompile Include="Source\UITransform.cpp">
       <Filter>ソース ファイル\UIModule</Filter>
     </ClCompile>
+    <ClCompile Include="Source\UIButton.cpp">
+      <Filter>ソース ファイル\UIModule</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GamePad.h">
@@ -259,6 +262,9 @@
     </ClInclude>
     <ClInclude Include="Source\PlayerPieceButton.h">
       <Filter>ヘッダー ファイル\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UIButton.h">
+      <Filter>ヘッダー ファイル\UIModule</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

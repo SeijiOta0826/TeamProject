@@ -4,6 +4,7 @@
 #include  "UITransform.h"
 #include "UIGraphic.h"
 #include "UIText.h"
+#include "UIButton.h"
 
 class UIManager;
 
@@ -21,6 +22,7 @@ public:
 	UITransform& GetTransform() { return mTransform; }
 	UIGraphic& GetGraphic() { return mGraphic; }
 	UIText& GetText() { return mText; }
+	UIButton& GetButton() { return mButton; }
 
 	UIManager* GetUIManager() { return mpUIManager; }
 
@@ -37,4 +39,5 @@ private:
 	UITransform mTransform;
 	UIGraphic mGraphic;
 	UIText mText;
+	UIButton mButton;
 };

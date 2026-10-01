@@ -50,13 +50,7 @@ void Player::InitPiece()
 	// Todo : 複数Pieceに対応させる
 	
 	// -- piece生成 & 初期処理 -- //
-	mpPiece = Master::mpSceneManager
-		->GetCurrentScene()
-		->GetObjectManager()
-		->CreateObject<PlayerPiece>(this);
-
-	if (auto transform = GetModule<Transform>())
-		mpPiece->SetLocalPosition(VGet(0.0f, 0.0f, 0.0f));
+	
 }
 
 void Player::Update(float _deltaTime)
@@ -69,7 +63,6 @@ void Player::Update(float _deltaTime)
 	UpdatePiecePositions();		// Pieceの座標を更新
 
 	ResetCollisionCorrection();
-	mpPiece->ResolveStageCollision();
 
 	ApplyCollisionCorrection();
 	UpdatePiecePositions();		// Pieceの座標を更新
@@ -139,8 +132,7 @@ void Player::Move()
 
 void Player::UpdatePiecePositions()
 {
-	// Todo : 複数Pieceに対応させる
-	mpPiece->UpdateWorldPosition();
+
 }
 
 

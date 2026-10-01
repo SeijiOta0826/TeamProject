@@ -2,6 +2,8 @@
 #include "GameObject.h"
 #include <array>
 
+#include "GameConfig.h"
+
 #include <DxLib.h>
 
 class PlayerPiece;
@@ -45,19 +47,12 @@ protected:
 	}
 
 private:
-	int SIZE = 3;
-	PlayerPiece* mPieces[3][3]{};
-	bool mShape[3][3] = { true };			// 変形画面で選択するグリッドの配列
-	bool mbIsTransforming = false;	// 変形中であることを示す
+	PlayerPiece* mPieces[GameConfig::PLAYER_PIECE_SIZE][GameConfig::PLAYER_PIECE_SIZE]{};
 
 	float mfSpeed = 10.0f;		// 移動スピード
-
 	float mfAngle = 0.0f;		// 回転の角度(-180 ~ 180)
-	
-	PlayerPiece* mpPiece;
 
 	VECTOR mvCollisionCorrection = VGet(0.0f, 0.0f, 0.0f);	
-	
 	
 	// --- 転がり・回転用メンバ変数 ---
     bool mIsRolling = false;          // 転がり中フラグ
