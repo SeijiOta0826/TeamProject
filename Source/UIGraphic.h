@@ -5,7 +5,7 @@ class UI;
 class UIGraphic
 {
 public:
-	UIGraphic();
+	UIGraphic() = default;
 	~UIGraphic() = default;
 
 	void Initialize(UI* _pUI, std::string _graphicFileName);

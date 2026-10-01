@@ -12,6 +12,13 @@ enum class TextAlign
 	RIGHT
 };
 
+enum class TextVerticalAlign
+{
+	TOP,
+	CENTER,
+	BOTTOM
+};
+
 class UIText
 {
 public:
@@ -30,6 +37,9 @@ public:
 	TextAlign GetAlign() { return mAlign; }
 
 	void Draw();
+
+private:
+	VECTOR CalculateTextDrawPosition();	// AlignによるX / Y を補正した座標を返す
 
 private:
 	std::string mText;

@@ -5,6 +5,8 @@
 #include "Master.h"
 #include "ResourceManager.h"
 
+#include "ScreenConfig.h"
+
 #include <DxLib.h>	// 画像のサイズ取得用
 
 void UIGraphic::Initialize(UI* _pUI, std::string _graphicFileName)
@@ -37,14 +39,14 @@ void UIGraphic::Draw()
 	
 	auto transform = mpUI->GetTransform();
 
-	const auto position = transform.GetPosition();
+	const auto centerPosition = transform.GetCenterPosition();
 	const auto rotation = transform.GetRotation();
 	const auto scale = transform.GetScale();
 	const auto size = transform.GetSize();
 
 	DrawRotaGraph3(
-		static_cast<int>(position.x),
-		static_cast<int>(position.y),
+		static_cast<int>(centerPosition.x),
+		static_cast<int>(centerPosition.y),
 		static_cast<int>(size.x / 2.0f),
 		static_cast<int>(size.y / 2.0f),
 		scale.x,

@@ -37,6 +37,7 @@
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\FakePlayerController.cpp" />
     <ClCompile Include="Source\PlayerPiece.cpp" />
+    <ClCompile Include="Source\PlayerPieceButton.cpp" />
     <ClCompile Include="Source\ResourceManager.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
@@ -46,6 +47,7 @@
     <ClCompile Include="Source\UIGraphic.cpp" />
     <ClCompile Include="Source\UIManager.cpp" />
     <ClCompile Include="Source\UIText.cpp" />
+    <ClCompile Include="Source\UITransform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Collider.h" />
@@ -68,6 +70,7 @@
     <ClInclude Include="Source\ObjectManager.h" />
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\PlayerPiece.h" />
+    <ClInclude Include="Source\PlayerPieceButton.h" />
     <ClInclude Include="Source\ResourceManager.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\SceneManager.h" />

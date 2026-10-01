@@ -6,10 +6,14 @@ void UI::Initialize(UIManager* _manager)
 	mpUIManager = _manager;
 
 	mGraphic.Initialize(this,GetGraphFilename());
+	mText.Initialize(this);
+
+	Init();
 }
 
 void UI::Draw()
 {
 	// Todo : 要素が増え次第追加検討(主にstring)
 	mGraphic.Draw();
+	mText.Draw();
 }

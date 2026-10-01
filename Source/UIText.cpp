@@ -9,15 +9,26 @@ void UIText::Initialize(UI* _pUI)
 
 void UIText::Draw()
 {
+	VECTOR position = CalculateTextDrawPosition();
+
+	DrawString(
+		static_cast<int>(position.x),
+		static_cast<int>(position.y),
+		mText.c_str(),
+		mColor
+	);
+}
+
+VECTOR UIText::CalculateTextDrawPosition()
+{
 	auto transform =
 		mpUI->GetTransform();
-	VECTOR basePosition = VSub(
-		transform.GetPosition(),
-		VGet(transform.GetSize().x / 2.0f,
-			transform.GetSize().y / 2.0f,
-			0.0f
-		)
-	);
+	/*VECTOR basePosition = VSub(
+		transform.GetCenterPosition(),
+		transform.GetSize()
+	);*/
+
+	VECTOR basePosition = transform.GetCenterPosition();
 
 	int textWidth = GetDrawStringWidth(
 		mText.c_str(),
@@ -40,4 +51,12 @@ void UIText::Draw()
 		drawX -= textWidth;
 		break;
 	}
+
+	int drawY = static_cast<int>(basePosition.y - mnFontSize / 2.0f);
+
+	return VGet(
+		static_cast<int>(drawX),
+		static_cast<int>(drawY),
+		0.0f
+	);
 }

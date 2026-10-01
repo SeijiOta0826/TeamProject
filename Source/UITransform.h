@@ -33,10 +33,13 @@ public:
 
 	void SetPivot(VECTOR _pivot) { mvPivot = _pivot; }
 	VECTOR GetPivot() { return mvPivot; }
+
+	VECTOR GetCenterPosition();	// 
+
 private:
 	VECTOR mvPosition = VGet(0.0f, 0.0f, 0.0f);	// 座標値
 	VECTOR mvSize = VGet(0.0f, 0.0f, 0.0f);		// 大きさ
-	VECTOR mvScale = VGet(0.0f, 0.0f, 0.0f);	// 拡縮値
+	VECTOR mvScale = VGet(1.0f, 1.0f, 0.0f);	// 拡縮値
 	VECTOR mvRotation = VGet(0.0f, 0.0f, 0.0f);	// 回転値(主にzを用いる)
 
 	VECTOR mvAnchor = VGet(0.5f, 0.5f, 0.0f);	// 画面上の正規値(左上(0.0f,0.0f,0.0f) / 右下(1.0f,1.0f,0.0f))

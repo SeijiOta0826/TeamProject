@@ -3,6 +3,7 @@
 // Todo : コンポジットする部品のインクルードをここへ
 #include  "UITransform.h"
 #include "UIGraphic.h"
+#include "UIText.h"
 
 class UIManager;
 
@@ -12,24 +13,28 @@ public:
 	UI() = default;
 	virtual ~UI() = default;
 
-	void Update();
-	void Draw();
+	virtual void Init() = 0;		// 固有の初期化処理
 
-	UITransform GetTransform() { return mTransform; }
-	UIGraphic GetGraphic() { return mGraphic; }
+	virtual void Update() {};
+	virtual void Draw();
+
+	UITransform& GetTransform() { return mTransform; }
+	UIGraphic& GetGraphic() { return mGraphic; }
+	UIText& GetText() { return mText; }
 
 	UIManager* GetUIManager() { return mpUIManager; }
 
 private:
 	friend class UIManager;
 	UIManager* mpUIManager;
-	void Initialize(UIManager* _manager);
+	void Initialize(UIManager* _manager);	// Manager内でUI生成時に通る
 
 protected:
 	virtual const char* GetGraphFilename() const { return ""; }
 
 private:
-	// コンポジットする部品の実体の宣言をここへ
+	// Todo : コンポジットする部品の実体の宣言をここへ
 	UITransform mTransform;
 	UIGraphic mGraphic;
+	UIText mText;
 };

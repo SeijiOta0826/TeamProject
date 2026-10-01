@@ -4,11 +4,16 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include "ObjectManager.h"
+#include "UIManager.h"
 
+// -- GameObject -- //
 #include "Stage.h"
 #include "Player.h"
 #include "FakePlayer.h" // デバック用
 #include "StageBlock.h"
+
+// -- UI -- //
+#include "PlayerPieceButton.h"
 
 #include "Debug.h"
 #include "GameConfig.h"
@@ -32,6 +37,10 @@ void GameScene::Initialize()
     auto* stage = new Stage();
     stage->Load("Resource/Stage/test_stage.csv");
 
+    auto* testUI =
+        this
+        ->GetUIManager()
+        ->CreateUI<PlayerPieceButton>();
 }
 
 void GameScene::Update(float deltaTime)
