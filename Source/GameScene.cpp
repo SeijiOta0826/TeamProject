@@ -383,9 +383,10 @@ void GameScene::UpdateClear()
 		mouseX >= 500 && mouseX <= 780 &&
 		mouseY >= 400 && mouseY <= 470)
 	{
-		Master::mpSceneManager->SetNextScene(
+		Master::mpSceneManager->RequestScene(
 			SCENE_TYPE::STAGE_SELECT_SCENE
 		);
+		
 	}
 
 	mbPreviousMouseLeft = currentMouseLeft;
@@ -410,16 +411,13 @@ void GameScene::UpdatePause()
 	// マウス座標
 	int mouseX;
 	int mouseY;
-
 	GetMousePoint(&mouseX, &mouseY);
 
-	// 左クリック
-
+	// 左クリック判定
 	bool currentMouseLeft = (GetMouseInput() & MOUSE_INPUT_LEFT) != 0;
-
 	bool mouseLeftDown = currentMouseLeft && !mbPreviousMouseLeft;
 
-	// 再開ボタン
+	//  再開ボタン
 	if (mouseLeftDown &&
 		mouseX >= 500 && mouseX <= 780 &&
 		mouseY >= 300 && mouseY <= 370)
@@ -427,24 +425,24 @@ void GameScene::UpdatePause()
 		mbIsPaused = false;
 	}
 
-	// ステージ選択へ戻るボタン
+	//  ステージ選択へ戻るボタン
 	if (mouseLeftDown &&
 		mouseX >= 500 && mouseX <= 780 &&
 		mouseY >= 400 && mouseY <= 470)
 	{
-		Master::mpSceneManager->SetNextScene(
-			SCENE_TYPE::STAGE_SELECT_SCENE
-		);
+		
+		// フェードアウトを開始してステージセレクトへ
+		Master::mpSceneManager->RequestScene(SCENE_TYPE::STAGE_SELECT_SCENE);
 	}
 
-	// タイトルへ戻る
+	// タイトルへ戻るボタン
 	if (mouseLeftDown &&
 		mouseX >= 500 && mouseX <= 780 &&
 		mouseY >= 500 && mouseY <= 570)
 	{
-		Master::mpSceneManager->SetNextScene(
-			SCENE_TYPE::TITLE_SCENE
-		);
+		
+		// フェードアウトを開始してタイトルへ
+		Master::mpSceneManager->RequestScene(SCENE_TYPE::TITLE_SCENE);
 	}
 
 	mbPreviousMouseLeft = currentMouseLeft;
