@@ -19,6 +19,11 @@ void StageSelectScene::Initialize()
 
 void StageSelectScene::Update(float _deltaTime)
 {
+	//Sceneが遷移中は入力を受け付けない
+	if (Master::mpSceneManager->IsChangingScene())
+	{
+		return;
+	}
 	int mouseX;
 	int mouseY;
 	
@@ -119,7 +124,7 @@ void StageSelectScene::Update(float _deltaTime)
 				i + 1
 			);
 
-			Master::mpSceneManager->SetNextScene(
+			Master::mpSceneManager->RequestScene(
 				SCENE_TYPE::GAME_SCENE
 			);
 

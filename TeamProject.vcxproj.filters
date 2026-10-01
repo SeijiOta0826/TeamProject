@@ -117,9 +117,6 @@
     <ClCompile Include="Source\Stage.cpp">
       <Filter>ソース ファイル\Obj</Filter>
     </ClCompile>
-    <ClCompile Include="Source\StageSelectScene.cpp">
-      <Filter>ソース ファイル\Obj</Filter>
-    </ClCompile>
     <ClCompile Include="Source\TitleScene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
@@ -137,6 +134,8 @@
     </ClCompile>
     <ClCompile Include="Source\MovingBlock.cpp">
       <Filter>ソース ファイル\Obj</Filter>
+    <ClCompile Include="Source\StageSelectScene.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -209,9 +208,6 @@
     <ClInclude Include="Source\Stage.h">
       <Filter>ヘッダー ファイル\Obj</Filter>
     </ClInclude>
-    <ClInclude Include="Source\StageSelectScene.h">
-      <Filter>ヘッダー ファイル\Obj</Filter>
-    </ClInclude>
     <ClInclude Include="Source\TitleScene.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
@@ -241,6 +237,11 @@
     </ClInclude>
     <ClInclude Include="Source\MovingBlock.h">
       <Filter>ヘッダー ファイル\Obj</Filter>
+    <ClInclude Include="Source\TypewriterText.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FadeEffect.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

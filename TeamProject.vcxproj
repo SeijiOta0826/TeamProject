@@ -54,6 +54,7 @@
     <ClInclude Include="Source\CsvLoader.h" />
     <ClInclude Include="Source\Cursor.h" />
     <ClInclude Include="Source\Debug.h" />
+    <ClInclude Include="Source\FadeEffect.h" />
     <ClInclude Include="Source\FloatingMotion.h" />
     <ClInclude Include="Source\FontManager.h" />
     <ClInclude Include="Source\GameConfig.h" />

@@ -88,8 +88,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 			//60fpsに調整
 		}
 
-		// Scene変更のチェッカー
-		Master::mpSceneManager->ChangeSceneIfNeeded();
+		//// Scene変更のチェッカー
+		//Master::mpSceneManager->ChangeSceneIfNeeded();
 	}
 
 	// -- 終了処理　-- // 

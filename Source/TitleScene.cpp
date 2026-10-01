@@ -63,7 +63,7 @@ void TitleScene::Update(float _deltaTime)
 
 	if (mbStartSelected && mouseLeftDown)
 	{
-		Master::mpSceneManager->SetNextScene(
+		Master::mpSceneManager->RequestScene(
 			SCENE_TYPE::STAGE_SELECT_SCENE
 		);
 	}
