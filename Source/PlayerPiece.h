@@ -17,14 +17,16 @@ public:
 	void Update(float _deltaTime) override;
 	void Draw() override;
 
+	void SetEnabled(bool _enabled);	// 有効状態のセッター
+
 	// -- Playerからの相対座標アクセサ -- //
 	void SetLocalPosition(VECTOR _pos) { mvLocalPosition = _pos; }
 	VECTOR GetLocalPosition() { return mvLocalPosition; }
 
-	void SetEnabled(bool _enabled);	// 有効状態のセッター
+	void ResolveCollision() override;
 
-	void ResolveStageCollision();	// 
 	void UpdateWorldPosition();		// Playerに基づいた相対座標へ座標更新
+	void UpdateRotation();
 protected:
 	const char* GetModelFilename() const override
 	{

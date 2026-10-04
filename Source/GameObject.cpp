@@ -54,6 +54,11 @@ void GameObject::Draw() {
 	}
 }
 
+void GameObject::BeginCollisionResolution()
+{
+	mvCollisionCorrection = VGet(0.0f, 0.0f, 0.0f);
+}
+
 void GameObject::ResolveCollision()
 {
 	// nullCheack
@@ -64,7 +69,6 @@ void GameObject::ResolveCollision()
 		return;
 
 	mbGrounded = false;
-	mvCollisionCorrection = VGet(0.0f, 0.0f, 0.0f);
 
 	auto* collisionManager =
 		Master::mpSceneManager

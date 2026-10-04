@@ -162,6 +162,9 @@
     <ClCompile Include="Source\UIButton.cpp">
       <Filter>ソース ファイル\UIModule</Filter>
     </ClCompile>
+    <ClCompile Include="Source\PlayerController.cpp">
+      <Filter>ソース ファイル\Controller</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GamePad.h">
@@ -265,6 +268,9 @@
     </ClInclude>
     <ClInclude Include="Source\UIButton.h">
       <Filter>ヘッダー ファイル\UIModule</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PlayerController.h">
+      <Filter>ヘッダー ファイル\Controller</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

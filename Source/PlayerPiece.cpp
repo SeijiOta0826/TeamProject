@@ -68,6 +68,13 @@ void PlayerPiece::SetEnabled(bool _enabled)
 		gravity->SetEnabled(_enabled);
 }
 
+void PlayerPiece::ResolveCollision()
+{
+	GameObject::ResolveCollision();
+
+	mpPlayer->AddCollisionCorrection(GetCollisionCorrection());
+}
+
 void PlayerPiece::UpdateWorldPosition()
 {
 	if (mpPlayer == nullptr)
@@ -85,53 +92,35 @@ void PlayerPiece::UpdateWorldPosition()
 	piece_transform->SetPosition(nextPos);
 }
 
-void PlayerPiece::ResolveStageCollision()
+void PlayerPiece::UpdateRotation()
 {
-	// nullCheack
-	auto myTransform = GetModule<Transform>();
-	auto myCollider = GetModule<Collider>();
-	if (!myTransform
-		|| !myCollider)
+	auto playerTransform = mpPlayer->GetModule<Transform>();
+	auto pieceTransform = GetModule<Transform>();
+
+	if (playerTransform == nullptr || pieceTransform == nullptr)
 		return;
 
-	// 有効check
-	if (!myTransform->IsEnabled()
-		|| !myCollider->IsEnabled())
-		return;
+	// Playerの回転角度（Z軸）
+	const float angle = playerTransform->GetRotation().z;
 
-	// -- 衝突しているStageBlockのコンテナを取得 -- //
-	Tag tag = Tag::BLOCK;
-	auto objects = myCollider->GetCollisions(tag);
+	const float cosAngle = cosf(angle);
+	const float sinAngle = sinf(angle);
 
-	for (auto obj : objects)
-	{
-		// -- 衝突objのCollider取得 & nullCheck -- //
-		auto collider = obj->GetModule<Collider>();
-		if (!collider)
-			continue;
+	// Playerの中心を基準に、Pieceのローカル座標を回転
+	VECTOR rotatedLocalPosition = VGet(
+		mvLocalPosition.x * cosAngle - mvLocalPosition.y * sinAngle,
+		mvLocalPosition.x * sinAngle + mvLocalPosition.y * cosAngle,
+		mvLocalPosition.z
+	);
 
-		CollisionInfo info;
-		if (!Master::mpSceneManager
-			->GetCurrentScene()
-			->GetCollisionManager()
-			->GetBoxBoxCollision(
-				myCollider,
-				collider,
-				info)
-			)
-		{
-			continue;
-		}
+	// 回転後のローカル座標をワールド座標へ変換
+	VECTOR worldPosition = VAdd(
+		playerTransform->GetPosition(),
+		rotatedLocalPosition
+	);
 
-		if (info.normal.y < -0.5f)
-			mbGrounded = true;
+	pieceTransform->SetPosition(worldPosition);
 
-		mpPlayer
-			->AddCollisionCorrection(
-				VScale(
-					info.normal,
-					info.penetration
-				)
-			);
-	}
+	// Piece自体の見た目もPlayerと同じ角度にする
+	pieceTransform->SetRotation(playerTransform->GetRotation());
 }

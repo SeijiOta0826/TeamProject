@@ -36,6 +36,7 @@
     <ClCompile Include="Source\ObjectManager.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\FakePlayerController.cpp" />
+    <ClCompile Include="Source\PlayerController.cpp" />
     <ClCompile Include="Source\PlayerPiece.cpp" />
     <ClCompile Include="Source\PlayerPieceButton.cpp" />
     <ClCompile Include="Source\ResourceManager.cpp" />
@@ -70,6 +71,7 @@
     <ClInclude Include="Source\Mouse.h" />
     <ClInclude Include="Source\ObjectManager.h" />
     <ClInclude Include="Source\Player.h" />
+    <ClInclude Include="Source\PlayerController.h" />
     <ClInclude Include="Source\PlayerPiece.h" />
     <ClInclude Include="Source\PlayerPieceButton.h" />
     <ClInclude Include="Source\ResourceManager.h" />

@@ -19,7 +19,15 @@ void ObjectManager::Draw() {
 void ObjectManager::ResolveCollision()
 {
     for (auto& object : mObjects) {
+        object->BeginCollisionResolution();
+    }
+
+    for (auto& object : mObjects) {
         object->ResolveCollision();
+    }
+
+    for (auto& object : mObjects) {
+        object->EndCollisionResolution();
     }
 }
 

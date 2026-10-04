@@ -18,6 +18,8 @@
 // 入力関係
 #include "InputManager.h"
 
+#include "Debug.h"
+
 // ライブラリ
 #include <DxLib.h>
 #include <cmath>  //回転処理用
@@ -37,6 +39,7 @@ void Player::Init()
 {
 	// -- タグ設定 -- //
 	SetTag(Tag::PLAYER);
+	mController.Initialize(this);
 }
 
 void Player::InitComponent()
@@ -50,76 +53,169 @@ void Player::InitPiece()
 	// Todo : 複数Pieceに対応させる
 	
 	// -- piece生成 & 初期処理 -- //
-	
+	for (int row = 0;
+		row < GameConfig::PLAYER_PIECE_SIZE;
+		++row)
+	{
+		for (int column = 0;
+			column < GameConfig::PLAYER_PIECE_SIZE;
+			++column)
+		{
+			CreatePiece(column, row);
+		}
+	}
+
+	mPieces[0][1]->SetEnabled(false);
+	mPieces[0][2]->SetEnabled(false);
+	mPieces[1][1]->SetEnabled(false);
+	mPieces[1][2]->SetEnabled(false);
+}
+
+void Player::CreatePiece(int _column, int _row)
+{
+	auto playerPiece =
+		Master::mpSceneManager
+		->GetCurrentScene()
+		->GetObjectManager()
+		->CreateObject<PlayerPiece>(this);
+
+	if (playerPiece == nullptr)
+		return;
+
+	mPieces[_row][_column] = playerPiece;
+
+	VECTOR localPosition = VGet(
+		(_column - 1) * GameConfig::CELL_SIZE,
+		(_row - 1) * GameConfig::CELL_SIZE,
+		0.0f
+	);
+
+	playerPiece->SetLocalPosition(localPosition);
 }
 
 void Player::Update(float _deltaTime)
-{	
-	if (InputManager::GetInstance().GetButtonDown(Button::OperationChange_toFakePlayer))
-		InputManager::GetInstance().SetInputMode(InputMode::Fake);
+{
+	mController.Update();
 	GameObject::Update(_deltaTime);
-
-	Move();						// 移動処理
-	UpdatePiecePositions();		// Pieceの座標を更新
-
-	ResetCollisionCorrection();
-
-	ApplyCollisionCorrection();
-	UpdatePiecePositions();		// Pieceの座標を更新
 }
 
 void Player::Draw()
 {
 	GameObject::Draw();
+
+	auto transform = GetModule<Transform>();
+	VECTOR pos = transform->GetPosition();
+	Debug::Print(
+		"Player座標 : (",
+		pos.x,
+		" , ",
+		pos.y,
+		" )"
+	);
 }
 
 void Player::AddCollisionCorrection(VECTOR _correction)
 {
-	if (fabsf(_correction.x) > fabsf(mvCollisionCorrection.x))
-	{
-		mvCollisionCorrection.x = _correction.x;
-	}
+	// 補正が不要なら登録しない
+	if (_correction.x == 0.0f && _correction.y == 0.0f)
+		return;
 
-	if (fabsf(_correction.y) > fabsf(mvCollisionCorrection.y))
-	{
-		mvCollisionCorrection.y = _correction.y;
-	}
-
-	if (fabsf(_correction.z) > fabsf(mvCollisionCorrection.z))
-	{
-		mvCollisionCorrection.z = _correction.z;
-	}
+	mCollisionCorrections.push_back(_correction); 
 }
 
-void Player::ResetCollisionCorrection()
+void Player::ResetCollisionCorrections()
 {
-	mvCollisionCorrection = VGet(0.0f, 0.0f, 0.0f);
+	mCollisionCorrections.clear();
+}
+
+VECTOR Player::CalculateCollisionCorrection()
+{
+	VECTOR correction = VGet(0.0f, 0.0f, 0.0f);
+
+	for (const VECTOR& candidate : mCollisionCorrections)
+	{
+		// X軸：絶対値が最大の補正を採用
+		if (fabsf(candidate.x) > fabsf(correction.x))
+		{
+			correction.x = candidate.x;
+		}
+
+		// Y軸：絶対値が最大の補正を採用
+		if (fabsf(candidate.y) > fabsf(correction.y))
+		{
+			correction.y = candidate.y;
+		}
+	}
+
+	return correction;
 }
 
 void Player::ApplyCollisionCorrection()
 {
 	auto transform = GetModule<Transform>();
-	transform->SetPosition(
-		VAdd(
-			transform->GetPosition(),
-			mvCollisionCorrection
-		)
-	);
+	if (transform == nullptr)
+		return;
+
+	VECTOR correction = CalculateCollisionCorrection();
+
+	VECTOR position = transform->GetPosition();
+	position = VAdd(position, correction);
+
+	transform->SetPosition(position);
 }
 
-void Player::Move()
+void Player::BeginCollisionResolution()
 {
-	// -- 入力値を取得 -- //
-	VECTOR inputDirection = VGet(0.0f, 0.0f, 0.0f);
+	GameObject::BeginCollisionResolution();	// memo : 意味ないけど一応
 
-	inputDirection.x += InputManager::GetInstance().GetAxis(Axis::MoveX);
-	inputDirection.y += InputManager::GetInstance().GetAxis(Axis::MoveY);
+	ResetCollisionCorrections();
+}
 
-	if (VSize(inputDirection) == 0.0f)
+void Player::EndCollisionResolution()
+{
+	GameObject::EndCollisionResolution();	// memo : 意味ないけど一応
+
+	ApplyCollisionCorrection();
+
+	UpdatePiecePosition();
+	UpdatePieceRotation();
+}
+
+void Player::UpdatePiecePosition()
+{
+	for (auto& row : mPieces)
+	{
+		for (auto* piece : row)
+		{
+			if (piece == nullptr)
+				continue;
+
+			piece->UpdateWorldPosition();
+		}
+	}
+}
+
+void Player::UpdatePieceRotation()
+{
+	for (auto& row : mPieces)
+	{
+		for (auto* piece : row)
+		{
+			if (piece == nullptr)
+				continue;
+
+			piece->UpdateRotation();
+		}
+	}
+}
+
+void Player::Move(VECTOR _direction)
+{
+	if (VSize(_direction) == 0.0f)
 		return;
 
 	// -- 移動量を取得 & 座標反映 -- //
-	VECTOR moveAmount = VScale(inputDirection, mfSpeed);
+	VECTOR moveAmount = VScale(_direction, mfSpeed);
 
 	auto transform = GetModule<Transform>();
 	VECTOR nextPos = VAdd(
@@ -128,11 +224,26 @@ void Player::Move()
 	);
 
 	transform->SetPosition(nextPos);
+
+	UpdatePiecePosition();
 }
 
-void Player::UpdatePiecePositions()
+void Player::Rotation(float _rotateDirection)
 {
+	// -- 回転値を取得 -- //
+	float rotationAmount = _rotateDirection * mfRotationPower;	// 回転の値(度数)
+	float rotationRadian = rotationAmount * DX_PI_F / 180.0f;	// 回転の値(ラジアン)
 
+	// -- 回転値を適用 -- //
+	if (auto transform = GetModule<Transform>())
+		transform->SetRotation(
+			VAdd(
+				transform->GetRotation(),
+				VGet(0.0f, 0.0f, rotationRadian)
+			)
+		);
+
+	UpdatePieceRotation();
 }
 
 

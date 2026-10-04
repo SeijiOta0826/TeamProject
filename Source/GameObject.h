@@ -29,7 +29,9 @@ public:
 	virtual void Update(float _deltaTime);		// 保有するコンポーネントの更新処理
 	virtual void Draw();		// 保有するコンポーネントの描画処理
 
-	virtual void ResolveCollision();
+	virtual void BeginCollisionResolution();	// 補正値のリセット
+	virtual void ResolveCollision();			// 衝突情報の処理
+	virtual void EndCollisionResolution() {};		// 補正値の適用
 
 	// 自身にコンポーネントを追加する
 	template <class T, class...Args>
@@ -67,7 +69,7 @@ public:
 
 	bool IsGrounded() const { return mbGrounded; }
 
-	VECTOR GetCollisionCorrection() { return mvCollisionCorrection; }
+	VECTOR GetCollisionCorrection() { return mvCollisionCorrection; }	// 衝突解決にかかる値を返す
 
 protected:
 	virtual const char* GetModelFilename() const { return ""; }

@@ -72,6 +72,7 @@ void GameScene::Draw()
         "InputMode : ",
         static_cast<int>(InputManager::GetInstance().GetInputMode())
     );
+
     Debug::Draw();
     Scene::Draw();
 }

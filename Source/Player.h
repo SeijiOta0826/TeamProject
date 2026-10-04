@@ -2,6 +2,8 @@
 #include "GameObject.h"
 #include <array>
 
+#include "PlayerController.h"
+
 #include "GameConfig.h"
 
 #include <DxLib.h>
@@ -16,31 +18,34 @@ public:
 
 	void Init() override;
 	void InitComponent() override;
-	void InitPiece();
+	void InitPiece();	// Todo : これする場所確定させる
 
 	void Update(float _deltaTime) override;
 	void Draw() override;
+
+	void Move(VECTOR _direction);
+	void Rotation(float _rotateDirection);
+
+	void BeginCollisionResolution() override;
+	void EndCollisionResolution() override;
 
 	// -- 角度(度数法)のアクセサ -- //
 	void SetAngle(float _angle) { mfAngle = _angle; }
 	float GetAngle() { return mfAngle; }
 
-	void AddCollisionCorrection(VECTOR _correction);	// 修正値を集約する処理(主にPlayerPieceのResolve処理後、修正値が存在する場合に加算していく)
-	void ResetCollisionCorrection();					// 修正値をリセットする処理(毎フレーム用いる)
-
-	void ApplyCollisionCorrection();					// 修正値をPlayerへ適応する処理
+	void AddCollisionCorrection(VECTOR _correction);
 
 private:
-	void Move();
-	void UpdatePiecePositions();	// 所有するPiece座標の更新
+	void CreatePiece(int _column, int _row);
 
-	// 変形画面を描画
-	//void DrawTransformUI();
-	//void UpdateTransformUI();
+	// -- 各Pieceの補正値を集約 & 適用 -- //
+	void ResetCollisionCorrections();
+	VECTOR CalculateCollisionCorrection();
+	void ApplyCollisionCorrection();
 
-	// 変形後のColliderを更新
-	//void UpdateTransformCollider();
-
+	// -- Player座標補正後にPieceの座標を更新 -- //
+	void UpdatePiecePosition();
+	void UpdatePieceRotation();
 protected:
 	const char* GetModelFilename() const override {
 		return "Resource/Player.png";
@@ -49,10 +54,13 @@ protected:
 private:
 	PlayerPiece* mPieces[GameConfig::PLAYER_PIECE_SIZE][GameConfig::PLAYER_PIECE_SIZE]{};
 
+	PlayerController mController;
+	
 	float mfSpeed = 10.0f;		// 移動スピード
 	float mfAngle = 0.0f;		// 回転の角度(-180 ~ 180)
+	float mfRotationPower = 5.0f;	// 回転力(単位は度数)
 
-	VECTOR mvCollisionCorrection = VGet(0.0f, 0.0f, 0.0f);	
+	std::vector<VECTOR> mCollisionCorrections;
 	
 	// --- 転がり・回転用メンバ変数 ---
     bool mIsRolling = false;          // 転がり中フラグ
