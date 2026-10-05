@@ -65,10 +65,10 @@ void Player::InitPiece()
 		}
 	}
 
-	mPieces[0][1]->SetEnabled(false);
+	/*mPieces[0][1]->SetEnabled(false);
 	mPieces[0][2]->SetEnabled(false);
 	mPieces[1][1]->SetEnabled(false);
-	mPieces[1][2]->SetEnabled(false);
+	mPieces[1][2]->SetEnabled(false);*/
 }
 
 void Player::CreatePiece(int _column, int _row)

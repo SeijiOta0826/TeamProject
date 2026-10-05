@@ -7,6 +7,7 @@ void UI::Initialize(UIManager* _manager)
 
 	mGraphic.Initialize(this,GetGraphFilename());
 	mText.Initialize(this);
+	mButton.Initialize(this);
 
 	Init();
 }
@@ -16,4 +17,15 @@ void UI::Draw()
 	// Todo : 要素が増え次第追加検討(主にstring)
 	mGraphic.Draw();
 	mText.Draw();
+}
+
+bool UI::IsEnabled()
+{
+	if (!mbIsEnabled)
+		return false;
+
+	if (mpParent != nullptr)
+		return mpParent->IsEnabled();
+
+	return true;
 }

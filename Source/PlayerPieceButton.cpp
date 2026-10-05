@@ -1,5 +1,7 @@
 ﻿#include "PlayerPieceButton.h"
 
+#include "Debug.h"
+
 void PlayerPieceButton::Init()
 {
 	auto& transform = GetTransform();
@@ -12,7 +14,8 @@ void PlayerPieceButton::Init()
 
 void PlayerPieceButton::Update()
 {
-
+	if (GetButton().IsMouseInside())
+		Debug::Print("挿入ってりゅ～");
 }
 
 void PlayerPieceButton::Draw()

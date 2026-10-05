@@ -12,7 +12,7 @@ public:
 	UIManager() = default;
 	~UIManager() = default;
 
-	// void Update();
+	void Update();
 	void Draw();
 
 	template<class T, class...Args>

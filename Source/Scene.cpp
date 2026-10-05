@@ -58,6 +58,11 @@ void Scene::Update(float _deltaTime)
 	{
 		mpObjectManager->ResolveCollision();
 	}
+
+	if (mpUIManager != nullptr)
+	{
+		mpUIManager->Update();
+	}
 }
 
 void Scene::Draw()

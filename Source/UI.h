@@ -6,6 +6,8 @@
 #include "UIText.h"
 #include "UIButton.h"
 
+#include <vector>
+
 class UIManager;
 
 class UI
@@ -18,6 +20,8 @@ public:
 
 	virtual void Update() {};
 	virtual void Draw();
+
+	bool IsEnabled();	// 有効であるかどうかを取得する
 
 	UITransform& GetTransform() { return mTransform; }
 	UIGraphic& GetGraphic() { return mGraphic; }
@@ -35,9 +39,14 @@ protected:
 	virtual const char* GetGraphFilename() const { return ""; }
 
 private:
+	UI* mpParent;
+	std::vector<UI*> mChildren;
+
 	// Todo : コンポジットする部品の実体の宣言をここへ
 	UITransform mTransform;
 	UIGraphic mGraphic;
 	UIText mText;
 	UIButton mButton;
+
+	bool mbIsEnabled = false;
 };
