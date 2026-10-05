@@ -23,6 +23,9 @@ public:
 	// -- ハンドル取得 -- //
 	int GetHandle() { return mnHandle; }
 
+	// -- 画像変更 -- //
+	void SetTexture(std::string filename);
+
 private:
 	VECTOR CalculateTopLeftPosition();	// 中心座標を、DrawGraph用に左上座標に変換する
 

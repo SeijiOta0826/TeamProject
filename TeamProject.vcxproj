@@ -24,6 +24,7 @@
     <ClCompile Include="Source\CsvLoader.cpp" />
     <ClCompile Include="Source\Cursor.cpp" />
     <ClCompile Include="Source\Debug.cpp" />
+    <ClCompile Include="Source\DisappearingBlock.cpp" />
     <ClCompile Include="Source\FontManager.cpp" />
     <ClCompile Include="Source\GameObject.cpp" />
     <ClCompile Include="Source\GamePad.cpp" />
@@ -46,6 +47,8 @@
     <ClCompile Include="Source\Stage.cpp" />
     <ClCompile Include="Source\StageBlock.cpp" />
     <ClCompile Include="Source\StageSelectScene.cpp" />
+    <ClCompile Include="Source\Switch.cpp" />
+    <ClCompile Include="Source\SwitchBlock.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
     <ClCompile Include="Source\TitleScene.cpp" />
   </ItemGroup>
@@ -55,6 +58,7 @@
     <ClInclude Include="Source\CsvLoader.h" />
     <ClInclude Include="Source\Cursor.h" />
     <ClInclude Include="Source\Debug.h" />
+    <ClInclude Include="Source\DisappearingBlock.h" />
     <ClInclude Include="Source\FloatingMotion.h" />
     <ClInclude Include="Source\FontManager.h" />
     <ClInclude Include="Source\GameConfig.h" />
@@ -80,6 +84,8 @@
     <ClInclude Include="Source\Stage.h" />
     <ClInclude Include="Source\StageBlock.h" />
     <ClInclude Include="Source\StageSelectScene.h" />
+    <ClInclude Include="Source\Switch.h" />
+    <ClInclude Include="Source\SwitchBlock.h" />
     <ClInclude Include="Source\TextRenderer.h" />
     <ClInclude Include="Source\Texture.h" />
     <ClInclude Include="Source\TitleScene.h" />
