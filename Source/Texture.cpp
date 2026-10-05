@@ -79,3 +79,16 @@ VECTOR Texture::CalculateTopLeftPosition()
 		mvPosition.z
 	);
 }
+
+void Texture::SetTexture(std::string filename)
+{
+	mnHandle = Master::mpResource->LoadGraphics(filename);
+
+	int size_x;
+	int size_y;
+
+	GetGraphSize(mnHandle, &size_x, &size_y);
+
+	mvSize.x = static_cast<float>(size_x);
+	mvSize.y = static_cast<float>(size_y);
+}

@@ -44,6 +44,9 @@ void MovingBlock::Update(float _deltaTime)
     mvMoveDelta = VSub(position, previousPosition);
 
     StageBlock::Update(_deltaTime);
+
+    // ˆÚ“®‚µ‚½•ª‚¾‚¯Player‚ð‰^‚Ô
+    CarryPlayer();
 }
 
 void MovingBlock::CarryPlayer()

@@ -40,6 +40,7 @@ void GameScene::Initialize()
 		+ ".csv";
 
 	stage->Load(stageFileName);
+	stage->SetPlayerRespawn(mpPlayer);
 
 	mpGoal = this->GetObjectManager()->FindObject<Goal>();
 
@@ -146,12 +147,6 @@ void GameScene::Update(float deltaTime)
 
 	// 更新処理
 	Scene::Update(deltaTime);
-
-	// 移動床に乗っているPlayerを運ぶ
-	if (mpMovingBlock != nullptr)
-	{
-		mpMovingBlock->CarryPlayer();
-	}
 
 	if (mpGoal != nullptr &&
 		mpGoal->IsShapeMatched(mpPlayer) &&

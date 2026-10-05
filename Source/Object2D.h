@@ -12,6 +12,7 @@ enum class Tag
 	PLAYER,
 	BLOCK,
 	GOAL,
+	SPIKE,
 };
 
 /* memo : 

@@ -138,6 +138,18 @@
     <ClCompile Include="Source\StageSelectScene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Spike.cpp">
+      <Filter>ソース ファイル\Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DisappearingBlock.cpp">
+      <Filter>ソース ファイル\Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Switch.cpp">
+      <Filter>ソース ファイル\Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SwitchBlock.cpp">
+      <Filter>ソース ファイル\Obj</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GamePad.h">
@@ -244,6 +256,18 @@
     </ClInclude>
     <ClInclude Include="Source\FadeEffect.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Spike.h">
+      <Filter>ヘッダー ファイル\Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DisappearingBlock.h">
+      <Filter>ヘッダー ファイル\Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Switch.h">
+      <Filter>ヘッダー ファイル\Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SwitchBlock.h">
+      <Filter>ヘッダー ファイル\Obj</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

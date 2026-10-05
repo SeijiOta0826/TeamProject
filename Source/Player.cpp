@@ -23,6 +23,7 @@
 
 Player::Player(std::string filename, VECTOR initPos)
 	:GameObject(filename, initPos)
+	, mvRespawnPos(initPos)
 {
 	// -- タグ設定 -- //
 	SetTag(Tag::PLAYER);
@@ -479,6 +480,20 @@ void Player::Rotate()
 			UpdateTransformCollider();
 		}
 	}
+}
+
+void Player::Respawn()
+{
+	SetPosition(mvRespawnPos);
+
+	mIsRolling = false;
+	mRollTimer = 0;
+
+	mDirection = 0.0f;
+	mCurrentAngle = 0.0f;
+	mStartAngle = 0.0f;
+
+	mbCompleteRoll = false;
 }
 
 
