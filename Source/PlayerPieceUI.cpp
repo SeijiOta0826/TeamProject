@@ -1,9 +1,11 @@
-﻿#include "PlayerPieceButton.h"
+﻿#include "PlayerPieceUI.h"
 
 #include "Debug.h"
 
-void PlayerPieceButton::Init()
+void PlayerPieceUI::Init()
 {
+	LoadUIGraph("Resource/Obj/test_field.png");
+
 	auto& transform = GetTransform();
 	transform.SetAnchor(VGet(0.5f, 0.5f, 0.0f));
 	transform.SetPosition(VGet(100.0f, 100.0f, 0.0f));
@@ -12,13 +14,13 @@ void PlayerPieceButton::Init()
 	text.SetText("うんこ");
 }
 
-void PlayerPieceButton::Update()
+void PlayerPieceUI::Update()
 {
 	if (GetButton().IsMouseInside())
 		Debug::Print("挿入ってりゅ～");
 }
 
-void PlayerPieceButton::Draw()
+void PlayerPieceUI::Draw()
 {
 	UI::Draw();
 }

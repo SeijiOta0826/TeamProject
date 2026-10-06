@@ -7,6 +7,7 @@
 #include "UIButton.h"
 
 #include <vector>
+#include <string>	// filenameの指定用
 
 class UIManager;
 
@@ -16,27 +17,36 @@ public:
 	UI() = default;
 	virtual ~UI() = default;
 
-	virtual void Init() = 0;		// 固有の初期化処理
+	virtual void Init() {};		// 固有の初期化処理
 
-	virtual void Update() {};
+	virtual void Update() {};		// 固有の更新処理
 	virtual void Draw();
+
+	void LoadUIGraph(std::string filename);
+
+	// -- 親子の設定 -- //
+	void AddChild(UI* _child) { mChildren.push_back(_child); }
+	void SetParent(UI* _parent) { mpParent = _parent; }
+
+	// -- レイヤーのアクセサ -- //
+	void SetLayer(int _layer) { mnLayer = _layer; }
+	int GetLayer() { return mnLayer; }
 
 	bool IsEnabled();	// 有効であるかどうかを取得する
 
+	// -- Moduleの取得 -- //
 	UITransform& GetTransform() { return mTransform; }
 	UIGraphic& GetGraphic() { return mGraphic; }
 	UIText& GetText() { return mText; }
 	UIButton& GetButton() { return mButton; }
 
+	// -- Managerの取得 -- //
 	UIManager* GetUIManager() { return mpUIManager; }
 
 private:
 	friend class UIManager;
 	UIManager* mpUIManager;
 	void Initialize(UIManager* _manager);	// Manager内でUI生成時に通る
-
-protected:
-	virtual const char* GetGraphFilename() const { return ""; }
 
 private:
 	UI* mpParent;
@@ -49,4 +59,6 @@ private:
 	UIButton mButton;
 
 	bool mbIsEnabled = false;
+
+	int mnLayer = 0;
 };

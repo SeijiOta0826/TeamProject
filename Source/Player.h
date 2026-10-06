@@ -9,6 +9,7 @@
 #include <DxLib.h>
 
 class PlayerPiece;
+class PlayerShapeUI;	// UI上の入力を取得する用
 
 class Player : public GameObject
 {
@@ -35,6 +36,8 @@ public:
 
 	void AddCollisionCorrection(VECTOR _correction);
 
+	
+
 private:
 	void CreatePiece(int _column, int _row);
 
@@ -55,6 +58,8 @@ private:
 	PlayerPiece* mPieces[GameConfig::PLAYER_PIECE_SIZE][GameConfig::PLAYER_PIECE_SIZE]{};
 
 	PlayerController mController;
+
+	PlayerShapeUI* mpShapeUI;
 	
 	float mfSpeed = 10.0f;		// 移動スピード
 	float mfAngle = 0.0f;		// 回転の角度(-180 ~ 180)

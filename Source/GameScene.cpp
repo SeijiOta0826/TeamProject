@@ -13,7 +13,7 @@
 #include "StageBlock.h"
 
 // -- UI -- //
-#include "PlayerPieceButton.h"
+#include "PlayerShapeUI.h"
 
 #include "Debug.h"
 #include "GameConfig.h"
@@ -40,7 +40,7 @@ void GameScene::Initialize()
     auto* testUI =
         this
         ->GetUIManager()
-        ->CreateUI<PlayerPieceButton>();
+        ->CreateUI<PlayerShapeUI>();
 }
 
 void GameScene::Update(float deltaTime)

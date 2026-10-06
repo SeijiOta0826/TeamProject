@@ -5,11 +5,15 @@ void UI::Initialize(UIManager* _manager)
 	// Todo : 初期処理何かあり次第追加
 	mpUIManager = _manager;
 
-	mGraphic.Initialize(this,GetGraphFilename());
 	mText.Initialize(this);
 	mButton.Initialize(this);
 
 	Init();
+}
+
+void UI::LoadUIGraph(std::string filename)
+{
+	mGraphic.Initialize(this, filename);
 }
 
 void UI::Draw()

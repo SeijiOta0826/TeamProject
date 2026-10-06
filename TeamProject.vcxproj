@@ -38,7 +38,8 @@
     <ClCompile Include="Source\FakePlayerController.cpp" />
     <ClCompile Include="Source\PlayerController.cpp" />
     <ClCompile Include="Source\PlayerPiece.cpp" />
-    <ClCompile Include="Source\PlayerPieceButton.cpp" />
+    <ClCompile Include="Source\PlayerPieceUI.cpp" />
+    <ClCompile Include="Source\PlayerShapeUI.cpp" />
     <ClCompile Include="Source\ResourceManager.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
@@ -73,7 +74,8 @@
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\PlayerController.h" />
     <ClInclude Include="Source\PlayerPiece.h" />
-    <ClInclude Include="Source\PlayerPieceButton.h" />
+    <ClInclude Include="Source\PlayerPieceUI.h" />
+    <ClInclude Include="Source\PlayerShapeUI.h" />
     <ClInclude Include="Source\ResourceManager.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\SceneManager.h" />
