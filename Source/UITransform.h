@@ -35,6 +35,7 @@ public:
 	VECTOR GetPivot() { return mvPivot; }
 
 	VECTOR GetCenterPosition();	// 
+	VECTOR GetPivotLocalPosition();
 
 private:
 	VECTOR mvPosition = VGet(0.0f, 0.0f, 0.0f);	// 座標値

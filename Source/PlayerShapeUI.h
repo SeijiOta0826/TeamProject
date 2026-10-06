@@ -14,11 +14,14 @@ public:
 
 	void Init() override;
 	void Update() override;
+	void Draw() override;
 
 	bool IsPieceSelected(int _x, int _y);
 
 private:
 	void CreatePieceUI(int _column, int _row);
+
+	void ApplyShapeFromUI();
 
 private:
 	Player* mpPlayer;

@@ -33,6 +33,7 @@ public:
 	int GetLayer() { return mnLayer; }
 
 	bool IsEnabled();	// 有効であるかどうかを取得する
+	void SetEnabled(bool _enabled) { mbIsEnabled = _enabled; }
 
 	// -- Moduleの取得 -- //
 	UITransform& GetTransform() { return mTransform; }

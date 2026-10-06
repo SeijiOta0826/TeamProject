@@ -2,6 +2,9 @@
 
 #include "Debug.h"
 
+#include <DxLib.h>	// 選択済みPieceの減算ブレンド用
+#include "InputManager.h"
+
 void PlayerPieceUI::Init()
 {
 	LoadUIGraph("Resource/Obj/test_field.png");
@@ -16,11 +19,19 @@ void PlayerPieceUI::Init()
 
 void PlayerPieceUI::Update()
 {
-	if (GetButton().IsMouseInside())
-		Debug::Print("挿入ってりゅ～");
+	if (GetButton().IsClicked())
+		ToggleSelected();
 }
 
 void PlayerPieceUI::Draw()
 {
+	if (IsSelected())
+	{
+		SetDrawBlendMode(DX_BLENDMODE_SUB, 100);
+		UI::Draw();
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+		return;
+	}
+
 	UI::Draw();
 }

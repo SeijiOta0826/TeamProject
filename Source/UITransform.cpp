@@ -18,3 +18,12 @@ VECTOR UITransform::GetCenterPosition()
 
 	return worldCenterPosition;
 }
+
+VECTOR UITransform::GetPivotLocalPosition()
+{
+	return VGet(
+		(mvPivot.x - 0.5f) * mvSize.x,
+		(mvPivot.y - 0.5f) * mvSize.y,
+		0.0f
+	);
+}

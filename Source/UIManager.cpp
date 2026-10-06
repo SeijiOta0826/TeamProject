@@ -8,6 +8,9 @@ void UIManager::Update()
 {
     for (auto& ui : mUIs)
     {
+        if (!ui->IsEnabled())
+            continue;
+
         ui->Update();
     }
 }
@@ -25,6 +28,9 @@ void UIManager::Draw()
 
     for (auto& ui : mUIs) 
     {
+        if (!ui->IsEnabled())
+            continue;
+
         ui->Draw();
     }
 }

@@ -15,6 +15,9 @@
 
 #include "GameConfig.h"
 
+// 変形状態取得用
+#include "PlayerShapeUI.h"
+
 // 入力関係
 #include "InputManager.h"
 
@@ -95,6 +98,9 @@ void Player::CreatePiece(int _column, int _row)
 
 void Player::Update(float _deltaTime)
 {
+	if (mpShapeUI != nullptr &&
+		InputManager::GetInstance().GetButtonDown(Button::Shape))
+		mpShapeUI->SetEnabled(!mpShapeUI->IsEnabled());
 	mController.Update();
 	GameObject::Update(_deltaTime);
 }
@@ -246,5 +252,19 @@ void Player::Rotation(float _rotateDirection)
 	UpdatePieceRotation();
 }
 
-
+void Player::ApplyShapeFromUI()
+{
+	for (int row = 0;
+		row < GameConfig::PLAYER_PIECE_SIZE;
+		++row)
+	{
+		for (int column = 0;
+			column < GameConfig::PLAYER_PIECE_SIZE;
+			++column)
+		{
+			bool selected = mpShapeUI->IsPieceSelected(column, row);
+			mPieces[column][row]->SetEnabled(selected);
+		}
+	}
+}
 

@@ -36,7 +36,8 @@ public:
 
 	void AddCollisionCorrection(VECTOR _correction);
 
-	
+	void SetShapeUI(PlayerShapeUI* _ui) { mpShapeUI = _ui; }
+	void ApplyShapeFromUI();
 
 private:
 	void CreatePiece(int _column, int _row);

@@ -53,7 +53,7 @@ bool GamePad::IsConnected() const {
 	return mbConnected;
 }
 
-bool GamePad::IsPressed(int _button) const{
+bool GamePad::IsPress(int _button) const{
 	return (mNowState & _button) != 0;
 }
 

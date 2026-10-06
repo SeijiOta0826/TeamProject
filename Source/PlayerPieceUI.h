@@ -18,5 +18,5 @@ public:
 	void ToggleSelected() { mbSelected = !mbSelected; }
 
 private:
-	bool mbSelected = true;
+	bool mbSelected = false;
 };

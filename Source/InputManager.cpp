@@ -58,7 +58,7 @@ void InputManager::InitializeButton() {
 		PAD_INPUT_5
 	};
 
-	mButtonBindings[(int)Button::Transform] =
+	mButtonBindings[(int)Button::Shape] =
 	{
 		InputMode::Normal,
 
@@ -221,12 +221,12 @@ bool InputManager::IsButtonPressed(
 	}
 
 	if (_binding.mnMouseButton != -1 &&
-		mKeyboard.IsPress(_binding.mnMouseButton)) {
+		mMouse.IsPress(_binding.mnMouseButton)) {
 		return true;
 	}
 
 	if (_binding.mnPadButton != -1 &&
-		mKeyboard.IsPress(_binding.mnPadButton)) {
+		mGamePad.IsPress(_binding.mnPadButton)) {
 		return true;
 	}
 
@@ -241,12 +241,12 @@ bool InputManager::IsButtonDown(
 	}
 
 	if (_binding.mnMouseButton != -1 &&
-		mKeyboard.IsDown(_binding.mnMouseButton)) {
+		mMouse.IsDown(_binding.mnMouseButton)) {
 		return true;
 	}
 
 	if (_binding.mnPadButton != -1 &&
-		mKeyboard.IsDown(_binding.mnPadButton)) {
+		mGamePad.IsDown(_binding.mnPadButton)) {
 		return true;
 	}
 
@@ -261,12 +261,12 @@ bool InputManager::IsButtonUp(
 	}
 
 	if (_binding.mnMouseButton != -1 &&
-		mKeyboard.IsUp(_binding.mnMouseButton)) {
+		mMouse.IsUp(_binding.mnMouseButton)) {
 		return true;
 	}
 
 	if (_binding.mnPadButton != -1 &&
-		mKeyboard.IsUp(_binding.mnPadButton)) {
+		mGamePad.IsUp(_binding.mnPadButton)) {
 		return true;
 	}
 

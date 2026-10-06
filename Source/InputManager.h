@@ -14,7 +14,7 @@ enum class Button {
 	Attack,
 	Dash,
 
-	Transform,
+	Shape,
 
 	OperationChange_toPlayer,	// (デバック用)
 	OperationChange_toFakePlayer,	// (デバック用)
