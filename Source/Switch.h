@@ -1,12 +1,12 @@
-#pragma once
+﻿#pragma once
 #include "GameObject.h"
 
 class Switch : public GameObject
 {
 public:
-    Switch(std::string filename, VECTOR initPos);
     ~Switch() = default;
 
+    void Init() override;
     void Update(float _deltaTime) override;
 
     bool IsActivated() const

@@ -1,19 +1,14 @@
-#include "Spike.h"
+ï»¿#include "Spike.h"
 #include "Player.h"
 #include "Collider.h"
 #include "Gravity.h"
 
-Spike::Spike(std::string filename, VECTOR initPos)
-    : GameObject(filename, initPos)
+void Spike::Init()
 {
-    // ƒgƒQ‚Ìƒ^ƒO‚ğİ’è
-    SetTag(Tag::SPIKE);
-
-    // Player‚Æ‚ÌÕ“Ë‚ğæ“¾
-    mpCollider->AddCollisionTag(Tag::PLAYER);
-
-    // ƒgƒQ‚Í—‰º‚µ‚È‚¢
-    mpGravity->SetEnable(false);
+    SetTag(Tag::SPIKE);     // ã‚¿ã‚°è¨­å®š
+    GetModule<Collider>()->AddCollisionTag(Tag::PLAYER);    // è¡çªå¯¾è±¡ã‚’è¨­å®š
+  
+    GetModule<Gravity>()->SetEnabled(false);    // é‡åŠ›ã‚’ç„¡åŠ¹åŒ–
 }
 
 void Spike::Update(float _deltaTime)
@@ -35,7 +30,7 @@ void Spike::Draw()
 
 void Spike::CheckPlayerCollision()
 {
-    auto collisions = mpCollider->GetCollisions(Tag::PLAYER);
+    auto collisions = GetModule<Collider>()->GetCollisions(Tag::PLAYER);
 
     for (auto* playerObject : collisions)
     {
@@ -51,7 +46,7 @@ void Spike::CheckPlayerCollision()
             continue;
         }
 
-        // Player‚ğƒŠƒXƒ|[ƒ“ˆÊ’u‚Ö–ß‚·
+        // Playerã‚’ãƒªã‚¹ãƒãƒ¼ãƒ³ä½ç½®ã¸æˆ»ã™
         player->Respawn();
 
         break;

@@ -1,11 +1,12 @@
-#pragma once
+﻿#pragma once
 #include "GameObject.h"
 
 class Spike : public GameObject
 {
 public:
-    Spike(std::string filename, VECTOR initPos);
     ~Spike() = default;
+
+    void Init() override;
 
     void Update(float _deltaTime) override;
     void Draw() override;

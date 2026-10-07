@@ -1,18 +1,18 @@
-#include "DisappearingBlock.h"
+ï»¿#include "DisappearingBlock.h"
 
 #include "Player.h"
+
+// -- Module -- //
+#include "Transform.h"
 #include "Collider.h"
 #include "Gravity.h"
+
 #include "GameConfig.h"
 
-DisappearingBlock::DisappearingBlock(
-	std::string filename,
-	VECTOR initPos
-)
-	: StageBlock(filename, initPos)
+void DisappearingBlock::Init()
 {
-	// Player‚Æ‚ÌÕ“Ë‚ğŒŸ’m
-	mpCollider->AddCollisionTag(Tag::PLAYER);
+	// Playerã¨ã®è¡çªã‚’æ¤œçŸ¥
+	GetModule<Collider>()->AddCollisionTag(Tag::PLAYER);
 }
 
 void DisappearingBlock::Update(float _deltaTime)
@@ -22,21 +22,21 @@ void DisappearingBlock::Update(float _deltaTime)
 
 	if (!mbIsDisappeared)
 	{
-		// Player‚ªŒ»İƒuƒƒbƒN‚Éæ‚Á‚Ä‚¢‚é‚©Šm”F
+		// PlayerãŒç¾åœ¨ãƒ–ãƒ­ãƒƒã‚¯ã«ä¹—ã£ã¦ã„ã‚‹ã‹ç¢ºèª
 		bool isPlayerOnBlock = CheckPlayer();
 
 		if (isPlayerOnBlock)
 		{
-			// Player‚ªæ‚Á‚Ä‚¢‚éŠÔ‚¾‚¯ƒ^ƒCƒ}[‚ği‚ß‚é
+			// PlayerãŒä¹—ã£ã¦ã„ã‚‹é–“ã ã‘ã‚¿ã‚¤ãƒãƒ¼ã‚’é€²ã‚ã‚‹
 			mTimer++;
 
-			// Á‚¦‚é‘O‚ÌŒx
+			// æ¶ˆãˆã‚‹å‰ã®è­¦å‘Š
 			if (mTimer >= DISAPPEAR_TIME - WARNING_TIME)
 			{
 				mbIsWarning = true;
 			}
 
-			// w’èŠÔæ‚Á‚Ä‚¢‚½‚çÁ‚¦‚é
+			// æŒ‡å®šæ™‚é–“ä¹—ã£ã¦ã„ãŸã‚‰æ¶ˆãˆã‚‹
 			if (mTimer >= DISAPPEAR_TIME)
 			{
 				Disappear();
@@ -44,7 +44,7 @@ void DisappearingBlock::Update(float _deltaTime)
 		}
 		else
 		{
-			// Player‚ª~‚è‚½‚çƒJƒEƒ“ƒg‚ğƒŠƒZƒbƒg
+			// PlayerãŒé™ã‚ŠãŸã‚‰ã‚«ã‚¦ãƒ³ãƒˆã‚’ãƒªã‚»ãƒƒãƒˆ
 			mTimer = 0;
 			mbIsTriggered = false;
 			mbIsWarning = false;
@@ -57,20 +57,20 @@ void DisappearingBlock::Update(float _deltaTime)
 	{
 		if (mpPlayer != nullptr)
 		{
-			VECTOR blockPosition = GetPosition();
-			VECTOR playerPosition = mpPlayer->GetPosition();
+			VECTOR blockPosition = GetModule<Transform>()->GetPosition();
+			VECTOR playerPosition = mpPlayer->GetModule<Transform>()->GetPosition();
 
 			float blockSize = GameConfig::CELL_SIZE;
 
-			//  ƒvƒŒƒCƒ„[‚ªÁ‚¦‚½ƒuƒƒbƒN‚ğ‰º•ûŒü‚É’Ê‰ß‚µ‚½‚©
+			//  ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒæ¶ˆãˆãŸãƒ–ãƒ­ãƒƒã‚¯ã‚’ä¸‹æ–¹å‘ã«é€šéã—ãŸã‹
 			bool isPlayerPassed = playerPosition.y > blockPosition.y + blockSize;
 
-			//  ƒvƒŒƒCƒ„[‚ªÁ‚¦‚½ƒuƒƒbƒN‚©‚ç‰¡•ûŒü‚É\•ª—£‚ê‚½‚©
+			//  ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒæ¶ˆãˆãŸãƒ–ãƒ­ãƒƒã‚¯ã‹ã‚‰æ¨ªæ–¹å‘ã«ååˆ†é›¢ã‚ŒãŸã‹
 			float distanceX = fabsf(playerPosition.x - blockPosition.x);
 
 			bool isPlayerFarAway = distanceX > blockSize * 2.0f;
 
-			// ‚Ç‚¿‚ç‚©‚ğ–‚½‚µ‚½‚ç•œŠˆ
+			// ã©ã¡ã‚‰ã‹ã‚’æº€ãŸã—ãŸã‚‰å¾©æ´»
 			if (isPlayerPassed || isPlayerFarAway)
 			{
 				Respawn();
@@ -86,7 +86,7 @@ void DisappearingBlock::Draw()
 
 	if (mbIsWarning)
 	{
-		// 5ƒtƒŒ[ƒ€‚²‚Æ‚É“_–Å
+		// 5ãƒ•ãƒ¬ãƒ¼ãƒ ã”ã¨ã«ç‚¹æ»…
 		if ((mTimer / 5) % 2 == 0)
 		{
 			return;
@@ -98,7 +98,7 @@ void DisappearingBlock::Draw()
 
 bool DisappearingBlock::CheckPlayer()
 {
-	auto collisions = mpCollider->GetCollisions(Tag::PLAYER);
+	auto collisions = GetModule<Collider>()->GetCollisions(Tag::PLAYER);
 
 	for (auto* playerObject : collisions)
 	{
@@ -127,8 +127,8 @@ void DisappearingBlock::Disappear()
 
 	mTimer = 0;
 
-	// ƒuƒƒbƒN‚Ì“–‚½‚è”»’è‚ğ–³Œø‰»
-	mpCollider->SetEnabled(false);
+	// ãƒ–ãƒ­ãƒƒã‚¯ã®å½“ãŸã‚Šåˆ¤å®šã‚’ç„¡åŠ¹åŒ–
+	GetModule<Collider>()->SetEnabled(false);
 }
 
 void DisappearingBlock::Respawn()
@@ -141,6 +141,6 @@ void DisappearingBlock::Respawn()
 	mTimer = 0;
 	mpPlayer = nullptr;
 
-	// ƒuƒƒbƒN‚Ì“–‚½‚è”»’è‚ğ—LŒø‰»
-	mpCollider->SetEnabled(true);
+	// ãƒ–ãƒ­ãƒƒã‚¯ã®å½“ãŸã‚Šåˆ¤å®šã‚’æœ‰åŠ¹åŒ–
+	GetModule<Collider>()->SetEnabled(true);
 }

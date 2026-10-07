@@ -15,6 +15,7 @@ enum class Tag
 	PLAYER,
 	PLAYER_CELL,
 	BLOCK,
+	SPIKE,
 };
 
 // コンポーネントを保持・管理するゲームオブジェクトの基底クラス
@@ -23,7 +24,7 @@ class GameObject
 public:
 	virtual ~GameObject() = default;
 
-	virtual void Init() = 0;			// 初期化処理
+	virtual void Init() = 0;			// 派生先固有の初期化処理
 	virtual void InitComponent() = 0;	// コンポーネント初期設定
 	virtual void Finalize();			// GameObject & コンポーネント終了処理
 	virtual void Update(float _deltaTime);		// 保有するコンポーネントの更新処理
@@ -31,7 +32,7 @@ public:
 
 	virtual void BeginCollisionResolution();	// 補正値のリセット
 	virtual void ResolveCollision();			// 衝突情報の処理
-	virtual void EndCollisionResolution() {};		// 補正値の適用
+	virtual void EndCollisionResolution() {};	// 補正値の適用
 
 	// 自身にコンポーネントを追加する
 	template <class T, class...Args>

@@ -28,17 +28,6 @@
 #include <DxLib.h>
 #include <cmath>  //回転処理用
 
-Player::Player()
-	:GameObject()
-{
-
-}
-
-Player::~Player()
-{
-
-}
-
 void Player::Init()
 {
 	// -- タグ設定 -- //
@@ -270,21 +259,13 @@ void Player::ApplyShapeFromUI()
 			column < GameConfig::PLAYER_PIECE_SIZE;
 			++column)
 		{
-			mShape[cellY][cellX] = !mShape[cellY][cellX];
+			bool selected = mpShapeUI->IsPieceSelected(column, row);
+			mPieces[column][row]->SetEnabled(selected);
 		}
 	}
 }
 
 void Player::Respawn()
 {
-	SetPosition(mvRespawnPos);
-
-	mIsRolling = false;
-	mRollTimer = 0;
-
-	mDirection = 0.0f;
-	mCurrentAngle = 0.0f;
-	mStartAngle = 0.0f;
-
-	mbCompleteRoll = false;
+	GetModule<Transform>()->SetPosition(mvRespawnPos);
 }

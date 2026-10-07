@@ -1,20 +1,27 @@
-#include "MovingBlock.h"
+Ôªø#include "MovingBlock.h"
 #include "Player.h"
 #include "Collider.h"
 
-MovingBlock::MovingBlock(std::string filename,VECTOR initPos,float leftLimit,float rightLimit,float speed)
-    : StageBlock(filename, initPos)
+#include "Transform.h"
+
+MovingBlock::MovingBlock(float leftLimit,float rightLimit,float speed)
+    : StageBlock()
     , mfLeftLimit(leftLimit)
     , mfRightLimit(rightLimit)
     , mfSpeed(speed)
 {
-    // PlayerÇ∆ÇÃè’ìÀÇéÊìæÇ∑ÇÈ
-    mpCollider->AddCollisionTag(Tag::PLAYER);
+
+}
+
+void MovingBlock::Init()
+{
+    // Player„Å®„ÅÆË°ùÁ™Å„ÇíÂèñÂæó„Åô„Çã
+    GetModule<Collider>()->AddCollisionTag(Tag::PLAYER);
 }
 
 void MovingBlock::Update(float _deltaTime)
 {
-    VECTOR previousPosition = GetPosition();
+    VECTOR previousPosition = GetModule<Transform>()->GetPosition();
 
     VECTOR position = previousPosition;
 
@@ -38,14 +45,14 @@ void MovingBlock::Update(float _deltaTime)
         mbMovingRight = true;
     }
 
-    SetPosition(position);
+    GetModule<Transform>()->SetPosition(position);
 
-    // Ç±ÇÃÉtÉåÅ[ÉÄÇ≈é¿ç€Ç…à⁄ìÆÇµÇΩó Çï€ë∂
+    // „Åì„ÅÆ„Éï„É¨„Éº„É†„ÅßÂÆüÈöõ„Å´ÁßªÂãï„Åó„ÅüÈáè„Çí‰øùÂ≠ò
     mvMoveDelta = VSub(position, previousPosition);
 
     StageBlock::Update(_deltaTime);
 
-    // à⁄ìÆÇµÇΩï™ÇæÇØPlayerÇâ^Ç‘
+    // ÁßªÂãï„Åó„ÅüÂàÜ„Å†„ÅëPlayer„ÇíÈÅã„Å∂
     CarryPlayer();
 }
 
@@ -56,7 +63,7 @@ void MovingBlock::CarryPlayer()
         return;
     }
 
-    auto collisions = mpCollider->GetCollisions(Tag::PLAYER);
+    auto collisions = GetModule<Collider>()->GetCollisions(Tag::PLAYER);
 
     for (auto* playerObject : collisions)
     {
@@ -72,13 +79,13 @@ void MovingBlock::CarryPlayer()
             continue;
         }
 
-        VECTOR playerPosition = player->GetPosition();
+        VECTOR playerPosition = player->GetModule<Transform>()->GetPosition();
 
         playerPosition = VAdd(
             playerPosition,
             mvMoveDelta
         );
 
-        player->SetPosition(playerPosition);
+        player->GetModule<Transform>()->SetPosition(playerPosition);
     }
 }

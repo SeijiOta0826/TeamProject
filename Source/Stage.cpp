@@ -107,12 +107,6 @@ void Stage::CreateObjects()
                 // 動く床を生成
                 objectManager
                     ->CreateObject<MovingBlock>(
-                        "Resource/Stage/Stage.png",
-                        VGet(
-                            (x * GameConfig::CELL_SIZE) + GameConfig::CELL_SIZE / 2.0f,
-                            (y * GameConfig::CELL_SIZE) + GameConfig::CELL_SIZE / 2.0f,
-                            0.0f
-                        ),
                         300.0f,
                         800.0f,
                         2.0f
@@ -153,14 +147,7 @@ void Stage::CreateObjects()
             {
                 // 消える床を生成
                 objectManager
-                    ->CreateObject<DisappearingBlock>(
-                        "Resource/Stage/Stage.png",
-                        VGet(
-                            (x * GameConfig::CELL_SIZE) + GameConfig::CELL_SIZE / 2.0f,
-                            (y * GameConfig::CELL_SIZE) + GameConfig::CELL_SIZE / 2.0f,
-                            0.0f
-                        )
-                    );
+                    ->CreateObject<DisappearingBlock>();
 
                 break;
             }

@@ -1,15 +1,12 @@
-#include "Goal.h"
-#include "Collider.h"
+Ôªø#include "Goal.h"
 #include "Player.h"
 
-Goal::Goal(
-    std::string filename,
-    VECTOR initPos,
-    const bool _shape[3][3]
-)
-    :GameObject(filename, initPos)
+#include "Transform.h"
+#include "Collider.h"
+
+Goal::Goal()
 {
-    for (int y = 0; y < 3; y++)
+   /* for (int y = 0; y < 3; y++)
     {
         for (int x = 0; x < 3; x++)
         {
@@ -21,10 +18,10 @@ Goal::Goal(
 
 	mpCollider->SetHalfSize(
 		VGet(50.0f, 50.0f, 0.0f)
-	);
+	);*/
 
-	// ÉvÉåÉCÉÑÅ[Ç∆ÇÃè’ìÀÇå©ÇÈ
-	mpCollider->AddCollisionTag(Tag::PLAYER);
+	// „Éó„É¨„Ç§„É§„Éº„Å®„ÅÆË°ùÁ™Å„ÇíË¶ã„Çã
+	GetModule<Collider>()->AddCollisionTag(Tag::PLAYER);
 }
 
 Goal::~Goal()
@@ -37,12 +34,12 @@ void Goal::Update(float _deltaTime)
 
 void Goal::Draw()
 {
-	Object2D::Draw();
+
 }
 
-bool Goal::IsPlayerTouching() const
+bool Goal::IsPlayerTouching()
 {
-	return mpCollider->IsColliding(Tag::PLAYER);
+	return GetModule<Collider>()->IsColliding(Tag::PLAYER);
 }
 
 bool Goal::IsShapeMatched(Player* _player) const
@@ -71,8 +68,8 @@ bool Goal::IsWithinDistance(Player* _player)
     if (_player == nullptr)
         return false;
 
-    VECTOR playerPos = _player->GetPosition();
-    VECTOR goalPos = GetPosition();
+    VECTOR playerPos = _player->GetModule<Transform>()->GetPosition();
+    VECTOR goalPos = GetModule<Transform>()->GetPosition();
 
     float distance = VSize(
         VSub(playerPos, goalPos)
