@@ -13,6 +13,8 @@ class Player;
 class Goal;
 class MovingBlock;
 
+//class Player_test;
+
 class GameScene : public Scene
 {
 public:
@@ -59,6 +61,4 @@ private:
     FloatingMotion mMessageMotion;//メッセージ用
     TypewriterText mTypewriter;
     bool mbIsMessageActive = false; //メッセージ表示フラグ
-
-
 };

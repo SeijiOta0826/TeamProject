@@ -4,13 +4,20 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include "ObjectManager.h"
+#include "UIManager.h"
 
+// -- GameObject -- //
 #include "Stage.h"
 #include "Player.h"
+#include "FakePlayer.h" // デバック用
 #include "StageBlock.h"
 #include "MovingBlock.h"
 
 #include <string>
+
+// -- UI -- //
+#include "PlayerShapeUI.h"
+
 #include "Debug.h"
 #include "GameConfig.h"
 #include "Goal.h"
@@ -18,19 +25,18 @@
 #include "FontManager.h"
 
 
+#include "InputManager.h"
 
 void GameScene::Initialize()
 {
 	mbPreviousMouseLeft = (GetMouseInput() & MOUSE_INPUT_LEFT) != 0;
 
-    // 初期化処理
-	mpPlayer =
+	// 初期化処理
+	auto* player =
 		this
 		->GetObjectManager()
-		->CreateObject<Player>(
-			"Resource/Player.png",
-			VGet(120.0f, 500.0f, 0.0f)
-		);
+		->CreateObject<Player>();
+	player->InitPiece();
 
 	auto* stage = new Stage();
 
@@ -46,15 +52,6 @@ void GameScene::Initialize()
 
 	mpMovingBlock = this->GetObjectManager()->FindObject<MovingBlock>();
 
-    /*if (mnStageNumber == 1)
-    {
-        stageFileName = "Resource/Stage/test_stage.csv";
-    }
-
-    stage->Load(stageFileName);*/
-
-    // ステージを増やす際はCSVの名前を Stage1.csv Stage2.csv … にしとけば読み込んでくれる
-
 
 	// ★フォントの取得（サイズ32、太さ3、アンチエイリアス）
 	// 引数を省略した場合は既定の太さ(-1)になります
@@ -65,8 +62,6 @@ void GameScene::Initialize()
 	// 2. アンチエイリアスを切ってフォントハンドルを作成
 //    フォント名にはファイル名ではなく、フォント自体の「フォントファミリー名」を指定
 	int fontType = DX_FONTTYPE_NORMAL; // アンチエイリアス無効（ドットがくっきり残る）
-
-
 
 	StageNumberFontHandle = CreateFontToHandle("PixelMplus10", 80, -1, fontType);
 
@@ -86,8 +81,15 @@ void GameScene::Initialize()
 	mTypewriter.SetText(startMessage);
 	mbIsMessageActive = true;//メッセージ表示開始
 
+    auto* fakePlayer = 
+        this
+        ->GetObjectManager()
+        ->CreateObject<FakePlayer>();
 
-
+    auto* testUI =
+        this
+        ->GetUIManager()
+        ->CreateUI<PlayerShapeUI>();
 }
 
 void GameScene::Update(float deltaTime)
@@ -154,7 +156,6 @@ void GameScene::Update(float deltaTime)
 	{
 		mbIsClear = true;
 	}
-
 }
 
 
@@ -169,6 +170,11 @@ void GameScene::Draw()
 	//Stage文字描画
 	mStageTextMotion.Draw();
 
+
+    Debug::Print(
+        "InputMode : ",
+        static_cast<int>(InputManager::GetInstance().GetInputMode())
+    );
 
     Debug::Draw();
     Scene::Draw();
@@ -233,92 +239,6 @@ void GameScene::DrawPause()
 	DrawBox(500, 500, 780, 570, GetColor(255, 255, 255), FALSE);
 	DrawStringToHandle(540, 525, "タイトルへ戻る", GetColor(0, 0, 0), mMessageFontHandle);
 
-
-
-	//====旧Pause=====//
-	//SetDrawBlendMode(DX_BLENDMODE_ALPHA, 150);
-
-	//DrawBox(
-	//	0, 0,
-	//	1280, 720,
-	//	GetColor(0, 0, 0),
-	//	TRUE
-	//);
-
-	//SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-
-	//DrawString(
-	//	570,
-	//	200,
-	//	"PAUSE",
-	//	GetColor(255, 255, 255)
-	//);
-
-	//// 再開ボタン
-	//DrawBox(
-	//	500, 300,
-	//	780, 370,
-	//	GetColor(200, 200, 200),
-	//	TRUE
-	//);
-
-	//DrawBox(
-	//	500, 300,
-	//	780, 370,
-	//	GetColor(255, 255, 255),
-	//	FALSE
-	//);
-
-	//DrawString(
-	//	625, 
-	//	325,
-	//	"再開",
-	//	GetColor(0, 0, 0)
-	//);
-
-	//// ステージ選択へ戻るボタン
-	//DrawBox(
-	//	500, 400,
-	//	780, 470,
-	//	GetColor(200, 200, 200),
-	//	TRUE
-	//);
-
-	//DrawBox(
-	//	500, 400,
-	//	780, 470,
-	//	GetColor(255, 255, 255),
-	//	FALSE
-	//);
-
-	//DrawString(
-	//	560,
-	//	425,
-	//	"ステージ選択へ戻る",
-	//	GetColor(0, 0, 0)
-	//);
-
-	//// タイトルへ戻るボタン
-	//DrawBox(
-	//	500, 500,
-	//	780, 570,
-	//	GetColor(200, 200, 200),
-	//	TRUE
-	//);
-
-	//DrawBox(
-	//	500, 500,
-	//	780, 570,
-	//	GetColor(255, 255, 255),
-	//	FALSE
-	//);
-
-	//DrawString(
-	//	583,
-	//	525,
-	//	"タイトルへ戻る",
-	//	GetColor(0, 0, 0)
-	//);
 }
 
 void GameScene::DrawClear()
@@ -481,4 +401,5 @@ void GameScene::Finalize()
 
 
     // 終了処理
+    Scene::Finalize();
 }

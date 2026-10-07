@@ -11,7 +11,7 @@ void Mouse::Update() {
 	mWheel = GetMouseWheelRotVol();
 }
 
-bool Mouse::IsPressed(int _button) const {
+bool Mouse::IsPress(int _button) const {
 	return (mNowState & _button) != 0;
 }
 

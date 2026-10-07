@@ -2,72 +2,64 @@
 #include "GameObject.h"
 #include <array>
 
-class Collider;
-class Gravity;
+#include "PlayerController.h"
+
+#include "GameConfig.h"
+
+#include <DxLib.h>
+
+class PlayerPiece;
+class PlayerShapeUI;	// UI上の入力を取得する用
 
 class Player : public GameObject
 {
 public:
-	Player(std::string filename, VECTOR initPos);
+	Player();
 	~Player();
+
+	void Init() override;
+	void InitComponent() override;
+	void InitPiece();	// Todo : これする場所確定させる
 
 	void Update(float _deltaTime) override;
 	void Draw() override;
 
-	const bool* GetShape() const
-	{
-		return &mShape[0][0];
-	}
-
-	VECTOR GetStartPos() const
-	{
-		return mStartPos;
-	}
-
-	VECTOR GetRespawnPos() const
-	{
-		return mvRespawnPos;
-	}
-
-	void SetRespawnPos(VECTOR _pos)
-	{
-		mvRespawnPos = _pos;
-	}
-
 	void Respawn();
 
 private:
-	void Move();
+	void Move(VECTOR _direction);
+	void Rotation(float _rotateDirection);
 
-	// 変形画面を描画
-	void DrawTransformUI();
-	void UpdateTransformUI();
+	void AddCollisionCorrection(VECTOR _correction);
 
-	// 変形後のColliderを更新
-	void UpdateTransformCollider();
+	void SetShapeUI(PlayerShapeUI* _ui) { mpShapeUI = _ui; }
+	void ApplyShapeFromUI();
 
 	VECTOR mvRespawnPos = VGet(0.0f, 0.0f, 0.0f); 
 
+	void CreatePiece(int _column, int _row);
+
+	// -- 各Pieceの補正値を集約 & 適用 -- //
+	void ResetCollisionCorrections();
+	VECTOR CalculateCollisionCorrection();
+	void ApplyCollisionCorrection();
+
+	// -- Player座標補正後にPieceの座標を更新 -- //
+	void UpdatePiecePosition();
+	void UpdatePieceRotation();
+protected:
+	const char* GetModelFilename() const override {
+		return "Resource/Player.png";
+	}
+
 private:
+	PlayerPiece* mPieces[GameConfig::PLAYER_PIECE_SIZE][GameConfig::PLAYER_PIECE_SIZE]{};
+
+	PlayerController mController;
+
+	PlayerShapeUI* mpShapeUI;
+	
 	float mfSpeed = 10.0f;		// 移動スピード
-
-	std::array<GameObject*, 9> mColliders;	// Playerが保有するColliderの配列	
-
-	bool mShape[3][3] = {};			// 変形画面で選択するグリッドの配列
-	bool mbIsTransforming = false;	// 変形中であることを示す
-
-    // --- 転がり・回転用メンバ変数 ---
-    bool mIsRolling = false;          // 転がり中フラグ
-    int mRollTimer = 0;               // 経過フレーム（0〜30）
-    const int ROLL_FRAMES = 45;       // 転がりにかかるフレーム数（約0.5秒）<= この数値をいじると回転スピードが変わる
-    const float BLOCK_SIZE = 100.0f;  // 1マスのサイズ（HalfSizeが50なら100）
-
-    float mDirection = 0.0f;          // 向き（右: 1.0f / 左: -1.0f）
-    VECTOR mStartPos = VGet(0, 0, 0); // 開始時の座標
-    float mStartAngle = 0.0f;         // 開始時の角度
-    float mCurrentAngle = 0.0f;       // 現在の描画角度
-
-	bool mbCompleteRoll = false;		// 最後まで回りきるかどうかのフラグ
-
-    void Rotate();                    // 転がり関数の宣言
+	float mfAngle = 0.0f;		// 回転の角度(-180 ~ 180)
+	float mfRotationPower = 5.0f;	// 回転力(単位は度数)
 };

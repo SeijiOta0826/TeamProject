@@ -1,30 +1,22 @@
 ﻿#pragma once
+#include "Module.h"
 
 class GameObject;
 
-class Gravity
+class Gravity : public Module
 {
 public:
-	Gravity(GameObject* _owner);
-	~Gravity();
-
-	void Initialize();
-	void Finalize();
-
 	void Update(float _deltaTime);
 
-	// -- 有効フラグのアクセサ -- //
-	void SetEnable(bool _enable);
-	bool IsEnable() const;
+	// -- 接地判定のアクセサ -- //
+	void SetGrounded(bool _grounded) { mbIsGrounded = _grounded; }
+	bool IsGrounded() { return mbIsGrounded; }
 
 private:
 	void ResetVerticalVelocity();	// 落下速度を「0」にする
 
 private:
-	GameObject* mpOwner = nullptr;	// 付与先のObj
+	float mfVelocityY = 0.0f;	// 落下速度
 
-	bool mbEnable = true;			// 有効であるかを示す
-		
-	float mfGravity = 0.0f;			// 重力加速度
-	float mfVelocityY = 0.0f;		// 落下速度
+	bool mbIsGrounded = true;	// 接地判定を示す
 };

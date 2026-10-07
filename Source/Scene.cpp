@@ -1,10 +1,12 @@
 ﻿#include"Scene.h"
 #include "ObjectManager.h"
+#include "UIManager.h"
 #include "CollisionManager.h"
 
 Scene::Scene()
 {
 	mpObjectManager = new ObjectManager();
+	mpUIManager = new UIManager();
 	mpCollisionManager = new CollisionManager();
 }
 
@@ -13,6 +15,9 @@ Scene::~Scene()
 	// -- 所有するポインタの解放 -- //
 	delete mpObjectManager;
 	mpObjectManager = nullptr;
+
+	delete mpUIManager;
+	mpUIManager = nullptr;
 
 	delete mpCollisionManager;
 	mpCollisionManager = nullptr;
@@ -30,6 +35,11 @@ void Scene::Finalize() {
 	{
 		mpObjectManager->Clear();
 	}
+
+	if (mpUIManager != nullptr)
+	{
+		mpUIManager->Clear();
+	}
 }
 
 void Scene::Update(float _deltaTime)
@@ -43,6 +53,16 @@ void Scene::Update(float _deltaTime)
 	{
 		mpCollisionManager->Update();
 	}
+
+	if (mpObjectManager != nullptr)
+	{
+		mpObjectManager->ResolveCollision();
+	}
+
+	if (mpUIManager != nullptr)
+	{
+		mpUIManager->Update();
+	}
 }
 
 void Scene::Draw()
@@ -50,6 +70,11 @@ void Scene::Draw()
 	if (mpObjectManager != nullptr)
 	{
 		mpObjectManager->Draw();
+	}
+
+	if (mpUIManager != nullptr)
+	{
+		mpUIManager->Draw();
 	}
 }
 

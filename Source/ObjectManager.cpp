@@ -1,6 +1,6 @@
 ﻿#include "ObjectManager.h"
 
-#include "Object2D.h"
+#include "GameObject.h"
 
 void ObjectManager::Update(float _deltaTime) {
     for (auto& object : mObjects) {
@@ -23,6 +23,21 @@ void ObjectManager::Draw() {
         {
             object->Draw();
         }
+    }
+}
+
+void ObjectManager::ResolveCollision()
+{
+    for (auto& object : mObjects) {
+        object->BeginCollisionResolution();
+    }
+
+    for (auto& object : mObjects) {
+        object->ResolveCollision();
+    }
+
+    for (auto& object : mObjects) {
+        object->EndCollisionResolution();
     }
 }
 

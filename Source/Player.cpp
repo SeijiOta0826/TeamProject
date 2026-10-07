@@ -1,73 +1,100 @@
-﻿#include <cmath>  //回転処理用
+﻿#include "Player.h"
 
-#include "Player.h"
-#include "Texture.h"
-
+// Module関係
+#include "Transform.h"
+#include "Graphic.h"
 #include "Collider.h"
-#include "Gravity.h" // 追加
-#include "InputManager.h"
+#include "Gravity.h"
 
+// Piece生成用
 #include "Master.h"
 #include "SceneManager.h"
 #include "Scene.h"
-#include "CollisionManager.h"
-
-#include "StageBlock.h"
+#include "ObjectManager.h"
+#include "PlayerPiece.h"
 
 
 #include "GameConfig.h"
 
-#include<DxLib.h>
+// 変形状態取得用
+#include "PlayerShapeUI.h"
 
+// 入力関係
+#include "InputManager.h"
 
+#include "Debug.h"
 
-Player::Player(std::string filename, VECTOR initPos)
-	:GameObject(filename, initPos)
-	, mvRespawnPos(initPos)
+// ライブラリ
+#include <DxLib.h>
+#include <cmath>  //回転処理用
+
+Player::Player()
+	:GameObject()
 {
-	// -- タグ設定 -- //
-	SetTag(Tag::PLAYER);
 
-	// -- 衝突判定を取得するObjを指定 -- //
-	mpCollider->AddCollisionTag(Tag::BLOCK);
-
-	// 3×3 = 9個のColliderを作成
-	for (int i = 0; i < 9; i++)
-	{
-		mColliders[i] = new GameObject("Resource/Player.png",VGet(0.0f,0.0f,0.0f));
-		mColliders[i]->GetCollider()->AddCollisionTag(Tag::BLOCK);
-		mColliders[i]->GetCollider()->SetHalfSize(
-			VGet(
-				GameConfig::CELL_SIZE / 2,
-				GameConfig::CELL_SIZE / 2,
-				0.0f
-			)
-		);
-
-		mColliders[i]->GetCollider()->SetEnabled(false);
-	}
-
-	// 初期状態は中央の1ブロックだけ有効
-	mColliders[4]->GetCollider()->SetEnabled(true);
-
-	// 初期形状
-	mShape[1][1] = true;
-
-	UpdateTransformCollider();
 }
 
 Player::~Player()
 {
-	for (auto* collider : mColliders)
+
+}
+
+void Player::Init()
+{
+	// -- タグ設定 -- //
+	SetTag(Tag::PLAYER);
+	mController.Initialize(this);
+}
+
+void Player::InitComponent()
+{
+	// -- Module追加 -- //
+	AddModule<Transform>();
+}
+
+void Player::InitPiece()
+{
+	// Todo : 複数Pieceに対応させる
+	
+	// -- piece生成 & 初期処理 -- //
+	for (int row = 0;
+		row < GameConfig::PLAYER_PIECE_SIZE;
+		++row)
 	{
-		if (collider != nullptr)
+		for (int column = 0;
+			column < GameConfig::PLAYER_PIECE_SIZE;
+			++column)
 		{
-			collider->GetCollider()->Finalize();
-			delete collider;
+			CreatePiece(column, row);
 		}
 	}
 
-	mColliders.fill(nullptr);
+	/*mPieces[0][1]->SetEnabled(false);
+	mPieces[0][2]->SetEnabled(false);
+	mPieces[1][1]->SetEnabled(false);
+	mPieces[1][2]->SetEnabled(false);*/
+}
+
+void Player::CreatePiece(int _column, int _row)
+{
+	auto playerPiece =
+		Master::mpSceneManager
+		->GetCurrentScene()
+		->GetObjectManager()
+		->CreateObject<PlayerPiece>(this);
+
+	if (playerPiece == nullptr)
+		return;
+
+	mPieces[_row][_column] = playerPiece;
+
+	VECTOR localPosition = VGet(
+		(_column - 1) * GameConfig::CELL_SIZE,
+		(_row - 1) * GameConfig::CELL_SIZE,
+		0.0f
+	);
+
+	playerPiece->SetLocalPosition(localPosition);
 }
 
 void Player::Update(float _deltaTime)
@@ -77,407 +104,173 @@ void Player::Update(float _deltaTime)
 	{
 		return;
 	}
+	
+	if (mpShapeUI != nullptr &&
+		InputManager::GetInstance().GetButtonDown(Button::Shape))
+		mpShapeUI->SetEnabled(!mpShapeUI->IsEnabled());
 
-	if (InputManager::GetInstance().GetButtonDown(Button::Transform))
-	{
-		mbIsTransforming = true;
-	}
-
-	// Eキーを押したら変形モードに入る
-	if (InputManager::GetInstance().GetButtonDown(Button::Transform))
-	{
-		mbIsTransforming = true;
-	}
-
-	// 変形中かどうかで入力を切り替える
-	if (mbIsTransforming)
-	{
-		UpdateTransformUI();
-		return; //変形中は移動や重力処理を行わない
-	}
-	//else
-	//{
-	//	Move();
-
-	//	// 通常時だけ重力を処理
-	//	mpGravity->Update(_deltaTime);
-
-	//	// StageBlockとの当たり判定
-	//	ResolveStageCollision();
-	//}
-	Rotate();//回転処理
-
-	if (!mIsRolling)
-	{
-		Move();
-		mpGravity->Update(_deltaTime);
-
-		// StageBlockとの当たり判定
-		//ResolveStageCollision();
-	}
-
-	UpdateTransformCollider();
-
+	mController.Update();
 	GameObject::Update(_deltaTime);
 }
 
 void Player::Draw()
 {
-	float rad = mCurrentAngle * (3.14159265f / 180.0f);
-	VECTOR centerPos = GetPosition();
-	const float blockSize = 100.0f;
+	GameObject::Draw();
 
+	auto transform = GetModule<Transform>();
+	VECTOR pos = transform->GetPosition();
+	Debug::Print(
+		"Player座標 : (",
+		pos.x,
+		" , ",
+		pos.y,
+		" )"
+	);
+}
 
-	if (mpTexture != nullptr)
+void Player::AddCollisionCorrection(VECTOR _correction)
+{
+	// 補正が不要なら登録しない
+	if (_correction.x == 0.0f && _correction.y == 0.0f)
+		return;
+
+	mCollisionCorrections.push_back(_correction); 
+}
+
+void Player::ResetCollisionCorrections()
+{
+	mCollisionCorrections.clear();
+}
+
+VECTOR Player::CalculateCollisionCorrection()
+{
+	VECTOR correction = VGet(0.0f, 0.0f, 0.0f);
+
+	for (const VECTOR& candidate : mCollisionCorrections)
 	{
-		for (int y = 0; y < 3; y++)
+		// X軸：絶対値が最大の補正を採用
+		if (fabsf(candidate.x) > fabsf(correction.x))
 		{
-			for (int x = 0; x < 3; x++)
-			{
-				if (!mShape[y][x]) continue; // OFFのマスは描画しない
+			correction.x = candidate.x;
+		}
 
-				// 中央(1, 1)からの相対座標
-				float localX = (x - 1) * blockSize;
-				float localY = (y - 1) * blockSize;
-
-				// 2D回転行列で角度radに合わせて回転
-				float rotatedX = localX * std::cos(rad) - localY * std::sin(rad);
-				float rotatedY = localX * std::sin(rad) + localY * std::cos(rad);
-
-				// 中心座標 + 回転後オフセット に描画
-				DrawRotaGraphF(
-					centerPos.x + rotatedX,
-					centerPos.y + rotatedY,
-					1.0,
-					rad,
-					mpTexture->GetHandle(),
-					TRUE
-				);
-			}
+		// Y軸：絶対値が最大の補正を採用
+		if (fabsf(candidate.y) > fabsf(correction.y))
+		{
+			correction.y = candidate.y;
 		}
 	}
 
-	// 変形画面
-	if (mbIsTransforming)
-	{
-		DrawTransformUI();
-	}
-
-	GameObject::Draw();
+	return correction;
 }
 
-void Player::Move()
+void Player::ApplyCollisionCorrection()
 {
-	VECTOR inputDirection = VGet(0.0f, 0.0f, 0.0f);
-
-	inputDirection.x += InputManager::GetInstance().GetAxis(Axis::MoveX);
-	inputDirection.y += InputManager::GetInstance().GetAxis(Axis::MoveY);
-
-	if (VSize(inputDirection) == 0.0f)
+	auto transform = GetModule<Transform>();
+	if (transform == nullptr)
 		return;
 
-	VECTOR moveAmount = VScale(inputDirection, mfSpeed);
+	VECTOR correction = CalculateCollisionCorrection();
 
+	VECTOR position = transform->GetPosition();
+	position = VAdd(position, correction);
+
+	transform->SetPosition(position);
+}
+
+void Player::BeginCollisionResolution()
+{
+	GameObject::BeginCollisionResolution();	// memo : 意味ないけど一応
+
+	ResetCollisionCorrections();
+}
+
+void Player::EndCollisionResolution()
+{
+	GameObject::EndCollisionResolution();	// memo : 意味ないけど一応
+
+	ApplyCollisionCorrection();
+
+	UpdatePiecePosition();
+	UpdatePieceRotation();
+}
+
+void Player::UpdatePiecePosition()
+{
+	for (auto& row : mPieces)
+	{
+		for (auto* piece : row)
+		{
+			if (piece == nullptr)
+				continue;
+
+			piece->UpdateWorldPosition();
+		}
+	}
+}
+
+void Player::UpdatePieceRotation()
+{
+	for (auto& row : mPieces)
+	{
+		for (auto* piece : row)
+		{
+			if (piece == nullptr)
+				continue;
+
+			piece->UpdateRotation();
+		}
+	}
+}
+
+void Player::Move(VECTOR _direction)
+{
+	if (VSize(_direction) == 0.0f)
+		return;
+
+	// -- 移動量を取得 & 座標反映 -- //
+	VECTOR moveAmount = VScale(_direction, mfSpeed);
+
+	auto transform = GetModule<Transform>();
 	VECTOR nextPos = VAdd(
-		GetPosition(),
+		transform->GetPosition(),
 		moveAmount
 	);
 
-	SetPosition(nextPos);
+	transform->SetPosition(nextPos);
+
+	UpdatePiecePosition();
 }
 
-void Player::DrawTransformUI()
+void Player::Rotation(float _rotateDirection)
 {
-	int screenWidth;
-	int screenHeight;
+	// -- 回転値を取得 -- //
+	float rotationAmount = _rotateDirection * mfRotationPower;	// 回転の値(度数)
+	float rotationRadian = rotationAmount * DX_PI_F / 180.0f;	// 回転の値(ラジアン)
 
-	GetDrawScreenSize(&screenWidth, &screenHeight);
+	// -- 回転値を適用 -- //
+	if (auto transform = GetModule<Transform>())
+		transform->SetRotation(
+			VAdd(
+				transform->GetRotation(),
+				VGet(0.0f, 0.0f, rotationRadian)
+			)
+		);
 
-	const int cellSize = 100;
-	const int gridSize = cellSize * 3;
-
-	const int startX = (screenWidth - gridSize) / 2;
-	const int startY = (screenHeight - gridSize) / 2;
-
-	// 背景
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 150);
-
-	DrawBox(
-		0,
-		0,
-		screenWidth,
-		screenHeight,
-		GetColor(0, 0, 0),
-		TRUE
-	);
-
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-
-	// 3×3
-	for (int y = 0; y < 3; y++)
-	{
-		for (int x = 0; x < 3; x++)
-		{
-			int left = startX + x * cellSize;
-			int top = startY + y * cellSize;
-			int right = left + cellSize;
-			int bottom = top + cellSize;
-
-			int color;
-
-			if (mShape[y][x])
-			{
-				// ON
-				color = GetColor(255, 255, 255);
-			}
-			else
-			{
-				// OFF
-				color = GetColor(80, 80, 80);
-			}
-
-			DrawBox(
-				left,
-				top,
-				right,
-				bottom,
-				color,
-				TRUE
-			);
-
-			// 枠
-			DrawBox(
-				left,
-				top,
-				right,
-				bottom,
-				GetColor(255, 255, 255),
-				FALSE
-			);
-		}
-	}
-
-	DrawString(
-		startX,
-		startY - 40,
-		"変形",
-		GetColor(255, 255, 255)
-	);
+	UpdatePieceRotation();
 }
 
-void Player::UpdateTransformUI()
+void Player::ApplyShapeFromUI()
 {
-	int mouseX = InputManager::GetInstance().GetMouse().GetX();
-	int mouseY = InputManager::GetInstance().GetMouse().GetY();
-
-	const int cellSize = 100;
-	const int gridSize = cellSize * 3;
-
-	int screenWidth;
-	int screenHeight;
-
-	GetDrawScreenSize(&screenWidth, &screenHeight);
-
-	const int startX = (screenWidth - gridSize) / 2;
-	const int startY = (screenHeight - gridSize) / 2;
-
-	// マウスが3×3の範囲内にあるか
-	if (mouseX >= startX &&
-		mouseX < startX + gridSize &&
-		mouseY >= startY &&
-		mouseY < startY + gridSize)
+	for (int row = 0;
+		row < GameConfig::PLAYER_PIECE_SIZE;
+		++row)
 	{
-		// 何列目・何行目をクリックしたか計算
-		int cellX = (mouseX - startX) / cellSize;
-		int cellY = (mouseY - startY) / cellSize;
-
-		// 左クリックされたらON/OFF切り替え
-		if (InputManager::GetInstance().GetMouse().IsDown(MOUSE_INPUT_LEFT))
+		for (int column = 0;
+			column < GameConfig::PLAYER_PIECE_SIZE;
+			++column)
 		{
 			mShape[cellY][cellX] = !mShape[cellY][cellX];
-		}
-	}
-
-	// Enterで変形を確定
-	if (InputManager::GetInstance().GetButtonDown(Button::Confirm))
-	{
-		UpdateTransformCollider();
-
-		// 変形によって大きくなった場合のめり込み防止
-		VECTOR position = GetPosition();
-		position.y -= 10.0f;
-		SetPosition(position);
-
-		mbIsTransforming = false;
-	}
-}
-
-void Player::UpdateTransformCollider()
-{
-	const float blockSize = 100.0f;
-
-	for (int y = 0; y < 3; y++)
-	{
-		for (int x = 0; x < 3; x++)
-		{
-			int index = y * 3 + x;
-
-			GameObject* gameObject = mColliders[index];
-			Collider* collider = gameObject->GetCollider();
-			gameObject->SetPosition(GetPosition());
-
-			if (collider == nullptr)
-			{
-				continue;
-			}
-
-			// 選択されているマスだけColliderを有効にする
-			collider->SetEnabled(mShape[y][x]);
-
-			if (!mShape[y][x])
-			{
-				continue;
-			}
-
-			// 3×3の中心をPlayerの位置にする
-			float offsetX =
-				(x - 1) * blockSize;
-
-			float offsetY =
-				(y - 1) * blockSize;
-
-			// Colliderを各マスの位置へ移動
-			collider->SetOffset(
-				VGet(
-					offsetX,
-					offsetY,
-					0.0f
-				)
-			);
-
-			// 1ブロック分のCollider
-			collider->SetHalfSize(
-				VGet(
-					blockSize / 2.0f,
-					blockSize / 2.0f,
-					0.0f
-				)
-			);
-		}
-	}
-}
-
-//=========回転処理=========
-void Player::Rotate()
-{
-	// 1. 押されているキーのチェック
-	bool isPressL = (CheckHitKey(KEY_INPUT_L) != 0);
-	bool isPressJ = (CheckHitKey(KEY_INPUT_J) != 0);
-
-	// まだ転がり始めていない時、キーが押されたら方向と開始位置を記録
-	if (!mIsRolling)
-	{
-		if (isPressL)
-		{
-			mDirection = 1.0f;       // 右
-			mIsRolling = true;
-			mbCompleteRoll = false;//初期化
-			mRollTimer = 0;
-			mStartPos = GetPosition();
-			mStartAngle = mCurrentAngle;
-		}
-		else if (isPressJ)
-		{
-			mDirection = -1.0f;      // 左
-			mIsRolling = true;
-			mbCompleteRoll = false;//初期化
-			mRollTimer = 0;
-			mStartPos = GetPosition();
-			mStartAngle = mCurrentAngle;
-		}
-	}
-
-	// 2. 転がりアニメーション（押し続け・離し判定）
-	if (mIsRolling)
-	{
-		// 該当する方向のキーが押され続けているか？
-		bool isHolding = (mDirection > 0.0f && isPressL) ||
-			(mDirection < 0.0f && isPressJ);
-		float currentProgress = (float)mRollTimer / ROLL_FRAMES;
-		if (currentProgress >= 0.5f || mbCompleteRoll)
-		{
-			mbCompleteRoll = true;
-			
-			mRollTimer++;// 押し続けている間は進める
-		}
-		else if (isHolding)
-		{
-			mRollTimer++;//45度未満かつキーを押し続けていたら進める
-		}
-		else
-		{
-			// 離されたら巻き戻す（元の位置に戻る）
-			mRollTimer--;
-			if (mRollTimer <= 0)
-			{
-				mRollTimer = 0;
-				mIsRolling = false;
-				mbCompleteRoll = false;
-				SetPosition(mStartPos);
-				mCurrentAngle = mStartAngle;
-				return;
-			}
-		}
-
-		// 進行度 t (0.0 〜 1.0)
-		float t = (float)mRollTimer / ROLL_FRAMES;
-
-		// 角度の更新
-		mCurrentAngle = mStartAngle + (90.0f * mDirection * t);
-
-		// 座標の更新
-		VECTOR pos = mStartPos;
-		pos.x += (BLOCK_SIZE * mDirection * t);
-
-		// 角の持ち上げ
-		float lift = std::sin(t * 3.14159265f) * 20.7f;
-		pos.y = mStartPos.y - lift;
-
-		SetPosition(pos);
-
-		// 完全に90度回しきった場合（押し続けた結果の完了処理）
-		if (mRollTimer >= ROLL_FRAMES)
-		{
-			mIsRolling = false;
-			mbCompleteRoll = false;
-			mRollTimer = 0;
-
-			pos.y = mStartPos.y;
-			pos.x = mStartPos.x + (BLOCK_SIZE * mDirection);
-			SetPosition(pos);
-
-			mCurrentAngle = 0.0f;
-
-			// --- 3×3 配列 mShape を90度回転 ---
-			bool tempShape[3][3];
-			for (int y = 0; y < 3; y++) {
-				for (int x = 0; x < 3; x++) {
-					if (mDirection > 0.0f) {
-						tempShape[x][2 - y] = mShape[y][x]; // 時計回り
-					}
-					else {
-						tempShape[2 - x][y] = mShape[y][x]; // 反時計回り
-					}
-				}
-			}
-
-			// 配列を上書きしてColliderを再配置
-			for (int y = 0; y < 3; y++) {
-				for (int x = 0; x < 3; x++) {
-					mShape[y][x] = tempShape[y][x];
-				}
-			}
-			UpdateTransformCollider();
 		}
 	}
 }
@@ -495,5 +288,3 @@ void Player::Respawn()
 
 	mbCompleteRoll = false;
 }
-
-
