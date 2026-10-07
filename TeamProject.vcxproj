@@ -25,6 +25,7 @@
     <ClCompile Include="Source\Cursor.cpp" />
     <ClCompile Include="Source\Debug.cpp" />
     <ClCompile Include="Source\FontManager.cpp" />
+    <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\GameObject.cpp" />
     <ClCompile Include="Source\GamePad.cpp" />
     <ClCompile Include="Source\GameScene.cpp" />
@@ -56,6 +57,7 @@
     <ClInclude Include="Source\FadeEffect.h" />
     <ClInclude Include="Source\FloatingMotion.h" />
     <ClInclude Include="Source\FontManager.h" />
+    <ClInclude Include="Source\Game.h" />
     <ClInclude Include="Source\GameConfig.h" />
     <ClInclude Include="Source\GameObject.h" />
     <ClInclude Include="Source\GamePad.h" />

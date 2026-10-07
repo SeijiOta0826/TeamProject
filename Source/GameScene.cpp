@@ -27,7 +27,7 @@ void GameScene::Initialize()
 		this
 		->GetObjectManager()
 		->CreateObject<Player>(
-			"Resource/Player.png",
+			"Resource/Player3.png",
 			VGet(120.0f, 500.0f, 0.0f)
 		);
 

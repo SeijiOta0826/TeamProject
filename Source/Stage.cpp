@@ -52,7 +52,7 @@ void Stage::CreateObjects()
                 // 床を生成
                 objectManager
                     ->CreateObject<StageBlock>(
-                        "Resource/Stage/Stage.png",
+                        "Resource/Stage/Stage2.png",
                         VGet(
                             (x * GameConfig::CELL_SIZE) + GameConfig::CELL_SIZE / 2.0f,
                             (y * GameConfig::CELL_SIZE) + GameConfig::CELL_SIZE / 2.0f,
