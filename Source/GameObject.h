@@ -67,14 +67,11 @@ public:
 	void SetTag(Tag _tag) { mTag = _tag; }
 	Tag GetTag() const { return mTag; }
 
-	bool IsGrounded() const { return mbGrounded; }
-
 	VECTOR GetCollisionCorrection() { return mvCollisionCorrection; }	// 衝突解決にかかる値を返す
 
 protected:
 	virtual const char* GetModelFilename() const { return ""; }
 
-	bool mbGrounded = true;
 private:
 	friend class ObjectManager;
 	ObjectManager* mpObjectManager;

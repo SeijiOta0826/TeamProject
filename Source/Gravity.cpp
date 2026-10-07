@@ -1,6 +1,7 @@
 ﻿#include "Gravity.h"
 
 #include <DxLib.h>
+#include <algorithm>
 
 #include "GameObject.h"
 #include "Transform.h"
@@ -10,7 +11,7 @@
 
 void Gravity::Update(float _deltaTime)
 {
-	if (mpGameObject->IsGrounded())
+	if (!mbIsGrounded)
 	{
 		ResetVerticalVelocity();
 		return;
@@ -23,15 +24,12 @@ void Gravity::Update(float _deltaTime)
 	auto transform = mpGameObject->GetModule<Transform>();
 	VECTOR position = transform->GetPosition();
 
-	// 重力による移動量を計算
-		// ota : ここdeltaTimeいるんか。僕は💩です
-	float moveAmount = mfVelocityY * _deltaTime;
+	mfVelocityY = std::min<float>(mfVelocityY, GameConfig::MAX_FALLSPEED);
 
 	// 2D座標ではYが下方向なので加算
-	position.y += moveAmount;
+	position.y += mfVelocityY;
 
 	// y = 0 を地面として、それより下に行かないようにする
-		// ota : マジックナンバーを直させていただきます。僕は💩です
 	if (position.y >= ScreenConfig::SCREEN_HEIGHT)
 	{
 		position.y = ScreenConfig::SCREEN_HEIGHT;

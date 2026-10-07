@@ -68,7 +68,7 @@ void GameObject::ResolveCollision()
 		|| !myCollider)
 		return;
 
-	mbGrounded = false;
+	bool isGrounded = false;	// 接地判定を示す
 
 	auto* collisionManager =
 		Master::mpSceneManager
@@ -102,7 +102,7 @@ void GameObject::ResolveCollision()
 			}
 
 			if (info.normal.y < -0.5f)
-				mbGrounded = true;
+				isGrounded = true;
 
 			VECTOR correction = VScale(
 				info.normal,
@@ -120,4 +120,7 @@ void GameObject::ResolveCollision()
 			}
 		}
 	}
+
+	if (auto gravity = GetModule<Gravity>())
+		gravity->SetGrounded(isGrounded);
 }

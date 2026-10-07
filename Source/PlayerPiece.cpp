@@ -35,7 +35,7 @@ void PlayerPiece::InitComponent()
 	AddModule<Transform>();
 	AddModule<Graphic>(GetModelFilename());
 	AddModule<Collider>();
-	//AddModule<Gravity>();
+	AddModule<Gravity>();
 
 	// -- 衝突判定を取得するObjを指定 -- //
 	auto collider = GetModule<Collider>();
