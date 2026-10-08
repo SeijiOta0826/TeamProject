@@ -4,28 +4,16 @@
 #include "Transform.h"
 #include "Collider.h"
 
-Goal::Goal()
+void Goal::Init()
 {
-   /* for (int y = 0; y < 3; y++)
-    {
-        for (int x = 0; x < 3; x++)
-        {
-            mShape[y][x] = _shape[y][x];
-        }
-    }
-
-	SetTag(Tag::GOAL);
-
-	mpCollider->SetHalfSize(
-		VGet(50.0f, 50.0f, 0.0f)
-	);*/
-
-	// プレイヤーとの衝突を見る
-	GetModule<Collider>()->AddCollisionTag(Tag::PLAYER);
+    // プレイヤーとの衝突を見る
+    GetModule<Collider>()->AddCollisionTag(Tag::PLAYER);
 }
 
-Goal::~Goal()
+void Goal::InitComponent()
 {
+    AddModule<Transform>();
+    AddModule<Collider>();
 }
 
 void Goal::Update(float _deltaTime)
@@ -47,13 +35,12 @@ bool Goal::IsShapeMatched(Player* _player) const
     if (_player == nullptr)
         return false;
 
-    const bool* playerShape = _player->GetShape();
-
     for (int y = 0; y < 3; y++)
     {
         for (int x = 0; x < 3; x++)
         {
-            if (playerShape[y * 3 + x] != mShape[y][x])
+            bool isPieceEnabled = _player->IsPieceEnabled(x, y);
+            if (isPieceEnabled != mShape[y][x])
             {
                 return false;
             }

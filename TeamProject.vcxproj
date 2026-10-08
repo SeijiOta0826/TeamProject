@@ -42,6 +42,7 @@
     <ClCompile Include="Source\ObjectManager.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\PlayerController.cpp" />
+    <ClCompile Include="Source\PlayerPiece.cpp" />
     <ClCompile Include="Source\PlayerPieceUI.cpp" />
     <ClCompile Include="Source\PlayerShapeUI.cpp" />
     <ClCompile Include="Source\ResourceManager.cpp" />

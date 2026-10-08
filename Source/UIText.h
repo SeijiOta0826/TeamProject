@@ -5,14 +5,14 @@
 
 class UI;
 
-enum class TextAlign
+enum class UITextAlign
 {
 	LEFT,
 	CENTER,
 	RIGHT
 };
 
-enum class TextVerticalAlign
+enum class UITextVerticalAlign
 {
 	TOP,
 	CENTER,
@@ -33,8 +33,8 @@ public:
 	void SetFontSize(int _size) { mnFontSize = _size; }
 	void SetColor(unsigned int _color) { mColor = _color; }
 
-	void SetAlign(TextAlign _align) { mAlign = _align; }
-	TextAlign GetAlign() { return mAlign; }
+	void SetAlign(UITextAlign _align) { mAlign = _align; }
+	UITextAlign GetAlign() { return mAlign; }
 
 	void Draw();
 
@@ -47,7 +47,7 @@ private:
 	int mnFontSize = 24;
 	unsigned int mColor = GetColor(255, 255, 255);
 
-	TextAlign mAlign = TextAlign::CENTER;
+	UITextAlign mAlign = UITextAlign::CENTER;
 
 	UI* mpUI;
 };

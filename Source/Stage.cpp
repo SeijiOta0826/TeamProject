@@ -54,6 +54,11 @@ void Stage::CreateObjects()
         for (int x = 0; x < mStageData[y].size(); x++)
         {
             const int tile = mStageData[y][x];
+            VECTOR initPosition = VGet(
+                (x * GameConfig::CELL_SIZE) + GameConfig::CELL_SIZE,
+                (y * GameConfig::CELL_SIZE) + GameConfig::CELL_SIZE,
+                0.0f
+            );
 
             switch (tile)
             {
@@ -68,36 +73,18 @@ void Stage::CreateObjects()
                     ->CreateObject<StageBlock>();
 
                 stageBlock->GetModule<Transform>()
-                    ->SetPosition(
-                        VGet(
-                            (x * GameConfig::CELL_SIZE) + GameConfig::CELL_SIZE,
-                            (y * GameConfig::CELL_SIZE) + GameConfig::CELL_SIZE,
-                            0.0f
-                        )
-                    );
+                    ->SetPosition(initPosition);
                 break;
-
+            }
             case 2:
             {
-                // ゴールの形
-                bool goalShape[3][3] =
-                {
-                    { false, false, false },
-                    { false, true,  false },
-                    { false, false, false }
-                };
-
                 // ゴールを生成
-                objectManager
-                    ->CreateObject<Goal>(
-                        "Resource/Help.png",
-                        VGet(
-                            (x * GameConfig::CELL_SIZE) + GameConfig::CELL_SIZE / 2.0f,
-                            (y * GameConfig::CELL_SIZE) + GameConfig::CELL_SIZE / 2.0f,
-                            0.0f
-                        ),
-                        goalShape
-                    );
+                auto goalBlock = objectManager
+                    ->CreateObject<Goal>();
+
+                goalBlock
+                    ->GetModule<Transform>()
+                    ->SetPosition(initPosition);
 
                 break;
             }
@@ -118,27 +105,22 @@ void Stage::CreateObjects()
             case 4:
             {
                 // 針を生成
-                objectManager
-                    ->CreateObject<Spike>(
-                        "Resource/Spike.png",
-                        VGet(
-                            (x * GameConfig::CELL_SIZE) + GameConfig::CELL_SIZE / 2.0f,
-                            (y * GameConfig::CELL_SIZE) + GameConfig::CELL_SIZE / 2.0f,
-                            0.0f
-                        )
-                    );
-
+                auto spikeBlock = objectManager
+                    ->CreateObject<Spike>();
+                spikeBlock
+                    ->GetModule<Transform>()
+                    ->SetPosition(initPosition);
                 break;
             }
 
             case 5:
             {
                 // リスポーン地点を設定
-                mvRespawnPos = VGet(
+                /*mvRespawnPos = VGet(
                     (x * GameConfig::CELL_SIZE) + GameConfig::CELL_SIZE / 2.0f,
                     (y * GameConfig::CELL_SIZE) + GameConfig::CELL_SIZE / 2.0f,
                     0.0f
-                );
+                );*/
 
                 break;
             }
@@ -146,8 +128,11 @@ void Stage::CreateObjects()
             case 6:
             {
                 // 消える床を生成
-                objectManager
+                auto disappearingBlock = objectManager
                     ->CreateObject<DisappearingBlock>();
+                disappearingBlock
+                    ->GetModule<Transform>()
+                    ->SetPosition(initPosition);
 
                 break;
             }
@@ -155,20 +140,14 @@ void Stage::CreateObjects()
             case 7:
             {
                 // スイッチを生成
-                objectManager
-                    ->CreateObject<Switch>(
-                        "Resource/Help.png",
-                        VGet(
-                            (x * GameConfig::CELL_SIZE) + GameConfig::CELL_SIZE / 2.0f,
-                            (y * GameConfig::CELL_SIZE) + GameConfig::CELL_SIZE / 2.0f,
-                            0.0f
-                        )
-                    );
+                auto switchBlock = objectManager
+                    ->CreateObject<Switch>();
 
                 break;
             }
 
             case 8:
+            {
                 // SwitchBlockは2回目に生成する
                 break;
 
@@ -197,22 +176,8 @@ void Stage::CreateObjects()
 
             objectManager
                 ->CreateObject<SwitchBlock>(
-                    "Resource/Stage/Stage.png",
-                    VGet(
-                        (x * GameConfig::CELL_SIZE) + GameConfig::CELL_SIZE / 2.0f,
-                        (y * GameConfig::CELL_SIZE) + GameConfig::CELL_SIZE / 2.0f,
-                        0.0f
-                    ),
                     pSwitch
                 );
         }
     }
-}
-
-void Stage::SetPlayerRespawn(Player* _player)
-{
-    if (_player == nullptr)
-        return;
-
-    _player->SetRespawnPos(mvRespawnPos);
 }

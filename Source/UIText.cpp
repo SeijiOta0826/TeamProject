@@ -40,14 +40,14 @@ VECTOR UIText::CalculateTextDrawPosition()
 
 	switch (mAlign)
 	{
-	case TextAlign::LEFT:
+	case UITextAlign::LEFT:
 		break;
 
-	case TextAlign::CENTER:
+	case UITextAlign::CENTER:
 		drawX -= textWidth / 2;
 		break;
 
-	case TextAlign::RIGHT:
+	case UITextAlign::RIGHT:
 		drawX -= textWidth;
 		break;
 	}

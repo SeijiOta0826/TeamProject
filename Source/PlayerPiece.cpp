@@ -55,6 +55,8 @@ void PlayerPiece::Draw()
 
 void PlayerPiece::SetEnabled(bool _enabled)
 {
+	mbIsEnabled = _enabled;
+
 	if (auto transform = GetModule<Transform>())
 		transform->SetEnabled(_enabled);
 	

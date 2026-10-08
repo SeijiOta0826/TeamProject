@@ -1,5 +1,8 @@
 ﻿#include "Spike.h"
 #include "Player.h"
+
+// -- Module -- //
+#include "Transform.h"
 #include "Collider.h"
 #include "Gravity.h"
 
@@ -9,6 +12,13 @@ void Spike::Init()
     GetModule<Collider>()->AddCollisionTag(Tag::PLAYER);    // 衝突対象を設定
   
     GetModule<Gravity>()->SetEnabled(false);    // 重力を無効化
+}
+
+void Spike::InitComponent()
+{
+    AddModule<Transform>();
+    AddModule<Collider>();
+    AddModule<Gravity>();
 }
 
 void Spike::Update(float _deltaTime)

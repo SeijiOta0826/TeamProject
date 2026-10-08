@@ -7,6 +7,7 @@ public:
     ~Spike() = default;
 
     void Init() override;
+    void InitComponent() override;
 
     void Update(float _deltaTime) override;
     void Draw() override;

@@ -7,9 +7,8 @@ class Player;
 class Goal : public GameObject
 {
 public:
-    Goal();
-    ~Goal();
-
+    void Init() override;
+    void InitComponent() override;
     void Update(float _deltaTime) override;
     void Draw() override;
 

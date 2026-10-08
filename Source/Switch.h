@@ -7,6 +7,7 @@ public:
     ~Switch() = default;
 
     void Init() override;
+    void InitComponent() override {}
     void Update(float _deltaTime) override;
 
     bool IsActivated() const

@@ -46,7 +46,6 @@ void GameScene::Initialize()
 		+ ".csv";
 
 	stage->Load(stageFileName);
-	stage->SetPlayerRespawn(mpPlayer);
 
 	mpGoal = this->GetObjectManager()->FindObject<Goal>();
 

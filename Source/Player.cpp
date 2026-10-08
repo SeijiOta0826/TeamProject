@@ -269,3 +269,8 @@ void Player::Respawn()
 {
 	GetModule<Transform>()->SetPosition(mvRespawnPos);
 }
+
+bool Player::IsPieceEnabled(int _column, int _row)
+{
+	return mPieces[_column][_row]->GetEnabled();
+}

@@ -6,9 +6,10 @@ class Switch;
 class SwitchBlock : public StageBlock
 {
 public:
-    SwitchBlock(std::string filename, VECTOR initPos, Switch* _switch);
+    SwitchBlock(Switch* _switch);
     ~SwitchBlock() = default;
 
+    void Init() override;
     void Update(float _deltaTime) override;
     void Draw() override;
 

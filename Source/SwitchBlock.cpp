@@ -5,13 +5,17 @@
 #include "Gravity.h"
 
 SwitchBlock::SwitchBlock(
-    std::string filename,
-    VECTOR initPos,
     Switch* _switch
 )
-    : StageBlock()
-    , mpSwitch(_switch)
+    : mpSwitch(_switch)
 {
+    
+}
+
+void SwitchBlock::Init()
+{
+    StageBlock::Init();
+
     // 最初は非表示・当たり判定OFF
     mbIsVisible = false;
     GetModule<Collider>()->SetEnabled(false);

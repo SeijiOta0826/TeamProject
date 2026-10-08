@@ -18,6 +18,7 @@ public:
 	void Draw() override;
 
 	void SetEnabled(bool _enabled);	// 有効状態のセッター
+	bool GetEnabled() { return mbIsEnabled; }
 
 	// -- Playerからの相対座標アクセサ -- //
 	void SetLocalPosition(VECTOR _pos) { mvLocalPosition = _pos; }
@@ -36,4 +37,9 @@ private:
 	Player* mpPlayer = nullptr;	// ハブとなるPlayerのポインタ
 
 	VECTOR mvLocalPosition = VGet(0.0f, 0.0f, 0.0f);		// Playerからの相対座標
+
+	// Todo : Playerの初期配列には関与しておらず、
+		// これを基にPieceの有効状態を変更しているわけでもない(主にSetEnabled基準)ので完全にGoal用。
+		// いつか直す
+	bool mbIsEnabled = false;	// Pieceの有効状態を示す
 };
