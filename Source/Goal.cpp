@@ -50,13 +50,11 @@ bool Goal::IsShapeMatched(Player* _player) const
     if (_player == nullptr)
         return false;
 
-    const bool* playerShape = _player->GetShape();
-
-    for (int y = 0; y < 3; y++)
+    for (int row = 0; row < 3; row++)
     {
-        for (int x = 0; x < 3; x++)
+        for (int column = 0; column < 3; column++)
         {
-            if (playerShape[y * 3 + x] != mShape[y][x])
+            if (_player->HasPiece(row, column) != mShape[row][column])
             {
                 return false;
             }
