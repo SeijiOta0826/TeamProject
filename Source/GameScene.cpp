@@ -1,4 +1,4 @@
-﻿#include "GameScene.h"
+#include "GameScene.h"
 
 #include "Master.h"
 #include "SceneManager.h"
@@ -224,13 +224,13 @@ void GameScene::DrawPause()
 	DrawStringToHandle(570, 200, "Pause", GetColor(255, 255, 255), StageNumberFontHandle);
 
 	//再開ボタン
-	DrawBox(500, 300, 780, 370, GetColor(200, 200, 200), TRUE);
-	DrawBox(500, 300, 780, 370, GetColor(255, 255, 255), FALSE);
+	/*DrawBox(500, 300, 780, 370, GetColor(200, 200, 200), FALSE);
+	DrawBox(500, 300, 780, 370, GetColor(255, 255, 255), FALSE);*/
 	DrawStringToHandle(605, 325, "再開", GetColor(0, 0, 0), mMessageFontHandle);
 
 	//ステージ選択
-	DrawBox(500, 400, 780, 470, GetColor(200, 200, 200), TRUE);
-	DrawBox(500, 400, 780, 470, GetColor(255, 255, 255), FALSE);
+	/*DrawBox(500, 400, 780, 470, GetColor(200, 200, 200), TRUE);
+	DrawBox(500, 400, 780, 470, GetColor(255, 255, 255), FALSE);*/
 	DrawStringToHandle(505, 425, "ステージ選択に戻る", GetColor(0, 0, 0), mMessageFontHandle);
 
 	// タイトルへ戻るボタン

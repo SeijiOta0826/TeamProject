@@ -28,6 +28,7 @@
     <ClCompile Include="Source\FakePlayer.cpp" />
     <ClCompile Include="Source\FakePlayerController.cpp" />
     <ClCompile Include="Source\FontManager.cpp" />
+    <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\GameObject.cpp" />
     <ClCompile Include="Source\GamePad.cpp" />
     <ClCompile Include="Source\GameScene.cpp" />
@@ -75,6 +76,7 @@
     <ClInclude Include="Source\FakePlayerController.h" />
     <ClInclude Include="Source\FloatingMotion.h" />
     <ClInclude Include="Source\FontManager.h" />
+    <ClInclude Include="Source\Game.h" />
     <ClInclude Include="Source\GameConfig.h" />
     <ClInclude Include="Source\GameObject.h" />
     <ClInclude Include="Source\GamePad.h" />
