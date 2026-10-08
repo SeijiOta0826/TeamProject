@@ -28,14 +28,8 @@ Texture::~Texture()
 
 void Texture::Draw()
 {
-	/*VECTOR topLeft = CalculateTopLeftPosition();
-
-	DrawGraph(
-		static_cast<int>(topLeft.x),
-		static_cast<int>(topLeft.y),
-		mnHandle,
-		TRUE
-	);*/
+	if (!mbEnabled)
+		return;
 
 	VECTOR topLeft = CalculateTopLeftPosition();
 	VECTOR bottomRight = VGet(
@@ -78,17 +72,4 @@ VECTOR Texture::CalculateTopLeftPosition()
 		mvPosition.y - (mvSize.y / 2.0f),
 		mvPosition.z
 	);
-}
-
-void Texture::SetTexture(std::string filename)
-{
-	mnHandle = Master::mpResource->LoadGraphics(filename);
-
-	int size_x;
-	int size_y;
-
-	GetGraphSize(mnHandle, &size_x, &size_y);
-
-	mvSize.x = static_cast<float>(size_x);
-	mvSize.y = static_cast<float>(size_y);
 }

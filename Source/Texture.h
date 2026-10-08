@@ -23,9 +23,10 @@ public:
 	// -- ハンドル取得 -- //
 	int GetHandle() { return mnHandle; }
 
-	// -- 画像変更 -- //
-	void SetTexture(std::string filename);
-
+	// -- 有効フラグのアクセサ -- //
+	void SetEnabled(bool _enabled) { mbEnabled = _enabled; }
+	bool IsEnabled() { return mbEnabled; }
+	
 private:
 	VECTOR CalculateTopLeftPosition();	// 中心座標を、DrawGraph用に左上座標に変換する
 
@@ -34,4 +35,6 @@ private:
 
 	VECTOR mvPosition;			// 描画画像の中心座標
 	VECTOR mvSize;				// 画像の大きさ
+
+	bool mbEnabled = true;	// 有効であるかを示す
 };

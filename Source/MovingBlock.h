@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "StageBlock.h"
 
 class Player;
@@ -7,8 +7,6 @@ class MovingBlock : public StageBlock
 {
 public:
     MovingBlock(
-        std::string filename,
-        VECTOR initPos,
         float leftLimit,
         float rightLimit,
         float speed
@@ -16,15 +14,16 @@ public:
 
     ~MovingBlock() = default;
 
+    void Init() override;
     void Update(float _deltaTime) override;
 
-    // ‚±‚ÌƒtƒŒ[ƒ€‚Å‚Ç‚ê‚¾‚¯ˆÚ“®‚µ‚½‚©æ“¾
+    // ã“ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã§ã©ã‚Œã ã‘ç§»å‹•ã—ãŸã‹å–å¾—
     VECTOR GetMoveDelta() const
     {
         return mvMoveDelta;
     }
 
-    // ƒvƒŒƒCƒ„[‚ğˆÚ“®°‚ÌˆÚ“®—Ê‚¾‚¯‰^‚Ô
+    // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’ç§»å‹•åºŠã®ç§»å‹•é‡ã ã‘é‹ã¶
     void CarryPlayer();
 
 private:

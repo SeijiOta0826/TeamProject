@@ -1,22 +1,15 @@
-#include "Switch.h"
+ï»¿#include "Switch.h"
 
 #include "Player.h"
 #include "Collider.h"
 #include "Gravity.h"
-#include "Texture.h"
 
-Switch::Switch(
-    std::string filename,
-    VECTOR initPos
-)
-    : GameObject(filename, initPos)
+void Switch::Init()
 {
     SetTag(Tag::BLOCK);
+    GetModule<Collider>()->AddCollisionTag(Tag::PLAYER);
 
-    mpCollider->AddCollisionTag(Tag::PLAYER);
-
-    // ƒXƒCƒbƒ`‚Í—Ž‰º‚µ‚È‚¢
-    mpGravity->SetEnable(false);
+    GetModule<Gravity>()->SetEnabled(false);    // é‡åŠ›ã‚’ç„¡åŠ¹åŒ–
 }
 
 void Switch::Update(float _deltaTime)
@@ -31,11 +24,11 @@ void Switch::Update(float _deltaTime)
 
 void Switch::CheckPlayer()
 {
-    // ‚·‚Å‚ÉON‚È‚ç‰½‚à‚µ‚È‚¢
+    // ã™ã§ã«ONãªã‚‰ä½•ã‚‚ã—ãªã„
     if (mbIsActivated)
         return;
 
-    auto collisions = mpCollider->GetCollisions(Tag::PLAYER);
+    auto collisions = GetModule<Collider>()->GetCollisions(Tag::PLAYER);
 
     for (auto* playerObject : collisions)
     {
@@ -47,11 +40,11 @@ void Switch::CheckPlayer()
         if (player == nullptr)
             continue;
 
-        // ƒvƒŒƒCƒ„[‚ª“¥‚ñ‚¾
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒè¸ã‚“ã 
         mbIsActivated = true;
 
-        // ƒXƒCƒbƒ`‚ðONó‘Ô‚ÌŒ©‚½–Ú‚É•ÏX
-        mpTexture->SetTexture("Resource/Player.png");
+        // ã‚¹ã‚¤ãƒƒãƒã‚’ONçŠ¶æ…‹ã®è¦‹ãŸç›®ã«å¤‰æ›´
+        // mpTexture->SetTexture("Resource/Player.png");
 
         break;
     }

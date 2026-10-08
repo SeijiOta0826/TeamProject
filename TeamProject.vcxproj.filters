@@ -52,6 +52,36 @@
     <Filter Include="ソース ファイル\System">
       <UniqueIdentifier>{0ff01531-2269-46a4-bcb7-4399ab66fa8b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\UI">
+      <UniqueIdentifier>{1d2de69a-dedd-4541-89af-3aaa736e21ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Controller">
+      <UniqueIdentifier>{606d382c-8bac-4a8c-a56b-622ec08512ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\UIModule">
+      <UniqueIdentifier>{bfdb932d-0e79-4aec-b49c-896d5828432d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Obj\StageElement">
+      <UniqueIdentifier>{e5180c39-9b99-42de-8da7-45de065f518e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Obj\Character">
+      <UniqueIdentifier>{78e40793-aef6-4f02-a3b4-be271bd5826f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\UI">
+      <UniqueIdentifier>{f44ce886-f6cd-4a5e-af89-cd5afd3d676d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\UI\UIModule">
+      <UniqueIdentifier>{01008bff-71a0-4f23-bca5-190637d8bd80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Controller">
+      <UniqueIdentifier>{4562afb6-67a9-4e63-bf9d-eab235c88c48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Obj\Character">
+      <UniqueIdentifier>{1b71c389-1ccd-4fe9-81ce-ec149802bc76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Obj\StageElement">
+      <UniqueIdentifier>{c327de8e-fcca-4e4e-9f5d-a61a2f5e6fb8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GamePad.cpp">
@@ -72,9 +102,6 @@
     <ClCompile Include="Source\Main.cpp">
       <Filter>ソース ファイル\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Object2D.cpp">
-      <Filter>ソース ファイル\Obj</Filter>
-    </ClCompile>
     <ClCompile Include="Source\ObjectManager.cpp">
       <Filter>ソース ファイル\Manager</Filter>
     </ClCompile>
@@ -87,26 +114,14 @@
     <ClCompile Include="Source\SceneManager.cpp">
       <Filter>ソース ファイル\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Texture.cpp">
-      <Filter>ソース ファイル\Obj</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Collider.cpp">
       <Filter>ソース ファイル\Module</Filter>
     </ClCompile>
     <ClCompile Include="Source\CollisionManager.cpp">
       <Filter>ソース ファイル\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Player.cpp">
-      <Filter>ソース ファイル\Obj</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\StageBlock.cpp">
-      <Filter>ソース ファイル\Obj</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Debug.cpp">
       <Filter>ソース ファイル\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Gravity.cpp">
-      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Source\GameObject.cpp">
       <Filter>ソース ファイル\Obj</Filter>
@@ -114,17 +129,8 @@
     <ClCompile Include="Source\CsvLoader.cpp">
       <Filter>ソース ファイル\System</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Stage.cpp">
-      <Filter>ソース ファイル\Obj</Filter>
-    </ClCompile>
     <ClCompile Include="Source\TitleScene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Goal.cpp">
-      <Filter>ソース ファイル\Obj</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\SoundManager.cpp">
-      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Source\FontManager.cpp">
       <Filter>ソース ファイル\Manager</Filter>
@@ -132,23 +138,80 @@
     <ClCompile Include="Source\Cursor.cpp">
       <Filter>ソース ファイル\Input</Filter>
     </ClCompile>
-    <ClCompile Include="Source\MovingBlock.cpp">
-      <Filter>ソース ファイル\Obj</Filter>
-	</ClCompile>
     <ClCompile Include="Source\StageSelectScene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Spike.cpp">
-      <Filter>ソース ファイル\Obj</Filter>
+    <ClCompile Include="Source\FakePlayerController.cpp">
+      <Filter>ソース ファイル\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gravity.cpp">
+      <Filter>ソース ファイル\Module</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Graphic.cpp">
+      <Filter>ソース ファイル\Module</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PlayerController.cpp">
+      <Filter>ソース ファイル\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PlayerPieceUI.cpp">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PlayerShapeUI.cpp">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SoundManager.cpp">
+      <Filter>ソース ファイル\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UI.cpp">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UIButton.cpp">
+      <Filter>ソース ファイル\UI\UIModule</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UIGraphic.cpp">
+      <Filter>ソース ファイル\UI\UIModule</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UIText.cpp">
+      <Filter>ソース ファイル\UI\UIModule</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UITransform.cpp">
+      <Filter>ソース ファイル\UI\UIModule</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UIManager.cpp">
+      <Filter>ソース ファイル\Manager</Filter>
     </ClCompile>
     <ClCompile Include="Source\DisappearingBlock.cpp">
+      <Filter>ソース ファイル\Obj\StageElement</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Goal.cpp">
+      <Filter>ソース ファイル\Obj\StageElement</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MovingBlock.cpp">
+      <Filter>ソース ファイル\Obj\StageElement</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Spike.cpp">
+      <Filter>ソース ファイル\Obj\StageElement</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Stage.cpp">
       <Filter>ソース ファイル\Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\StageBlock.cpp">
+      <Filter>ソース ファイル\Obj\StageElement</Filter>
     </ClCompile>
     <ClCompile Include="Source\Switch.cpp">
-      <Filter>ソース ファイル\Obj</Filter>
+      <Filter>ソース ファイル\Obj\StageElement</Filter>
     </ClCompile>
     <ClCompile Include="Source\SwitchBlock.cpp">
-      <Filter>ソース ファイル\Obj</Filter>
+      <Filter>ソース ファイル\Obj\StageElement</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Player.cpp">
+      <Filter>ソース ファイル\Obj\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FakePlayer.cpp">
+      <Filter>ソース ファイル\Obj\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PlayerPiece.cpp">
+      <Filter>ソース ファイル\Obj\Character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -170,9 +233,6 @@
     <ClInclude Include="Source\Master.h">
       <Filter>ヘッダー ファイル\System</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Object2D.h">
-      <Filter>ヘッダー ファイル\Obj</Filter>
-    </ClInclude>
     <ClInclude Include="Source\ObjectManager.h">
       <Filter>ヘッダー ファイル\Manager</Filter>
     </ClInclude>
@@ -188,29 +248,17 @@
     <ClInclude Include="Source\ScreenConfig.h">
       <Filter>ヘッダー ファイル\System</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Texture.h">
-      <Filter>ヘッダー ファイル\Obj</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Collider.h">
       <Filter>ヘッダー ファイル\Module</Filter>
     </ClInclude>
     <ClInclude Include="Source\CollisionManager.h">
       <Filter>ヘッダー ファイル\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Player.h">
-      <Filter>ヘッダー ファイル\Obj</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\StageBlock.h">
-      <Filter>ヘッダー ファイル\Obj</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Debug.h">
       <Filter>ヘッダー ファイル\System</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameConfig.h">
       <Filter>ヘッダー ファイル\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Gravity.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameObject.h">
       <Filter>ヘッダー ファイル\Obj</Filter>
@@ -224,17 +272,11 @@
     <ClInclude Include="Source\TitleScene.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Goal.h">
-      <Filter>ヘッダー ファイル\Obj</Filter>
-    </ClInclude>
     <ClCompile Include="Source\SoundManager.cpp">
       <Filter>ソース ファイル\Manager</Filter>
     </ClCompile>
     <ClInclude Include="Source\FontManager.h">
       <Filter>ヘッダー ファイル\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\FloatingMotion.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Source\TextRenderer.h">
       <Filter>ヘッダー ファイル</Filter>
@@ -245,29 +287,83 @@
     <ClInclude Include="Source\Cursor.h">
       <Filter>ヘッダー ファイル\Input</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SoundManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\MovingBlock.h">
-      <Filter>ヘッダー ファイル\Obj</Filter>
-	</ClInclude>
     <ClInclude Include="Source\TypewriterText.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Source\FadeEffect.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Spike.h">
-      <Filter>ヘッダー ファイル\Obj</Filter>
+    <ClInclude Include="Source\FakePlayerController.h">
+      <Filter>ヘッダー ファイル\Controller</Filter>
     </ClInclude>
-    <ClInclude Include="Source\DisappearingBlock.h">
-      <Filter>ヘッダー ファイル\Obj</Filter>
+    <ClInclude Include="Source\PlayerController.h">
+      <Filter>ヘッダー ファイル\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FloatingMotion.h">
+      <Filter>ヘッダー ファイル\Module</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UI.h">
+      <Filter>ヘッダー ファイル\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UIButton.h">
+      <Filter>ヘッダー ファイル\UI\UIModule</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UIGraphic.h">
+      <Filter>ヘッダー ファイル\UI\UIModule</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UIText.h">
+      <Filter>ヘッダー ファイル\UI\UIModule</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UITransform.h">
+      <Filter>ヘッダー ファイル\UI\UIModule</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Graphic.h">
+      <Filter>ヘッダー ファイル\Module</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gravity.h">
+      <Filter>ヘッダー ファイル\Module</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FakePlayer.h">
+      <Filter>ヘッダー ファイル\Obj\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Goal.h">
+      <Filter>ヘッダー ファイル\Obj\StageElement</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MovingBlock.h">
+      <Filter>ヘッダー ファイル\Obj\StageElement</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Spike.h">
+      <Filter>ヘッダー ファイル\Obj\StageElement</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\StageBlock.h">
+      <Filter>ヘッダー ファイル\Obj\StageElement</Filter>
     </ClInclude>
     <ClInclude Include="Source\Switch.h">
-      <Filter>ヘッダー ファイル\Obj</Filter>
+      <Filter>ヘッダー ファイル\Obj\StageElement</Filter>
     </ClInclude>
     <ClInclude Include="Source\SwitchBlock.h">
-      <Filter>ヘッダー ファイル\Obj</Filter>
+      <Filter>ヘッダー ファイル\Obj\StageElement</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DisappearingBlock.h">
+      <Filter>ヘッダー ファイル\Obj\StageElement</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Player.h">
+      <Filter>ヘッダー ファイル\Obj\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PlayerPieceUI.h">
+      <Filter>ヘッダー ファイル\Obj\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PlayerShapeUI.h">
+      <Filter>ヘッダー ファイル\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SoundManager.h">
+      <Filter>ヘッダー ファイル\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\StageSelectScene.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UIManager.h">
+      <Filter>ヘッダー ファイル\Manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

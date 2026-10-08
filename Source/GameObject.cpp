@@ -1,6 +1,5 @@
 ﻿#include "GameObject.h"
 
-#include "Texture.h"
 #include "Collider.h"
 #include "Gravity.h"
 
@@ -12,45 +11,64 @@
 
 #include "GameConfig.h"
 
-GameObject::GameObject(std::string filename, VECTOR initPos)
-	:Object2D(filename, initPos)
-{ 
-	// -- Objのサイズ調整(GameObjectとして) -- //
-	mpTexture->SetSize(VGet(GameConfig::CELL_SIZE, GameConfig::CELL_SIZE, 0.0f));
-	
-	// -- コライダー初期設定 -- //
-	mpCollider = new Collider(this);
-	mpCollider->Initialize();
-	mpCollider->SetHalfSize(VGet(GameConfig::CELL_SIZE / 2, GameConfig::CELL_SIZE / 2, 0.0f));
+#include "Transform.h"
+#include "Collider.h"
 
-	// -- 重力システム初期設定 -- //
-	mpGravity = new Gravity(this);
-	mpGravity->Initialize();
+#include <cmath>
+
+void GameObject::Initialize(ObjectManager* _manager) {
+	mpObjectManager = _manager;
+	this->InitComponent();	// 継承先が持つコンポーネント初期設定
+	this->Init();			// 継承先特有の初期化処理
+
+	for (auto& component : mModules) {
+		if (component->IsEnabled()) {
+			component->Initialize();
+		}
+	}
 }
 
-GameObject::~GameObject() 
-{
-	// -- 所有するポインタの解放 -- //
-	delete mpCollider;
-	mpCollider = nullptr;
-
-	delete mpGravity;
-	mpGravity = nullptr;
+void GameObject::Finalize() {
+	for (auto component = mModules.rbegin();
+		component != mModules.rend();
+		++component) {
+		(*component)->Finalize();
+	}
 }
 
-void GameObject::Update(float _deltaTime)
-{
-	ResolveCollision();
+void GameObject::Update(float _deltaTime) {
+	for (auto& component : mModules) {
+		if (component->IsEnabled()) {
+			component->Update();
+		}
+	}
+
+	// ResolveCollision();
 }
 
-void GameObject::Draw()
+void GameObject::Draw() {
+	for (auto& component : mModules) {
+		if (component->IsEnabled()) {
+			component->Draw();
+		}
+	}
+}
+
+void GameObject::BeginCollisionResolution()
 {
-	Object2D::Draw();
+	mvCollisionCorrection = VGet(0.0f, 0.0f, 0.0f);
 }
 
 void GameObject::ResolveCollision()
 {
-	mbGrounded = false;
+	// nullCheack
+	auto myTransform = GetModule<Transform>();
+	auto myCollider = GetModule<Collider>();
+	if (!myTransform
+		|| !myCollider)
+		return;
+
+	bool isGrounded = false;	// 接地判定を示す
 
 	auto* collisionManager =
 		Master::mpSceneManager
@@ -58,24 +76,25 @@ void GameObject::ResolveCollision()
 		->GetCollisionManager();
 
 	if (collisionManager == nullptr
-		|| !mpCollider->IsEnabled())
+		|| !myCollider->IsEnabled())
 		return;
 
-	auto tags = mpCollider->GetCollisionTag();
+	auto tags = myCollider->GetCollisionTag();
 
 	for (auto tag : tags)
 	{
-		auto collisions = mpCollider->GetCollisions(tag);
-		for (auto collision : collisions)
+		auto objects = myCollider->GetCollisions(tag);
+		for (auto obj : objects)
 		{
-			auto collider = collision->GetCollider();
+			//auto collider = collision->GetCollider();
+			auto collider = obj->GetModule<Collider>();
 			if (collider == nullptr)
 				continue;
 
 			CollisionInfo info;
 
 			if (!collisionManager->GetBoxBoxCollision(
-				mpCollider,
+				myCollider,
 				collider,
 				info))
 			{
@@ -83,18 +102,25 @@ void GameObject::ResolveCollision()
 			}
 
 			if (info.normal.y < -0.5f)
-			{
-				mbGrounded = true;
-			}
+				isGrounded = true;
 
-			VECTOR position = GetPosition();
-
-			position = VAdd(
-				position,
-				VScale(info.normal, info.penetration)
+			VECTOR correction = VScale(
+				info.normal,
+				info.penetration
 			);
 
-			SetPosition(position);
+			if (fabsf(correction.x) > fabsf(mvCollisionCorrection.x))
+			{
+				mvCollisionCorrection.x = correction.x;
+			}
+
+			if (fabsf(correction.y) > fabsf(mvCollisionCorrection.y))
+			{
+				mvCollisionCorrection.y = correction.y;
+			}
 		}
 	}
+
+	if (auto gravity = GetModule<Gravity>())
+		gravity->SetGrounded(isGrounded);
 }

@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 class ObjectManager;
+class UIManager;
 class CollisionManager;
 
 class Scene
@@ -15,9 +16,11 @@ public:
 	virtual void Draw();							// 描画処理
 
 	ObjectManager* GetObjectManager() {return mpObjectManager;}
+	UIManager* GetUIManager() { return mpUIManager; }
 	CollisionManager* GetCollisionManager() {return mpCollisionManager;}
 
 private:
 	ObjectManager* mpObjectManager;			// ObjectManager(所有権はScene)
+	UIManager* mpUIManager;
 	CollisionManager* mpCollisionManager;	// CollisionManager(所有権はScene)
 };

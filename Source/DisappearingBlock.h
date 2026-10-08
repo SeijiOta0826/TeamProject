@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "StageBlock.h"
 
 class Player;
@@ -6,8 +6,7 @@ class Player;
 class DisappearingBlock : public StageBlock
 {
 public:
-	DisappearingBlock(std::string filename, VECTOR initPos);
-	~DisappearingBlock() = default;
+	void Init() override;
 
 	void Update(float _deltaTime) override;
 	void Draw() override;
@@ -20,13 +19,13 @@ private:
 private:
 	int mTimer = 0;
 
-	// ƒvƒŒƒCƒ„[‚ªæ‚è‘±‚¯‚éŠÔ
+	// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒä¹—ã‚Šç¶šã‘ã‚‹æ™‚é–“
 	const int DISAPPEAR_TIME = 180;
 
-	// Á‚¦‚é‘O‚ÌŒxŠÔ
+	// æ¶ˆãˆã‚‹å‰ã®è­¦å‘Šæ™‚é–“
 	const int WARNING_TIME = 60;
 
-	// ƒvƒŒƒCƒ„[‚ª—£‚ê‚Ä‚©‚ç•œŠˆ‚·‚é‚Ü‚Å‚ÌŠÔ
+	// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒé›¢ã‚Œã¦ã‹ã‚‰å¾©æ´»ã™ã‚‹ã¾ã§ã®æ™‚é–“
 	const int RESPAWN_TIME = 120;
 
 	bool mbIsTriggered = false;

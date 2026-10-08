@@ -25,7 +25,7 @@ public:
 
 	bool IsConnected() const;
 
-	bool IsPressed(int _button) const;
+	bool IsPress(int _button) const;
 	bool IsDown(int _button) const;
 	bool IsUp(int _button) const;
 

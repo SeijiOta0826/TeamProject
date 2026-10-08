@@ -1,23 +1,27 @@
-#include "SwitchBlock.h"
+ï»¿#include "SwitchBlock.h"
 
 #include "Switch.h"
 #include "Collider.h"
 #include "Gravity.h"
 
 SwitchBlock::SwitchBlock(
-    std::string filename,
-    VECTOR initPos,
     Switch* _switch
 )
-    : StageBlock(filename, initPos)
-    , mpSwitch(_switch)
+    : mpSwitch(_switch)
 {
-    // Å‰‚Í”ñ•\¦E“–‚½‚è”»’èOFF
-    mbIsVisible = false;
-    mpCollider->SetEnabled(false);
+    
+}
 
-    // d—Í‚Íg‚í‚È‚¢
-    mpGravity->SetEnable(false);
+void SwitchBlock::Init()
+{
+    StageBlock::Init();
+
+    // æœ€åˆã¯éè¡¨ç¤ºãƒ»å½“ãŸã‚Šåˆ¤å®šOFF
+    mbIsVisible = false;
+    GetModule<Collider>()->SetEnabled(false);
+
+    // é‡åŠ›ã¯ä½¿ã‚ãªã„
+    GetModule<Gravity>()->SetEnabled(false);
 }
 
 void SwitchBlock::Update(float _deltaTime)
@@ -28,7 +32,7 @@ void SwitchBlock::Update(float _deltaTime)
     if (mpSwitch != nullptr && mpSwitch->IsActivated())
     {
         mbIsVisible = true;
-        mpCollider->SetEnabled(true);
+        GetModule<Collider>()->SetEnabled(true);
     }
 
     if (mbIsVisible)
