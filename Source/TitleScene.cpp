@@ -13,16 +13,14 @@ TitleScene::TitleScene()
 {
 }
 
-
-
-
-
 void TitleScene::Initialize()
 {
 	// シーンに入った瞬間のマウス状態を記録
 	mbPreviousMouseLeft = (GetMouseInput() & MOUSE_INPUT_LEFT) != 0;
 
 	mTitleLogoHandle = LoadGraph("Resource/Logo/TitleLogo.png");
+
+	mStartTofuHandle = Master::mpResource->LoadGraphics("Resource/UI/Tofu.png");
 
 	// 読み込み失敗の安全対策 (ロード失敗時は -1 が返る)
 	if (mBgGroundHandle == -1)
@@ -122,37 +120,20 @@ void TitleScene::Draw()
 	const int startWidth = 280;
 	const int startHeight = 70;
 
-	int buttonColor;
-
-	if (mbStartSelected)
+	if (mStartTofuHandle != -1)
 	{
-		buttonColor = GetColor(255, 220, 100);
+		DrawExtendGraph(
+			startX,
+			startY,
+			startX + startWidth,
+			startY + startHeight,
+			mStartTofuHandle,
+			TRUE
+		);
 	}
-	else
-	{
-		buttonColor = GetColor(200, 200, 200);
-	}
-
-	DrawBox(
-		startX,
-		startY,
-		startX + startWidth,
-		startY + startHeight,
-		buttonColor,
-		TRUE
-	);
-
-	DrawBox(
-		startX,
-		startY,
-		startX + startWidth,
-		startY + startHeight,
-		GetColor(0, 0, 0),
-		FALSE
-	);
 
 	DrawString(
-		startX + 100,
+		startX + 115,
 		startY + 25,
 		"START",
 		GetColor(0, 0, 0)

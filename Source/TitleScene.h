@@ -19,6 +19,7 @@ private:
 private:
 	int mBgGroundHandle; //背景画像ハンドル
 	int mTitleLogoHandle;//タイトルロゴ画像ハンドル
+	int mStartTofuHandle = -1;
 private:
 	FloatingMotion mTitleFloatingMotion;
 

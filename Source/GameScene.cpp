@@ -1,4 +1,4 @@
-#include "GameScene.h"
+﻿#include "GameScene.h"
 
 #include "Master.h"
 #include "SceneManager.h"
@@ -89,6 +89,8 @@ void GameScene::Initialize()
         this
         ->GetUIManager()
         ->CreateUI<PlayerShapeUI>();
+
+	mPauseBoardHandle = Master::mpResource->LoadGraphics("Resource/UI/PauseBoard.png");
 }
 
 void GameScene::Update(float deltaTime)
@@ -218,26 +220,88 @@ void GameScene::Draw()
 void GameScene::DrawPause()
 {
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 150);
-	DrawBox(0, 0, 1280, 720, GetColor(0, 0, 0), TRUE);
+	DrawBox(
+		0, 0,
+		1280, 720,
+		GetColor(0, 0, 0),
+		TRUE
+	);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-	//Pauseタイトル
-	DrawStringToHandle(570, 200, "Pause", GetColor(255, 255, 255), StageNumberFontHandle);
 
-	//再開ボタン
-	/*DrawBox(500, 300, 780, 370, GetColor(200, 200, 200), FALSE);
-	DrawBox(500, 300, 780, 370, GetColor(255, 255, 255), FALSE);*/
-	DrawStringToHandle(605, 325, "再開", GetColor(0, 0, 0), mMessageFontHandle);
+	// Pauseタイトル
+	DrawStringToHandle(
+		570,
+		200,
+		"Pause",
+		GetColor(255, 255, 255),
+		StageNumberFontHandle
+	);
 
-	//ステージ選択
-	/*DrawBox(500, 400, 780, 470, GetColor(200, 200, 200), TRUE);
-	DrawBox(500, 400, 780, 470, GetColor(255, 255, 255), FALSE);*/
-	DrawStringToHandle(505, 425, "ステージ選択に戻る", GetColor(0, 0, 0), mMessageFontHandle);
+	const int buttonWidth = 280;
+	const int buttonHeight = 70;
 
-	// タイトルへ戻るボタン
-	DrawBox(500, 500, 780, 570, GetColor(200, 200, 200), TRUE);
-	DrawBox(500, 500, 780, 570, GetColor(255, 255, 255), FALSE);
-	DrawStringToHandle(540, 525, "タイトルへ戻る", GetColor(0, 0, 0), mMessageFontHandle);
+	// 再開ボタン
+	if (mPauseBoardHandle != -1)
+	{
+		DrawExtendGraph(
+			500,
+			300,
+			500 + buttonWidth,
+			300 + buttonHeight,
+			mPauseBoardHandle,
+			TRUE
+		);
+	}
 
+	DrawStringToHandle(
+		605,
+		325,
+		"再開",
+		GetColor(0, 0, 0),
+		mMessageFontHandle
+	);
+
+	// ステージ選択
+	if (mPauseBoardHandle != -1)
+	{
+		DrawExtendGraph(
+			500,
+			400,
+			500 + buttonWidth,
+			400 + buttonHeight,
+			mPauseBoardHandle,
+			TRUE
+		);
+	}
+
+	DrawStringToHandle(
+		505,
+		425,
+		"ステージ選択に戻る",
+		GetColor(0, 0, 0),
+		mMessageFontHandle
+	);
+
+	// タイトルへ戻る
+	if (mPauseBoardHandle != -1)
+	{
+		DrawExtendGraph(
+			500,
+			500,
+			500 + buttonWidth,
+			500 + buttonHeight,
+			mPauseBoardHandle,
+			TRUE
+		);
+	}
+
+	DrawStringToHandle(
+		540,
+		525,
+		"タイトルへ戻る",
+		GetColor(0, 0, 0),
+		mMessageFontHandle
+	);
 }
 
 void GameScene::DrawClear()

@@ -27,6 +27,7 @@ public:
 private:
     int StageNumberFontHandle = -1;//左上のステージ番号用フォントハンドル
     int mMessageFontHandle = -1;   //下のTypeWriter用のフォントハンドル
+    int mPauseBoardHandle = -1;
 		
         void*  mAddedFontHandle = nullptr; // フォントハンドル
 

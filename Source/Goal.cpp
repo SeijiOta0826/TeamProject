@@ -22,12 +22,11 @@ void Goal::Update(float _deltaTime)
 
 void Goal::Draw()
 {
-
 }
 
 bool Goal::IsPlayerTouching()
 {
-	return GetModule<Collider>()->IsColliding(Tag::PLAYER);
+    return GetModule<Collider>()->IsColliding(Tag::PLAYER);
 }
 
 bool Goal::IsShapeMatched(Player* _player) const
@@ -35,11 +34,13 @@ bool Goal::IsShapeMatched(Player* _player) const
     if (_player == nullptr)
         return false;
 
-    for (int row = 0; row < 3; row++)
+    for (int y = 0; y < 3; y++)
     {
-        for (int column = 0; column < 3; column++)
+        for (int x = 0; x < 3; x++)
         {
-            if (_player->HasPiece(row, column) != mShape[row][column])
+            bool isPieceEnabled = _player->IsPieceEnabled(x, y);
+
+            if (isPieceEnabled != mShape[y][x])
             {
                 return false;
             }
@@ -54,8 +55,11 @@ bool Goal::IsWithinDistance(Player* _player)
     if (_player == nullptr)
         return false;
 
-    VECTOR playerPos = _player->GetModule<Transform>()->GetPosition();
-    VECTOR goalPos = GetModule<Transform>()->GetPosition();
+    VECTOR playerPos =
+        _player->GetModule<Transform>()->GetPosition();
+
+    VECTOR goalPos =
+        GetModule<Transform>()->GetPosition();
 
     float distance = VSize(
         VSub(playerPos, goalPos)
