@@ -27,10 +27,10 @@ public:
 
     void Run();
 
-    [[nodiscard]] bool IsInitialized() const noexcept { return m_initSuccess; }
+    bool IsInitialized() const noexcept { return m_initSuccess; }
 
 private:
-    [[nodiscard]] bool InitializeDxLib();
+     bool InitializeDxLib();
     void UpdateLogic(double deltaTime);
     void Draw();
 
