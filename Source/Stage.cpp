@@ -18,6 +18,7 @@
 #include "DisappearingBlock.h"
 #include "Switch.h"
 #include "SwitchBlock.h"
+#include "Collectible.h"
 
 #include "Transform.h"
 
@@ -152,6 +153,20 @@ void Stage::CreateObjects()
                 break;
 
             }
+
+            case 9:
+            {
+                // Collectibleを生成
+                auto collectible = objectManager
+                    ->CreateObject<Collectible>();
+
+                collectible
+                    ->GetModule<Transform>()
+                    ->SetPosition(initPosition);
+
+                break;
+            }
+
             default:
                 break;
             }

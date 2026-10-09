@@ -2,31 +2,45 @@
 #include "Player.h"
 
 #include "Transform.h"
+#include "Graphic.h"
 #include "Collider.h"
 
 void Goal::Init()
 {
-    // プレイヤーとの衝突を見る
-    GetModule<Collider>()->AddCollisionTag(Tag::PLAYER);
+    SetTag(Tag::BLOCK);
+
+    auto collider = GetModule<Collider>();
+    if (collider != nullptr)
+    {
+        collider->AddCollisionTag(Tag::PLAYER_CELL);
+    }
 }
 
 void Goal::InitComponent()
 {
     AddModule<Transform>();
+    AddModule<Graphic>(GetModelFilename());
     AddModule<Collider>();
 }
 
 void Goal::Update(float _deltaTime)
 {
+    GameObject::Update(_deltaTime);
 }
 
 void Goal::Draw()
 {
+    GameObject::Draw();
 }
 
 bool Goal::IsPlayerTouching()
 {
-    return GetModule<Collider>()->IsColliding(Tag::PLAYER);
+    auto collider = GetModule<Collider>();
+
+    if (collider == nullptr)
+        return false;
+
+    return collider->IsColliding(Tag::PLAYER_CELL);
 }
 
 bool Goal::IsShapeMatched(Player* _player) const
@@ -38,12 +52,11 @@ bool Goal::IsShapeMatched(Player* _player) const
     {
         for (int x = 0; x < 3; x++)
         {
-            bool isPieceEnabled = _player->IsPieceEnabled(x, y);
+            bool isPieceEnabled =
+                _player->IsPieceEnabled(x, y);
 
             if (isPieceEnabled != mShape[y][x])
-            {
                 return false;
-            }
         }
     }
 
@@ -55,15 +68,24 @@ bool Goal::IsWithinDistance(Player* _player)
     if (_player == nullptr)
         return false;
 
+    auto playerTransform =
+        _player->GetModule<Transform>();
+
+    auto goalTransform =
+        GetModule<Transform>();
+
+    if (playerTransform == nullptr ||
+        goalTransform == nullptr)
+        return false;
+
     VECTOR playerPos =
-        _player->GetModule<Transform>()->GetPosition();
+        playerTransform->GetPosition();
 
     VECTOR goalPos =
-        GetModule<Transform>()->GetPosition();
+        goalTransform->GetPosition();
 
-    float distance = VSize(
-        VSub(playerPos, goalPos)
-    );
+    float distance =
+        VSize(VSub(playerPos, goalPos));
 
     const float clearDistance = 50.0f;
 

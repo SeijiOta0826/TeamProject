@@ -12,7 +12,6 @@
 #include "GameConfig.h"
 
 #include "Transform.h"
-#include "Collider.h"
 
 #include <cmath>
 

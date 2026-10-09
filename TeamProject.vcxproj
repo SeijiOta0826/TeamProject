@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Collectible.cpp" />
     <ClCompile Include="Source\Collider.cpp" />
     <ClCompile Include="Source\CollisionManager.cpp" />
     <ClCompile Include="Source\CsvLoader.cpp" />
@@ -65,6 +66,7 @@
     <ClCompile Include="Source\UITransform.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Collectible.h" />
     <ClInclude Include="Source\Collider.h" />
     <ClInclude Include="Source\CollisionManager.h" />
     <ClInclude Include="Source\CsvLoader.h" />

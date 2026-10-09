@@ -32,11 +32,12 @@ void GameScene::Initialize()
 	mbPreviousMouseLeft = (GetMouseInput() & MOUSE_INPUT_LEFT) != 0;
 
 	// 初期化処理
-	auto* player =
+	mpPlayer =
 		this
 		->GetObjectManager()
 		->CreateObject<Player>();
-	player->InitPiece();
+
+	mpPlayer->InitPiece();
 
 	auto* stage = new Stage();
 
@@ -151,11 +152,18 @@ void GameScene::Update(float deltaTime)
 	// 更新処理
 	Scene::Update(deltaTime);
 
-	if (mpGoal != nullptr &&
-		mpGoal->IsShapeMatched(mpPlayer) &&
-		mpGoal->IsWithinDistance(mpPlayer))
+	if (mpGoal != nullptr)
 	{
-		mbIsClear = true;
+		bool shapeMatched = mpGoal->IsShapeMatched(mpPlayer);
+		bool withinDistance = mpGoal->IsWithinDistance(mpPlayer);
+
+		Debug::Print("Goal Shape : ", shapeMatched);
+		Debug::Print("Goal Distance : ", withinDistance);
+
+		if (shapeMatched && withinDistance)
+		{
+			mbIsClear = true;
+		}
 	}
 }
 

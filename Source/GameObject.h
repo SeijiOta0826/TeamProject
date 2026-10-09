@@ -16,6 +16,7 @@ enum class Tag
 	PLAYER_CELL,
 	BLOCK,
 	SPIKE,
+	COLLECTIBLE,
 };
 
 // コンポーネントを保持・管理するゲームオブジェクトの基底クラス
