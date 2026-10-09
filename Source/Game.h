@@ -8,7 +8,9 @@
 #include "ResourceManager.h"
 #include "FontManager.h"
 #include "Cursor.h"
-
+#include "Mouse.h"          // 追加
+#include "ClickEffect.h"    // 追加
+#include "GoalEffect.h"
 class Game {
 public:
     // C++20 chrono型を用いた固定タイムステップ定義
@@ -30,7 +32,7 @@ public:
     bool IsInitialized() const noexcept { return m_initSuccess; }
 
 private:
-     bool InitializeDxLib();
+    bool InitializeDxLib();
     void UpdateLogic(double deltaTime);
     void Draw();
 
@@ -42,8 +44,11 @@ private:
     std::chrono::duration<double> m_accumulator{ 0.0 };
 
     // 依存関係順に定義（下から上へ逆順に破棄される）
-    ResourceManager m_resourceManager{};
-    FontManager     m_fontManager{};
-    SceneManager    m_sceneManager{};
-    Cursor          m_cursor{};
+    ResourceManager       m_resourceManager{};
+    FontManager           m_fontManager{};
+    SceneManager          m_sceneManager{};
+    Cursor                m_cursor{};
+    Mouse                 m_mouse{};        // 追加
+    TofuGame::ClickEffect m_clickEffect{};  // 追加
+    GoalEffect m_goalEffect;
 };
